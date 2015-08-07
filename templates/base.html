@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Kid-O - Children's overview app for children's aid projects</title>
+		<link rel="stylesheet"
+          href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css"/>
+        <link rel="stylesheet" href="static/css/style.css"/>
+    </head>
+
+    <body>
+    	<div class="container">
+    	<div id="top">
+    		<h1> Kid-O </h1>
+    	</div>
+    	{% with messages = get_flashed_messages() %}
+    		{% if messages %}
+    			{% for message in messages %}
+    			{{ message }}
+    			{% endfor %}
+    		{% endif %}
+    	{% endwith %}
+
+    	{%block content %} here goes the content {% endblock %}
+</div>
+    </body>
+</html>

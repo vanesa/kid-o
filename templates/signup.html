@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> Sign up to Kid-O!</h1>
+
+<form action="/signup" class="form-signin" method="POST">
+
+	<div class="form-group">
+		<label for="name-field" class="sr-only">First name</label>
+		<input type="text" name="first_name" placeholder="First name">
+	</div>
+
+	<div class="form-group">
+		<label for="name-field" class="sr-only">Last name</label>
+		<input type="text" name="last_name" placeholder="Last name">
+	</div>
+
+	<div class="form-group">
+		<label for="email-field" class="sr-only">E-Mail</label>
+		<input type="email" name="email" placeholder="Email">
+	</div>
+
+	<div class="form-group">
+		<label for="password-field" class="sr-only">Password</label>
+		<input type="password" name="password" placeholder="Password">
+	</div>
+
+	<div class="form-group">
+		<label for="password-field" class="sr-only">Repeate Password</label>
+		<input type="password" name="password" placeholder="Repeate Password">
+	</div>
+	<button class="btn btn-sm btn-primary" type="submit">Sign Up</button>
+</form>
+<a href="/">Cancel</a>
+
+{% endblock %}

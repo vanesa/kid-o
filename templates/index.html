@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> Welcome to Kid-O!</h1>
+
+<form action="/" class="form-signin" method="POST">
+
+	<div class="form-group">
+		<label for="email-field" class="sr-only">E-Mail</label>
+		<input type="email" name="email" placeholder="Email">
+	</div>
+
+	<div class="form-group">
+		<label for="password-field" class="sr-only">Password</label>
+		<input type="password" name="password" placeholder="Password">
+	</div>
+	<button class="btn btn-sm btn-primary" type="submit">Sign In</button>
+</form>
+<a href="/signup">Sign up</a>
+
+{% endblock %}

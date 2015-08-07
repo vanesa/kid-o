@@ -1,0 +1,109 @@
+______________________________
+**** NOTES for Kid-O App *****
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+Project Description and Goals:
+
+Children's aid projects often struggle with maintaining a clear overview of the children who are part of the project. This problem is foremost apparent when briefing new incoming volunteers which occures every 3-6 months. An app that gives a clear overview of the chidlren, including a photo and additional information such as their current situation, name of their guardian, location of their home etc. would ease the volunteers work and make it more efficient. 
+
+
+####################
+## Helpful tools ##
+##################
+
+- http://dillinger.io/ - cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
+- gmaps - http://hpneo.github.io/gmaps/
+
+
+
+
+#####################
+##     TO DO      ##
+###################
+
+
+********* MVP *********
+
+- Model py
+	(x) create tables
+- Server.py
+	(.) create routes
+
+- Templates
+	(.) create HTML for routes
+
+- Signup page
+	() create forms
+	() authentification with e.g. Flask Auth
+
+- Children profile show
+  	() Get kid photo on page
+  	() get String information
+  	() spilt them into divs
+  	() have a edit button
+ 
+- Edit Profile
+ 	() New html page
+ 	() Create the forms
+ 		() Prepopulate the form fields
+ 	() Verify data (check that all fields are filled out)
+ 	() Clicking submit is going to overwrite the existing date
+ 		() send to profile page after submit
+ 	() Option of delete Profile with Alert <are you sure????>
+
+- Create profile
+	() Verify existence of child
+	() Create the forms
+ 	() Verify data (check that all fields are filled out)
+ 	() Clicking submit is going to create data in data base
+ 		() send to profile page after submit
+ 	() Upload Photo option
+ 	() Option to Cancel
+
+ - Add Siblings
+ 	() relationship solution
+ 	() Link to profile page
+
+.....
+
+- Image
+	() Amazon S3 or Dropbox API (or others)
+......
+
+ - Bootstrap
+ 	() responsive
+
+......
+
+********* END MVP *********
+
+
+##############################
+
+
+********* EXTRA FEATURES IN SCOPE *********
+
+
+- Logging of situation changes
+
+- Search function
+	() specialized full-text search option handling: stemming, thesaurus, sounds-like
+
+- Google Maps API
+	() Show location of child
+	() Save location of child
+
+********* END EXTRA FEATURES IN SCOPE ********* 
+
+
+###################
+## readme file! ##
+#################
+
+
+#####################
+## Open questions ##
+###################
+
+PostgreSQL: Use Array for sibling ids? Look up each sibling through child table: If not in table, just show as string?
+

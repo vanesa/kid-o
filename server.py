@@ -22,21 +22,32 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def index():
-	"""" Starting page with either login or personal profile if login session exists.
-		 For Log in: take email, password from user and check if credentials exist in the database
-		 by checking if email is in the users table. If email in table, redirect to the children overview.
-		 If not: redirect to sign up page."""
+    """" Starting page with either login or personal profile if login session exists.
+     For Log in: take email, password from user and check if credentials exist in the database
+     by checking if email is in the users table. If email in table, redirect to the children overview.
+     If not: redirect to sign up page."""
 
-	if request.method == 'POST': # Process form if route gets POST request from /index
-		email = request.form.get("email")
-		password = request.form.get("password") # 
+    if request.method == 'POST': # Process form if route gets POST request from /index
+        email = request.form.get("email")
+        password = request.form.get("password") #
 
-		credentials = (email, password)
+        credentials = (email, password)
 
-		# to be continued
+        user = User.query.filter_by(email=email).first()
 
+        if not user:
+            flash('Please sign up!')
+            return redirect('/signup')
+    else:
+        if user.password != password:
+            flash('Incorrect password.')
+            return redirect('/')
 
-	return render_template("index.html")
+        session['login_id']= credentials # Save session
+        flash('You have sucessfully logged in.')
+        return redirect("/overview.html") # Redirect to children's overview
+
+    return render_template("index.html")
 
 ###########
 # LOG OUT #
@@ -50,9 +61,9 @@ def index():
 
 @app.route('/signup')
 def signup_form():
-	""" Sign up user """
+    """ Sign up user """
 
-	return render_template("signup.html")
+    return render_template("signup.html")
 
 #####################
 # CHILDREN OVERVIEW #
@@ -81,12 +92,12 @@ def signup_form():
 
 if __name__ == '__main__':
 
-	# debug = True as DebugToolbarExtension is invoked
+    # debug = True as DebugToolbarExtension is invoked
 
-	app.debug = True
-	connect_to_db(app)
+    app.debug = True
+    connect_to_db(app)
 
-	# User the DebugToolbar
-	DebugToolbarExtension(app)
+    # User the DebugToolbar
+    DebugToolbarExtension(app)
 
-	app.run()
+    app.run()

@@ -40,14 +40,13 @@ class Child(db.Model):
     __tablename__= "children"
 
     child_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    child_pic_url = db.Column(db.String, nullable=True)
     child_first_name = db.Column(db.String(32), nullable=False)
     child_last_name = db.Column(db.String(32), nullable=False)
     birth_date = db.Column(db.DateTime, nullable=False)
+    caregiver_type = db.Column(db.String(50), nullable=True)
     caregiver_first_name = db.Column(db.String(32), nullable=True)
     caregiver_last_name = db.Column(db.String(32), nullable=True)
-    # sibling_id = db.Column(db.Integer, db.ForeignKey('Sibling.sibling_id'))
-    # sibling_first_name = db.Column(db.String(32), db.ForeignKey('Sibling.sibling_first_name'))
-    # sibling_last_name = db.Column(db.String(32), db.ForeignKey('Sibling.sibling_last_name'))
     doctor_appt = db.Column(db.DateTime, nullable=True)
     situation = db.Column(db.Text, nullable=True)
     home_visit = db.Column(db.DateTime, nullable=True)
@@ -59,18 +58,6 @@ class Child(db.Model):
         """Provide helpful representation when printed."""
 
         return "<Child child_id=%s child_first_name=%s child_last_name=%s>" % (self.child_id, self.child_first_name, self.child_last_name)
-
-
-# class Sibling(db.Model):
-#     """Sibling of Kid-O App."""
-
-#     __tablename__= "siblings"
-
-#     child_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     sibling_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     sibling_first_name = db.Column(db.String(32), db.ForeignKey('Sibling.sibling_first_name'))
-#     sibling_last_name = db.Column(db.String(32), db.ForeignKey('Sibling.sibling_last_name'))
-
 
 
 

@@ -69,7 +69,13 @@ def signup_form():
 # CHILDREN OVERVIEW #
 #####################
 
+@app.route('overview')
+def show_overview():
+    """ Shows overview of all of the children in the project ordered by lastname."""
 
+    all_children = db.session.query(Child).ordered_by(Child.child_last_name).all()
+
+    return render_template('overview.html', all_children=all_children)
 
 
 #################

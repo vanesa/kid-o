@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<table>
+	{% for child in child}
+	<tr>
+		<td>
+			<div class="images"><img src="{{child_pic_url}}"></div>
+			{{ child_first}}
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+
+{% endblock %}

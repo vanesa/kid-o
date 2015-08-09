@@ -7,8 +7,6 @@ from datetime import datetime
 def load_users():
     """ Load users from users.txt into database. """
     # import pdb; pdb.set_trace()
-    # with open("seed_data/users.txt") as fileinput:
-    #     next(fileinput)
     fileinput = open("seed_data/users.txt")
     for line in fileinput.readlines():
         user_info = line.split("\t")

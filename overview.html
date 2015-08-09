@@ -1,11 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 <table>
-	{% for child in child}
+	{% for child in children %}
 	<tr>
 		<td>
-			<div class="images"><img src="{{child_pic_url}}"></div>
-			{{ child_first}}
+			<div class="images left"><img src="{{child_pic_url}}"></div>
+			<div class="info right"> 
+				<p>
+					{{ child_first_name}} {{ child_last_name }}
+				</p>
+				<p>
+					{{ age }} years old,
+				</p>
+				<p>
+					Birth date: {{ birth_date }}
+				</p>
+				<p>
+					- status -
+				</p>
+			</div>
 		</td>
 	</tr>
 	{% endfor %}

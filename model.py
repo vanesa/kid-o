@@ -59,7 +59,7 @@ class Child(db.Model):
 
         return "<Child child_id=%s child_first_name=%s child_last_name=%s>" % (self.child_id, self.child_first_name, self.child_last_name)
 
-
+    # Add here a model to calculate age?
 
 #####################
 # Helper functions #

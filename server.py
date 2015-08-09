@@ -38,14 +38,14 @@ def index():
         if not user:
             flash('Please sign up!')
             return redirect('/signup')
-    else:
-        if user.password != password:
-            flash('Incorrect password.')
-            return redirect('/')
+        else:
+            if user.password != password:
+                flash('Incorrect password.')
+                return redirect('/')
 
-        session['login_id']= credentials # Save session
-        flash('You have sucessfully logged in.')
-        return redirect("/overview.html") # Redirect to children's overview
+            session['login_id']= credentials # Save session
+            flash('You have sucessfully logged in.')
+            return redirect("/overview.html") # Redirect to children's overview
 
     return render_template("index.html")
 
@@ -65,7 +65,7 @@ def signup_form():
 
     return render_template("signup.html")
 
-#####################
+    #####################
 # CHILDREN OVERVIEW #
 #####################
 
@@ -73,7 +73,8 @@ def signup_form():
 def show_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
 
-    all_children = db.session.query(Child).ordered_by(Child.child_last_name).all()
+    all_children = db.session.query(Child).all()
+
 
     return render_template('overview.html', all_children=all_children)
 

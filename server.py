@@ -7,6 +7,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Child, connect_to_db, db
 
+from child import ChildView
+
 app = Flask(__name__)
 
 # Required to use Flask sessions and debug toolbar
@@ -74,9 +76,13 @@ def show_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
 
     all_children = db.session.query(Child).all()
+    child_views = []
+
+    for child in all_children:
+        child_views.append(ChildView(child))
 
 
-    return render_template('overview.html', all_children=all_children)
+    return render_template('overview.html', child_profiles=child_views)
 
 
 #################

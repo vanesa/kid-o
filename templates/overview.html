@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <table>
-	{% for child in all_children %}
+	{% for child in child_profiles %}
 	<tr>
 		<td>
 			<div class="img-thumbnail pull-left"><img src="{{child.child_pic_url}}"></div>
@@ -13,7 +13,7 @@
 					- age- years old,
 				</p>
 				<p>
-					Birth date: {{ child.birth_date }}
+					Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}
 				</p>
 				<p>
 					- status -

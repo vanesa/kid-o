@@ -21,9 +21,9 @@ class User(db.Model):
 
     __tablename__= "users"
 
-    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_first_name = db.Column(db.String(32), nullable=False)
-    user_last_name = db.Column(db.String(32), nullable=False)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    first_name = db.Column(db.String(32), nullable=False)
+    last_name = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(64), nullable=True)
     password = db.Column(db.String(64), nullable=True)
 
@@ -31,7 +31,7 @@ class User(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s user_first_name=%s user_last_name=%s email=%s password=%s>" % (self.user_id, self.user_first_name, self.user_last_name, self.email, self.password)
+        return "<User id=%s first_name=%s last_name=%s email=%s password=%s>" % (self.id, self.first_name, self.last_name, self.email, self.password)
 
 
 class Child(db.Model):
@@ -39,14 +39,14 @@ class Child(db.Model):
 
     __tablename__= "children"
 
-    child_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    child_pic_url = db.Column(db.String, nullable=True)
-    child_first_name = db.Column(db.String(32), nullable=False)
-    child_last_name = db.Column(db.String(32), nullable=False)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    pic_url = db.Column(db.String, nullable=True)
+    first_name = db.Column(db.String(32), nullable=False)
+    last_name = db.Column(db.String(32), nullable=False)
     birth_date = db.Column(db.DateTime, nullable=False)
-    caregiver_type = db.Column(db.String(50), nullable=True)
-    caregiver_first_name = db.Column(db.String(32), nullable=True)
-    caregiver_last_name = db.Column(db.String(32), nullable=True)
+    guardian_type = db.Column(db.String(50), nullable=True)
+    guardian_fname = db.Column(db.String(32), nullable=True)
+    guardian_lname = db.Column(db.String(32), nullable=True)
     doctor_appt = db.Column(db.DateTime, nullable=True)
     situation = db.Column(db.Text, nullable=True)
     home_visit = db.Column(db.DateTime, nullable=True)
@@ -57,7 +57,7 @@ class Child(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Child child_id=%s child_first_name=%s child_last_name=%s>" % (self.child_id, self.child_first_name, self.child_last_name)
+        return "<Child id=%s first_name=%s last_name=%s>" % (self.id, self.first_name, self.last_name)
 
     # Add here a model to calculate age?
 

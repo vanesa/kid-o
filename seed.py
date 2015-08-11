@@ -9,8 +9,8 @@ def load_users():
     # import pdb; pdb.set_trace()
     fileinput = open("seed_data/users.txt")
     for line in fileinput.readlines():
-        user_info = line.split("\t\n\r")
-        user_entry = User(user_first_name=user_info[0], user_last_name=user_info[1], email=user_info[2], 
+        user_info = line.split("\t")
+        user_entry = User(first_name=user_info[0], last_name=user_info[1], email=user_info[2], 
             password=user_info[3])
 
         db.session.add(user_entry)
@@ -34,9 +34,9 @@ def load_children():
         print "The line is:", line
         
         print "This is the child info:", child_info
-        child_entry = Child(child_pic_url=child_info[0], child_first_name=child_info[1], child_last_name=child_info[2],
-                            birth_date=child_info[3], caregiver_type=child_info[4], caregiver_first_name=child_info[5],
-                            caregiver_last_name=child_info[6], doctor_appt=child_info[7], situation=child_info[8],
+        child_entry = Child(pic_url=child_info[0], first_name=child_info[1], last_name=child_info[2],
+                            birth_date=child_info[3], guardian_type=child_info[4], guardian_fname=child_info[5],
+                            guardian_lname=child_info[6], doctor_appt=child_info[7], situation=child_info[8],
                             home_visit=child_info[9], latitude=child_info[10], longitude=child_info[11])
         db.session.add(child_entry)
        
@@ -51,4 +51,4 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     load_children()
-    # load_users()
+    load_users()

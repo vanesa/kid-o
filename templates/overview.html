@@ -4,13 +4,13 @@
 	{% for child in child_profiles %}
 	<tr>
 		<td>
-			<div class="img-thumbnail pull-left"><img src="{{child.child_pic_url}}"></div>
+			<div class="img-thumbnail pull-left"><img src="{{child.pic_url}}" class="images-style"></div>
 			<div class="info pull-right"> 
 				<h4>
-					{{ child.child_first_name}} {{ child.child_last_name }}
+					{{ child.first_name}} {{ child.last_name }}
 				</h4>
 				<p>
-					- age- years old,
+					{{ child.age }} years old,
 				</p>
 				<p>
 					Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}

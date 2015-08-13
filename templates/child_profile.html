@@ -18,17 +18,37 @@
 				<p>
 					Guardian: {{ child.guardian_fname}} {{ child.guardian_lname }}
 				</p>
-				<div>
-					<h4> Medical condition</h4>
-					<p>
-						{{ child.medical_condition }}
-					</p>
-					<p>
-						Needs to visit the doctor: {{ child.doctor_appt.strftime('%d-%m-%Y') }}
-					</p>
-				</div>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div>
+				<h4> Medical condition</h4>
+				<p>
+					{{ child.medical_condition }}
+				</p>
+				<p>
+					Needs to visit the doctor: {{ child.doctor_appt.strftime('%d-%m-%Y') }}
+				</p>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div>
+				<h4> Situation</h4>
+				<p>
+					{{ child.stituation }}
+				</p>
+				<p>
+					Next home visit: {{ child.home_visit.strftime('%d-%m-%Y') }}
+				</p>
 			</div>
 		</td>
+	</tr>
+	<tr>
+		<button type="button" class="btn btn-sm btn-danger" value="edit">Edit</button>
 	</tr>
 </table>
 

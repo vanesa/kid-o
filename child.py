@@ -13,8 +13,7 @@ import time
 class ChildView:
 
     def __init__(self, child):
-        self.temp = 1
-        # print "This should be a child profile:", child
+        """ """
         self.pic_url = child.pic_url
         self.first_name = child.first_name
         self.last_name = child.last_name
@@ -22,31 +21,18 @@ class ChildView:
         self.guardian_type = child.guardian_type
         self.guardian_fname = child.guardian_fname
         self.guardian_lname = child.guardian_lname
+        self.medical_condition = child.medical_condition
         self.doctor_appt = child.doctor_appt
         self.situation = child.situation
         self.home_visit = child.home_visit
         self.latitude = child.latitude
         self.longitude = child.longitude
 
-        # self....
-        print "This should be a birthdate", child.birth_date
         # import pdb; pdb.set_trace()
 
         self.currenttime = datetime.now()
-        # print type(child.birth_date.strftime("%Y-%m-%d %I:%M:%S"))
-        # print type(self.currenttime)
-        print "This should be the current time:", self.currenttime
         self.age = self.currenttime - child.birth_date
-
 
         self.age = self.age.days / 365
         print "This should be an age:", self.age
-
-        # self.age = (child.birth_date)
      
-
-    def  getage():
-
-        age = 57
-
-        return "Age: ", age

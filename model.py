@@ -47,6 +47,7 @@ class Child(db.Model):
     guardian_type = db.Column(db.String(50), nullable=True)
     guardian_fname = db.Column(db.String(32), nullable=True)
     guardian_lname = db.Column(db.String(32), nullable=True)
+    medical_condition = db.Column(db.String, nullable=True)
     doctor_appt = db.Column(db.DateTime, nullable=True)
     situation = db.Column(db.Text, nullable=True)
     home_visit = db.Column(db.DateTime, nullable=True)

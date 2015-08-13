@@ -36,8 +36,8 @@ def load_children():
         print "This is the child info:", child_info
         child_entry = Child(pic_url=child_info[0], first_name=child_info[1], last_name=child_info[2],
                             birth_date=child_info[3], guardian_type=child_info[4], guardian_fname=child_info[5],
-                            guardian_lname=child_info[6], doctor_appt=child_info[7], situation=child_info[8],
-                            home_visit=child_info[9], latitude=child_info[10], longitude=child_info[11])
+                            guardian_lname=child_info[6], medical_condition=child_info[7], doctor_appt=child_info[8], situation=child_info[9],
+                            home_visit=child_info[10], latitude=child_info[11], longitude=child_info[12])
         db.session.add(child_entry)
        
         print child_entry

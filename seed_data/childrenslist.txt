@@ -1,3 +1,3 @@
-http://vanesaortiz.com/kid-o/luis.jpg	Luis	Paredez Aleala	2010-11-22	Mother	Maria	Aleala	2015-08-12	Mother doesn't have a job. They live with strangers.	2015-08-22	18.542769	-69.801216
-http://vanesaortiz.de/kid-o/laura.jpg	Laura	Perez	2012-03-02	Aunt	Celia	Morro	2015-08-18	Was abandoned by her mother.	2015-08-22	18.542413	-69.805216
-http://vanesaortiz.com/kid-o/marco.jpg	Marco	Ramirez	2010-11-02	Mother	Theresa	Gutierez	2015-08-12	Mother doesn't have a job. Marco is very undernurished.	2015-08-04	18.542769	-69.805219
+http://vanesaortiz.com/kid-o/luis.jpg	Luis	Paredez	2010-11-22	Mother	Maria	Aleala	Sickle cell disease	2015-08-12	Mother doesn't have a job. They live with strangers.	2015-08-22	18.542769	-69.801216
+http://vanesaortiz.de/kid-o/laura.jpg	Laura	Perez	2009-03-22	Aunt	Celia	Morro		2015-08-18	Was abandoned by her mother.	2015-08-22	18.542413	-69.805216
+http://vanesaortiz.com/kid-o/marco.jpg	Marco	Ramirez	2009-11-22	Mother	Theresa	Gutierez	Anemia	2015-08-12	Mother doesn't have a job. Marco is very undernurished.	2015-08-04	18.542769	-69.805219

@@ -67,7 +67,7 @@ def signup_form():
 
     return render_template("signup.html")
 
-    #####################
+#####################
 # CHILDREN OVERVIEW #
 #####################
 
@@ -75,7 +75,7 @@ def signup_form():
 def show_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
 
-    all_children = db.session.query(Child).all()
+    all_children = db.session.query(Child).all() # 
     child_views = []
 
     for child in all_children:
@@ -85,16 +85,28 @@ def show_overview():
     return render_template('overview.html', child_profiles=child_views)
 
 
+##################
+# CHILD PROFILE #
+#################
+
+
+@app.route('/<int:id>')
+def child_profile(id):
+    """ Show's each child's profile with the following information: First name, last name, 
+    age, birth date, guadian, siblings, medical condition, next doctor's appointment, sitution at 
+    home and school and when the next home visit is due. """
+
+    # this_child = 
+    
+######################
+# EDIT CHILD PROFILE #
+######################
+
+
 #################
 # ADD NEW CHILD #
 #################
 
-
-
-
-######################
-# EDIT CHILD PROFILE #
-######################
 
 
 

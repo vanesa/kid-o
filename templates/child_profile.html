@@ -1,23 +1,16 @@
-{% extend 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 
 <table>
+	{% for child in child_info %}
 	<tr>
 		<td>
 			<div class="img-thumbnail pull-left"><img src="{{child.pic_url}}" class="images-style"></div>
 			<div class="info pull-right"> 
-				<h4>
-					{{ child.first_name}} {{ child.last_name }}
-				</h4>
-				<p>
-					{{ child.age }} years old,
-				</p>
-				<p>
-					Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}
-				</p>
-				<p>
-					Guardian: {{ child.guardian_fname}} {{ child.guardian_lname }}
-				</p>
+				<h4> {{ child.first_name}} {{ child.last_name }}</h4>
+				<p>{{ child.age }} years old,</p>
+				<p>Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
+				<p>Guardian: {{ child.guardian_fname}} {{ child.guardian_lname }}</p>
 			</div>
 			</td>
 		</tr>
@@ -25,12 +18,8 @@
 			<td>
 			<div>
 				<h4> Medical condition</h4>
-				<p>
-					{{ child.medical_condition }}
-				</p>
-				<p>
-					Needs to visit the doctor: {{ child.doctor_appt.strftime('%d-%m-%Y') }}
-				</p>
+				<p>{{ child.medical_condition }}</p>
+				<p>Needs to visit the doctor: {{ child.doctor_appt.strftime('%d-%m-%Y') }}</p>
 			</div>
 			</td>
 		</tr>
@@ -38,18 +27,15 @@
 			<td>
 			<div>
 				<h4> Situation</h4>
-				<p>
-					{{ child.stituation }}
-				</p>
-				<p>
-					Next home visit: {{ child.home_visit.strftime('%d-%m-%Y') }}
-				</p>
+				<p>{{ child.situation }}</p>
+				<p>Next home visit: {{ child.home_visit.strftime('%d-%m-%Y') }}</p>
 			</div>
 		</td>
 	</tr>
 	<tr>
-		<button type="button" class="btn btn-sm btn-danger" value="edit">Edit</button>
+		<td><button type="button" class="btn btn-sm btn-danger" value="edit">Edit</button></td>
 	</tr>
+	{% endfor %}
 </table>
 
 {% endblock %}

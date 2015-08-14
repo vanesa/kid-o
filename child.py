@@ -14,6 +14,7 @@ class ChildView:
 
     def __init__(self, child):
         """ """
+        self.id = child.id
         self.pic_url = child.pic_url
         self.first_name = child.first_name
         self.last_name = child.last_name

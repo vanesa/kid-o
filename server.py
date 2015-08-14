@@ -90,14 +90,20 @@ def show_overview():
 #################
 
 
-@app.route('/<int:id>')
+@app.route('/child/<int:id>')
 def child_profile(id):
-    """ Show's each child's profile with the following information: First name, last name, 
-    age, birth date, guadian, siblings, medical condition, next doctor's appointment, sitution at 
+    """ Show's each child's profile with the following information: First name, last name,
+    age, birth date, guadian, siblings, medical condition, next doctor's appointment, sitution at
     home and school and when the next home visit is due. """
 
-    # this_child = 
-    
+    this_child = db.session.query(Child).filter_by(id=id).one()
+
+    child_info = [ChildView(this_child)]
+
+    # child_info.append(ChildView(this_child))
+
+    return render_template('child_profile.html', child_info=child_info)
+
 ######################
 # EDIT CHILD PROFILE #
 ######################

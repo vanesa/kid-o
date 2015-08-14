@@ -10,6 +10,14 @@
 	margin-left: 20px;
 }
 
+.profile {
+	max-width: 290px;
+}
+
 .images-style {
 	width: 84px;
+}
+
+.medbox {
+	clear: both;
 }

@@ -7,17 +7,52 @@
 }
 
 .info {
-	margin-left: 20px;
+	margin-left: 5px;
+	text-align: left;
+}
+
+.info h4 {
+	margin-top: 0px;
 }
 
 .profile {
-	max-width: 290px;
+	max-width: 270px;
 }
 
 .images-style {
 	width: 84px;
+    position: absolute;
+    z-index: 10;
+    padding: 5px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.photobox {
+	width: 85px;
+	height: auto;
+	position: relative;
 }
 
 .medbox {
 	clear: both;
+}
+
+.uploadlink {
+    z-index: 200;
+    background-color: rgba(255,255,255,0.5);
+    position: absolute;
+    top: 90px;
+    font-size: 0.9em;
+    text-align: center;
+    width: 80px;
+}
+
+.mapcontainer {
+	position: relative;
+	height: 220px;
+	width: 400px;
+	margin-bottom: 20px;
 }

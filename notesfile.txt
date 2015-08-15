@@ -75,6 +75,18 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 
 ......
 
+Mapbox:
+
+Geolocation 
+
+- map.on click handler, function to get latlng
+
+function(e) {
+	L.marker(e.latlong).addTo(map);
+} # look at Single Marker documents
+
+
+
 ********* END MVP *********
 
 

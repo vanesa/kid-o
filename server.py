@@ -100,14 +100,22 @@ def child_profile(id):
 
     child_info = [ChildView(this_child)]
 
-    # child_info.append(ChildView(this_child))
-
     return render_template('child_profile.html', child_info=child_info)
 
 ######################
 # EDIT CHILD PROFILE #
 ######################
 
+
+@app.route('/child/edit<int:id>')
+def edit_profile(id):
+    """ Edit child profile """
+
+    this_child = db.session.query(Child).filter_by(id=id).one()
+
+    child_info = [ChildView(this_child)]
+
+    return render_template('edit_profile.html', child_info=child_info)
 
 #################
 # ADD NEW CHILD #

@@ -3,7 +3,7 @@
 
 {% for child in child_info %}
 <div class="profile">
-	<div class="img-thumbnail pull-left"><img src="{{child.pic_url}}" class="images-style"></div>
+	<div class="pull-left"><img src="{{child.pic_url}}" class="images-style"></div>
 	<div class="info pull-right"> <h4> {{ child.first_name}} {{ child.last_name }}</h4>
 		<p>{{ child.age }} years old,</p>
 		<p>Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
@@ -19,7 +19,41 @@
 		<p>{{ child.situation }}</p>
 		<p>Next home visit: {{ child.home_visit.strftime('%d-%m-%Y') }}</p>
 	</div>
-	<button type="button" class="btn btn-sm btn-danger" value="edit">Edit</button></td>
+	 <h4>Home location</h4>
+	<div class="mapcontainer">
+	<div id='map'></div>
+</div>
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
+var map = L.mapbox.map('map', 'mapbox.streets')
+    .setView([{{ child.latitude}}, {{child.longitude}}], 15);
+
+L.mapbox.featureLayer({
+    // this feature is in the GeoJSON format: see geojson.org
+    // for the full specification
+    type: 'Feature',
+    geometry: {
+        type: 'Point',
+        // coordinates here are in longitude, latitude order because
+        // x, y is the standard for GeoJSON and many formats
+        coordinates: [
+          {{ child.latitude }},
+          {{ child.longitude }} 
+        ]
+    },
+    properties: {
+        title: '{{ child.first_name}} {{ child.last_name }}',
+        description: '1718 14th St NW, Washington, DC',
+        // one can customize markers by adding simplestyle properties
+        // https://www.mapbox.com/guides/an-open-platform/#simplestyle
+        'marker-size': 'large',
+        'marker-color': '#BE9A6B',
+        'marker-symbol': 'cafe'
+    }
+}).addTo(map);
+</script>
+
+	<a href="/child/edit{{child.id}}"><button type="button" class="btn btn-sm btn-danger" value="edit">Edit</button></a>
 </div>
 	{% endfor %}
 {% endblock %}

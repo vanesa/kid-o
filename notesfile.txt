@@ -33,18 +33,18 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 	(.) create HTML for routes
 
 - Signup page
-	() create forms
+	(x) create forms
 	() authentification with e.g. Flask Auth
 
 - Children profile show
-  	() Get kid photo on page
-  	() get String information
-  	() spilt them into divs
-  	() have a edit button
+  	(x) Get kid photo on page
+  	(x) get String information
+  	(x) spilt them into divs
+  	(x) have a edit button
  
 - Edit Profile
- 	() New html page
- 	() Create the forms
+ 	(x) New html page
+ 	(x) Create the forms
  		() Prepopulate the form fields
  	() Verify data (check that all fields are filled out)
  	() Clicking submit is going to overwrite the existing date
@@ -74,18 +74,6 @@ Children's aid projects often struggle with maintaining a clear overview of the 
  	() responsive
 
 ......
-
-Mapbox:
-
-Geolocation 
-
-- map.on click handler, function to get latlng
-
-function(e) {
-	L.marker(e.latlong).addTo(map);
-} # look at Single Marker documents
-
-
 
 ********* END MVP *********
 

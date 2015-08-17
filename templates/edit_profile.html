@@ -3,12 +3,20 @@
 
 {% for child in child_info %}
 <div class="profile">
-	<div class="pull-left photobox"><img src="{{child.pic_url}}" class="images-style"><a href="uploadlink" class="uploadlink">Upload photo</a></div>
-	<div class="info pull-right"> <h4> {{ child.first_name}} {{ child.last_name }}</h4>
-		<p>{{ child.age }} years old,</p>
-		<p>Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
-		<p>Guardian: {{ child.guardian_fname}} {{ child.guardian_lname }}</p>
-	</div>
+	<div class="floatleft photobox"><img src="{{child.pic_url}}" class="images-style"><a href="uploadlink" class="uploadlink">Upload photo</a></div>
+
+	<div class="info floatright">
+	<form action="/child/{{child.id}}" id="" class="form-signin" method="POST">
+	<input type="text" name="first_name" value="{{child.first_name}}" placeholder="{{child.first_name}}"><br />
+	<input type="text" name="last_name" value="{{child.last_name}}" placeholder="{{child.last_name}}"><br />
+	<input type="text" name="birth_date" placeholder="{{child.birth_date.strftime('%d-%m-%Y')}}"><br />
+	<input type="text" name="guardian_fname" value="{{child.guardian_fname}}" placeholder="{{child.guardian_fname}}"><br />
+	<input type="text" name="guardian_lname" value="{{child.guardian_lname}}" placeholder="{{child.guardian_lname}}"><br />
+</br>
+	<button class="btn btn-sm btn-primary" type="submit">Save</button>
+</form>
+</div>
+<br style="clear: both" />
 	<div class="medbox">
 		<h4> Medical condition</h4>
 		<p>{{ child.medical_condition }}</p>
@@ -18,7 +26,9 @@
 		<h4> Situation</h4>
 		<p>{{ child.situation }}</p>
 		<p>Next home visit: {{ child.home_visit.strftime('%d-%m-%Y') }}</p>
+
 	</div>
+
 	<a href="/child/{{child.id}}"><button type="button" class="btn btn-sm btn-danger" value="edit">Cancel</button></a>
 </div>
 	{% endfor %}

@@ -56,3 +56,13 @@
 	width: 400px;
 	margin-bottom: 20px;
 }
+
+.floatleft {
+	float: left;
+
+}
+
+.floatright {
+	float: right;
+
+}

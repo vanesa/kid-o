@@ -6,6 +6,7 @@ from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Child, connect_to_db, db
+from datetime import datetime
 
 from child import ChildView
 
@@ -90,17 +91,45 @@ def show_overview():
 #################
 
 
-@app.route('/child/<int:id>')
+@app.route('/child/<int:id>', methods=['GET', 'POST'])
 def child_profile(id):
     """ Show's each child's profile with the following information: First name, last name,
-    age, birth date, guadian, siblings, medical condition, next doctor's appointment, sitution at
+    age, birth date, guardian, siblings, medical condition, next doctor's appointment, sitution at
     home and school and when the next home visit is due. """
 
-    this_child = db.session.query(Child).filter_by(id=id).one()
+    if request.method == 'POST': # update child info from edit_profile.html form
 
-    child_info = [ChildView(this_child)]
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        birth_date = request.form.get("birth_date")
+        guardian_fname = request.form.get("guardian_fname")
+        guardian_lname = request.form.get("guardian_lname")
 
-    return render_template('child_profile.html', child_info=child_info)
+
+        child_entry = db.session.query(Child).filter_by(id=id).one()
+        child_entry.first_name = first_name
+        child_entry.last_name = last_name
+        # child_entry.birth_date = birth_date.strptime("%Y%m%d")
+        child_entry.guardian_fname = guardian_fname
+        child_entry.guardian_lname = guardian_lname
+        db.session.commit()
+        this_child = db.session.query(Child).filter_by(id=id).one()
+        child_info = [ChildView(this_child)]
+
+        return render_template('child_profile.html', child_info=child_info)
+
+    else:
+        this_child = db.session.query(Child).filter_by(id=id).one()
+
+        child_info = [ChildView(this_child)]
+
+        return render_template('child_profile.html', child_info=child_info)
+
+
+# Look up: GET attr
+
+
+
 
 ######################
 # EDIT CHILD PROFILE #

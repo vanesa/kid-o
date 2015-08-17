@@ -3,21 +3,31 @@
 
 {% for child in child_info %}
 <div class="profile">
-	<div class="floatleft photobox"><img src="{{child.pic_url}}" class="images-style"><a href="uploadlink" class="uploadlink">Upload photo</a></div>
-
-	<div class="info floatright">
+	<div class="pull-left photobox"><img src="{{child.pic_url}}" class="imagesedit-style"><a href="uploadlink" class="uploadlink">Upload photo</a></div>
 	<form action="/child/{{child.id}}" id="" class="form-signin" method="POST">
-	<input type="text" name="first_name" value="{{child.first_name}}" placeholder="{{child.first_name}}"><br />
-	<input type="text" name="last_name" value="{{child.last_name}}" placeholder="{{child.last_name}}"><br />
-	<input type="text" name="birth_date" placeholder="{{child.birth_date.strftime('%d-%m-%Y')}}"><br />
-	<input type="text" name="guardian_fname" value="{{child.guardian_fname}}" placeholder="{{child.guardian_fname}}"><br />
-	<input type="text" name="guardian_lname" value="{{child.guardian_lname}}" placeholder="{{child.guardian_lname}}"><br />
-</br>
-	<button class="btn btn-sm btn-primary" type="submit">Save</button>
+		<div class="info pull-right">
+			<input type="text" name="first_name" value="{{child.first_name}}" placeholder="{{child.first_name}}"><br />
+			<input type="text" name="last_name" value="{{child.last_name}}" placeholder="{{child.last_name}}"><br />
+			<input type="text" name="birth_date" value="{{child.birth_date.strftime('%Y-%m-%d')}}" placeholder="{{child.birth_date.strftime('%Y-%m-%d')}}"><br />
+			<input type="text" name="guardian_fname" value="{{child.guardian_fname}}" placeholder="{{child.guardian_fname}}"><br />
+			<input type="text" name="guardian_lname" value="{{child.guardian_lname}}" placeholder="{{child.guardian_lname}}"><br />
+		</div>
+		<div class="lowerform">
+			<label for="med-field">Medical Condition</label><br />
+			<textarea rows="2" cols="20" name="medical_condition" placeholder="{{child.medical_condition}}">{{child.medical_condition}}</textarea><br />
+			<label for="doct-field">Needs to visit the doctor:</label><br />
+			<input type="text" name="doctor_appt" value="{{child.doctor_appt.strftime('%Y-%m-%d')}}" placeholder="{{child.doctor_appt.strftime('%Y-%m-%d')}}"><br />
+			<label for="home-field">Situation:</label><br />
+			<textarea rows="3" cols="40" name="situation" placeholder="{{child.situation}}">{{child.situation}}</textarea><br />
+			<label for="doct-field">Next home visit:</label><br />
+			<input type="text" name="home_visit" value="{{child.home_visit.strftime('%Y-%m-%d')}}" placeholder="{{child.home_visit.strftime('%Y-%m-%d')}}"><br />
+			<button class="btn btn-sm btn-primary" type="submit">Save</button>
+		</div>
+
 </form>
-</div>
+
 <br style="clear: both" />
-	<div class="medbox">
+<!-- 	<div>
 		<h4> Medical condition</h4>
 		<p>{{ child.medical_condition }}</p>
 		<p>Needs to visit the doctor: {{ child.doctor_appt.strftime('%d-%m-%Y') }}</p>
@@ -27,7 +37,7 @@
 		<p>{{ child.situation }}</p>
 		<p>Next home visit: {{ child.home_visit.strftime('%d-%m-%Y') }}</p>
 
-	</div>
+	</div> -->
 
 	<a href="/child/{{child.id}}"><button type="button" class="btn btn-sm btn-danger" value="edit">Cancel</button></a>
 </div>

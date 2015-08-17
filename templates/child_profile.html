@@ -26,8 +26,7 @@
 <script>
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
 var map = L.mapbox.map('map', 'mapbox.streets')
-    .setView([{{ child.latitude}}, {{child.longitude}}], 15);
-
+    .setView([{{ child.latitude}}, {{child.longitude}}], 12);
 L.mapbox.featureLayer({
     // this feature is in the GeoJSON format: see geojson.org
     // for the full specification
@@ -37,8 +36,8 @@ L.mapbox.featureLayer({
         // coordinates here are in longitude, latitude order because
         // x, y is the standard for GeoJSON and many formats
         coordinates: [
-          {{ child.latitude }},
-          {{ child.longitude }} 
+          {{ child.longitude }},
+          {{ child.latitude }}
         ]
     },
     properties: {

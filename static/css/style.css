@@ -21,6 +21,16 @@
 
 .images-style {
 	width: 84px;
+    z-index: 10;
+    padding: 5px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.imagesedit-style {
+	width: 84px;
     position: absolute;
     z-index: 10;
     padding: 5px;
@@ -36,7 +46,7 @@
 	position: relative;
 }
 
-.medbox {
+.lowerform {
 	clear: both;
 }
 

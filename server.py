@@ -99,19 +99,29 @@ def child_profile(id):
 
     if request.method == 'POST': # update child info from edit_profile.html form
 
+        # get all new data
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         birth_date = request.form.get("birth_date")
         guardian_fname = request.form.get("guardian_fname")
         guardian_lname = request.form.get("guardian_lname")
+        medical_condition = request.form.get("medical_condition")
+        doctor_appt = request.form.get("doctor_appt")
+        situation = request.form.get("situation")
+        home_visit = request.form.get("home_visit")
 
+        # seed into database
 
         child_entry = db.session.query(Child).filter_by(id=id).one()
         child_entry.first_name = first_name
         child_entry.last_name = last_name
-        # child_entry.birth_date = birth_date.strptime("%Y%m%d")
+        child_entry.birth_date = birth_date
         child_entry.guardian_fname = guardian_fname
         child_entry.guardian_lname = guardian_lname
+        child_entry.medical_condition = medical_condition
+        child_entry.doctor_appt = doctor_appt
+        child_entry.situation = situation
+        child_entry.home_visit = home_visit
         db.session.commit()
         this_child = db.session.query(Child).filter_by(id=id).one()
         child_info = [ChildView(this_child)]

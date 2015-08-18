@@ -126,7 +126,7 @@ def child_profile(id):
         child_entry.home_visit = home_visit
         child_entry.latitude = latitude
         child_entry.longitude = longitude
-        print "These are the new LatLng:", longitude, latitude
+
         db.session.commit()
         this_child = db.session.query(Child).filter_by(id=id).one()
         child_info = [ChildView(this_child)]
@@ -165,10 +165,34 @@ def edit_profile(id):
 # ADD NEW CHILD #
 #################
 
-# @app.route('/child/add')
-# def add_profile():
-    
+@app.route('/child/add', methods=['GET', 'POST'])
+def add_profile():
 
+    """add a child profile"""
+
+    if request.method == 'POST':
+        # get all new data
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        birth_date = request.form.get("birth_date")
+        guardian_fname = request.form.get("guardian_fname")
+        guardian_lname = request.form.get("guardian_lname")
+        medical_condition = request.form.get("medical_condition")
+        doctor_appt = request.form.get("doctor_appt")
+        situation = request.form.get("situation")
+        home_visit = request.form.get("home_visit")
+        latitude = request.form.get("latitude")
+        longitude = request.form.get("longitude")
+
+        # seed into database
+        child_entry = Child(first_name=first_name, last_name=last_name,
+                            birth_date=birth_date, guardian_type=guardian_type, guardian_fname=guardian_fname,
+                            guardian_lname=guardian_lname, medical_condition=medical_condition, doctor_appt=doctor_appt, situation=situation,
+                            home_visit=home_visit, latitude=latitude, longitude=longitude)
+        db.session.add(child_entry)
+        db.session.commit()
+    else:
+        return render_template('add_profile.html')
 
 
 ########

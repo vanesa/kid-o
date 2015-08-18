@@ -109,6 +109,8 @@ def child_profile(id):
         doctor_appt = request.form.get("doctor_appt")
         situation = request.form.get("situation")
         home_visit = request.form.get("home_visit")
+        latitude = request.form.get("latitude")
+        longitude = request.form.get("longitude")
 
         # seed into database
 
@@ -122,6 +124,9 @@ def child_profile(id):
         child_entry.doctor_appt = doctor_appt
         child_entry.situation = situation
         child_entry.home_visit = home_visit
+        child_entry.latitude = latitude
+        child_entry.longitude = longitude
+        print "These are the new LatLng:", longitude, latitude
         db.session.commit()
         this_child = db.session.query(Child).filter_by(id=id).one()
         child_info = [ChildView(this_child)]
@@ -160,7 +165,9 @@ def edit_profile(id):
 # ADD NEW CHILD #
 #################
 
-
+# @app.route('/child/add')
+# def add_profile():
+    
 
 
 

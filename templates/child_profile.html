@@ -9,7 +9,7 @@
 		<p>Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
 		<p>Guardian: {{ child.guardian_fname}} {{ child.guardian_lname }}</p>
 	</div>
-	<div class="medbox">
+	<div class="lowerform">
 		<h4> Medical condition</h4>
 		<p>{{ child.medical_condition }}</p>
 		<p>Needs to visit the doctor: {{ child.doctor_appt.strftime('%d-%m-%Y') }}</p>
@@ -26,7 +26,7 @@
 <script>
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
 var map = L.mapbox.map('map', 'mapbox.streets')
-    .setView([{{ child.latitude}}, {{child.longitude}}], 12);
+    .setView([{{ child.latitude}}, {{child.longitude}}], 15);
 L.mapbox.featureLayer({
     // this feature is in the GeoJSON format: see geojson.org
     // for the full specification
@@ -42,12 +42,12 @@ L.mapbox.featureLayer({
     },
     properties: {
         title: '{{ child.first_name}} {{ child.last_name }}',
-        description: '1718 14th St NW, Washington, DC',
+        description: 'lives here with {{ child.guardian_fname}} {{ child.guardian_lname }}',
         // one can customize markers by adding simplestyle properties
         // https://www.mapbox.com/guides/an-open-platform/#simplestyle
         'marker-size': 'large',
         'marker-color': '#BE9A6B',
-        'marker-symbol': 'cafe'
+        'marker-symbol': 'building'
     }
 }).addTo(map);
 </script>

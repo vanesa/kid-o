@@ -113,15 +113,6 @@ def child_profile(id):
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
 
-        if doctor_appt == "":
-            doctor_appt = None
-
-        if home_visit == "":
-            home_visit = None
-
-        if medical_condition == "":
-            medical_condition = None
-
         # seed into database
 
         child_entry = db.session.query(Child).filter_by(id=id).one()
@@ -196,10 +187,23 @@ def add_profile():
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
 
-        print "Birth date: ", birth_date, " ", "Doct Appointment: ", doctor_appt, " ", "home visit: ", home_visit, " "
-        print type(home_visit)
-        print type(doctor_appt)
-        print type(birth_date)
+        
+        if doctor_appt == "":
+            doctor_appt = None
+
+            print doctor_appt
+            print type(doctor_appt)
+
+        if home_visit == "":
+            home_visit = None
+
+        if medical_condition == "":
+            medical_condition = None
+
+        # print "Birth date: ", birth_date, " ", "Doct Appointment: ", doctor_appt, " ", "home visit: ", home_visit, " "
+        # print type(home_visit)
+        # print type(doctor_appt)
+        # print type(birth_date)
 
 
         # seed into database

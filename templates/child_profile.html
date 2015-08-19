@@ -12,12 +12,20 @@
 	<div class="lowerform">
 		<h4> Medical condition</h4>
 		<p>{{ child.medical_condition }}</p>
+        {% if child.doctor_appt %}
 		<p>Needs to visit the doctor: {{ child.doctor_appt.strftime('%d-%m-%Y') }}</p>
+        {% else %}
+        <p>Needs to visit the doctor: {{ child.doctor_appt }}</p>
+        {% endif %}
 	</div>
 	<div>
 		<h4> Situation</h4>
 		<p>{{ child.situation }}</p>
+        {% if child.home_visit %}
 		<p>Next home visit: {{ child.home_visit.strftime('%d-%m-%Y') }}</p>
+        {% else %}
+        <p>Next home visit: {{ child.home_visit }}</p>
+        {% endif %}
 	</div>
 	 <h4>Home location</h4>
 	<div class="mapcontainer">

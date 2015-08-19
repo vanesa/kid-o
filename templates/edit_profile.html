@@ -4,7 +4,7 @@
 {% for child in child_info %}
 <div class="profile">
 	<div class="pull-left photobox"><img src="{{child.pic_url}}" class="imagesedit-style"><a href="uploadlink" class="uploadlink">Upload photo</a></div>
-	<form action="/child/{{child.id}}" id="" class="form-signin" method="POST">
+	<form action="/child/{{child.id}}" class="form-signin" method="POST">
 		<div class="info pull-right">
 			<input type="text" name="first_name" value="{{child.first_name}}" placeholder="{{child.first_name}}"><br />
 			<input type="text" name="last_name" value="{{child.last_name}}" placeholder="{{child.last_name}}"><br />
@@ -15,13 +15,25 @@
 		</div>
 		<div class="lowerform">
 			<label for="med-field">Medical Condition</label><br />
+			{% if child.medical_condition %}
 			<textarea rows="2" cols="20" name="medical_condition" placeholder="{{child.medical_condition}}">{{child.medical_condition}}</textarea><br />
+			{% else %}
+			<textarea rows="2" cols="20" name="medical_condition" placeholder="Currently healthy."></textarea><br />
+			{% endif %}
 			<label for="doct-field">Needs to visit the doctor:</label><br />
+			{% if child.doctor_appt %}
 			<input type="text" name="doctor_appt" value="{{child.doctor_appt.strftime('%Y-%m-%d')}}" placeholder="{{child.doctor_appt.strftime('%Y-%m-%d')}}"><br />
+			{% else %}
+			<input type="text" name="doctor_appt" placeholder="YYYY-M-D"><br />
+			{% endif %}
 			<label for="home-field">Situation:</label><br />
 			<textarea rows="3" cols="40" name="situation" placeholder="{{child.situation}}">{{child.situation}}</textarea><br />
 			<label for="doct-field">Next home visit:</label><br />
+			{% if child.home_visit %}
 			<input type="text" name="home_visit" value="{{child.home_visit.strftime('%Y-%m-%d')}}" placeholder="{{child.home_visit.strftime('%Y-%m-%d')}}"><br />
+			{% else %}
+			<input type="text" name="home_visit" placeholder="YYYY-M-D"><br />
+			{% endif %}
 			<input type="text" id="lat" name="latitude" class="hidden">
 			<input type="text" id="lng" name="longitude" class="hidden">
 			<h3> Home Location </h3>

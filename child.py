@@ -34,6 +34,4 @@ class ChildView:
         self.currenttime = datetime.now()
         self.age = self.currenttime - child.birth_date
 
-        self.age = self.age.days / 365
-        print "This should be an age:", self.age
-     
+        self.age = self.age.days / 365 

@@ -11,6 +11,7 @@
 			<input type="text" name="birth_date" value="{{child.birth_date.strftime('%Y-%m-%d')}}" placeholder="{{child.birth_date.strftime('%Y-%m-%d')}}"><br />
 			<input type="text" name="guardian_fname" value="{{child.guardian_fname}}" placeholder="{{child.guardian_fname}}"><br />
 			<input type="text" name="guardian_lname" value="{{child.guardian_lname}}" placeholder="{{child.guardian_lname}}"><br />
+			<input type="text" name="guardian_type" value="{{child.guardian_type}}" placeholder="{{child.guardian_type}}"><br />
 		</div>
 		<div class="lowerform">
 			<label for="med-field">Medical Condition</label><br />
@@ -21,18 +22,16 @@
 			<textarea rows="3" cols="40" name="situation" placeholder="{{child.situation}}">{{child.situation}}</textarea><br />
 			<label for="doct-field">Next home visit:</label><br />
 			<input type="text" name="home_visit" value="{{child.home_visit.strftime('%Y-%m-%d')}}" placeholder="{{child.home_visit.strftime('%Y-%m-%d')}}"><br />
-			<input type="text" id="lat" name="latitude" class="">
-			<input type="text" id="lng" name="longitude" class="">
-			<button class="btn btn-sm btn-primary" type="submit">Save</button>
+			<input type="text" id="lat" name="latitude" class="hidden">
+			<input type="text" id="lng" name="longitude" class="hidden">
+			<h3> Home Location </h3>
+			<div class="mapcontainer">
+			<div id="map"></div>
+			</div>
+			<button class="btn btn-sm btn-primary" type="submit">Save</button> 
+	<a href="/child/{{child.id}}"><button type="button" class="btn btn-sm btn-danger" value="edit">Cancel</button></a>
 		</div>
 </form>
-
-<br style="clear: both" />
-
-	<a href="/child/{{child.id}}"><button type="button" class="btn btn-sm btn-danger" value="edit">Cancel</button></a>
-	<br>
-	<div class="mapcontainer">
-	<div id="map"></div>
 
 <script>
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
@@ -51,25 +50,10 @@ map.on('click', function(e) {
     var child_longitude = e.latlng.lng;
     $("#lat").val(child_latitude)
     $("#lng").val(child_longitude)
-  
-//    if (clicked === false) {
-//            marker = L.marker(new L.LatLng(child_latitude, child_longitude), {
-//     icon: L.mapbox.marker.icon({
-//         'marker-color': 'ff8888'
-//     }),
-//     draggable: true
-// });
-//     marker.bindPopup('This marker is draggable! Move it around.');
-       
-//        marker.addTo(map);
-//    	   clicked = true;
-//    }
-//    else {
+
    	marker.setLatLng(new L.LatLng(child_latitude, child_longitude)).update();
-    // }
 });
 </script>
-</div>
 </div>
 	{% endfor %}
 {% endblock %}

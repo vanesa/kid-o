@@ -105,6 +105,7 @@ def child_profile(id):
         birth_date = request.form.get("birth_date")
         guardian_fname = request.form.get("guardian_fname")
         guardian_lname = request.form.get("guardian_lname")
+        guardian_type = request.form.get("guardian_type")
         medical_condition = request.form.get("medical_condition")
         doctor_appt = request.form.get("doctor_appt")
         situation = request.form.get("situation")
@@ -112,12 +113,22 @@ def child_profile(id):
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
 
+        if doctor_appt == "":
+            doctor_appt = None
+
+        if home_visit == "":
+            home_visit = None
+
+        if medical_condition == "":
+            medical_condition = None
+
         # seed into database
 
         child_entry = db.session.query(Child).filter_by(id=id).one()
         child_entry.first_name = first_name
         child_entry.last_name = last_name
         child_entry.birth_date = birth_date
+        child_entry.guardian_type = guardian_type
         child_entry.guardian_fname = guardian_fname
         child_entry.guardian_lname = guardian_lname
         child_entry.medical_condition = medical_condition
@@ -175,6 +186,7 @@ def add_profile():
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         birth_date = request.form.get("birth_date")
+        guardian_type = request.form.get("guardian_type")
         guardian_fname = request.form.get("guardian_fname")
         guardian_lname = request.form.get("guardian_lname")
         medical_condition = request.form.get("medical_condition")
@@ -184,6 +196,12 @@ def add_profile():
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
 
+        print "Birth date: ", birth_date, " ", "Doct Appointment: ", doctor_appt, " ", "home visit: ", home_visit, " "
+        print type(home_visit)
+        print type(doctor_appt)
+        print type(birth_date)
+
+
         # seed into database
         child_entry = Child(first_name=first_name, last_name=last_name,
                             birth_date=birth_date, guardian_type=guardian_type, guardian_fname=guardian_fname,
@@ -191,6 +209,11 @@ def add_profile():
                             home_visit=home_visit, latitude=latitude, longitude=longitude)
         db.session.add(child_entry)
         db.session.commit()
+
+        this_child = db.session.query(Child).order_by(Child.id.desc()).first()
+        child_info = [ChildView(this_child)]
+
+        return render_template('child_profile.html', child_info=child_info)
     else:
         return render_template('add_profile.html')
 

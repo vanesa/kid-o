@@ -7,7 +7,7 @@
 	<div class="info pull-right"> <h4> {{ child.first_name}} {{ child.last_name }}</h4>
 		<p>{{ child.age }} years old,</p>
 		<p>Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
-		<p>Guardian: {{ child.guardian_fname}} {{ child.guardian_lname }}</p>
+		<p>{{ child.guardian_type}}: {{ child.guardian_fname}} {{ child.guardian_lname }}</p>
 	</div>
 	<div class="lowerform">
 		<h4> Medical condition</h4>

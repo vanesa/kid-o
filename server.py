@@ -76,7 +76,7 @@ def signup_form():
 def show_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
 
-    all_children = db.session.query(Child).all() # 
+    all_children = db.session.query(Child).order_by(Child.last_name.asc()).all() # 
     child_views = []
 
     for child in all_children:
@@ -112,6 +112,15 @@ def child_profile(id):
         home_visit = request.form.get("home_visit")
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
+
+        if doctor_appt == "":
+            doctor_appt = None
+
+        if home_visit == "":
+            home_visit = None
+
+        if medical_condition == "":
+            medical_condition = None
 
         # seed into database
 
@@ -187,23 +196,15 @@ def add_profile():
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
 
-        
+        # Wordaround to avoid syntax errors for empty fields
         if doctor_appt == "":
             doctor_appt = None
-
-            print doctor_appt
-            print type(doctor_appt)
 
         if home_visit == "":
             home_visit = None
 
         if medical_condition == "":
             medical_condition = None
-
-        # print "Birth date: ", birth_date, " ", "Doct Appointment: ", doctor_appt, " ", "home visit: ", home_visit, " "
-        # print type(home_visit)
-        # print type(doctor_appt)
-        # print type(birth_date)
 
 
         # seed into database

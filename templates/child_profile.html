@@ -10,12 +10,16 @@
 		<p>{{ child.guardian_type}}: {{ child.guardian_fname}} {{ child.guardian_lname }}</p>
 	</div>
 	<div class="lowerform">
+        {% if child.medical_condition %}
 		<h4> Medical condition</h4>
 		<p>{{ child.medical_condition }}</p>
+        {% else %}
+        <p></p>
+        {% endif %}
         {% if child.doctor_appt %}
 		<p>Needs to visit the doctor: {{ child.doctor_appt.strftime('%d-%m-%Y') }}</p>
         {% else %}
-        <p>Needs to visit the doctor: {{ child.doctor_appt }}</p>
+        <p></p>
         {% endif %}
 	</div>
 	<div>
@@ -24,7 +28,7 @@
         {% if child.home_visit %}
 		<p>Next home visit: {{ child.home_visit.strftime('%d-%m-%Y') }}</p>
         {% else %}
-        <p>Next home visit: {{ child.home_visit }}</p>
+        <p></p>
         {% endif %}
 	</div>
 	 <h4>Home location</h4>

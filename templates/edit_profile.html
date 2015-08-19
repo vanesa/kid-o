@@ -34,8 +34,8 @@
 			{% else %}
 			<input type="text" name="home_visit" placeholder="YYYY-M-D"><br />
 			{% endif %}
-			<input type="text" id="lat" name="latitude" class="hidden">
-			<input type="text" id="lng" name="longitude" class="hidden">
+			<input type="text" id="lat" name="latitude" class="">
+			<input type="text" id="lng" name="longitude" class="">
 			<h3> Home Location </h3>
 			<div class="mapcontainer">
 			<div id="map"></div>
@@ -52,6 +52,7 @@ var map = L.mapbox.map('map', 'mapbox.streets')
 
 var marker;
 var clicked = false;
+
 
 marker = L.marker(new L.LatLng({{child.latitude}}, {{child.longitude}}));
 console.log({{child.latitude}}, {{child.longitude}});

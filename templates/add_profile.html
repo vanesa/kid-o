@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="profile">
+  <div class="pull-left photobox"><img src="/static/images/childphotopreview.png" class="imagesedit-style"><a href="uploadlink" class="uploadlink">Upload photo</a></div>
+  <form action="/child/add" id="" class="form-signin" method="POST">
+    <div class="info pull-right">
+      <input type="text" name="first_name" placeholder="First name"><br />
+      <input type="text" name="last_name" placeholder="Last name"><br />
+      <input type="text" name="birth_date" placeholder="Birth date YYYY-M-D"><br />
+      <input type="text" name="guardian_fname" placeholder="Guardian First name"><br />
+      <input type="text" name="guardian_lname" placeholder="Guardian Last name"><br />
+      <input type="text" name="guardian_type" placeholder="Guardian type (Mother, Aunt etc.)"><br />
+    </div>
+    <div class="lowerform">
+      <label for="med-field">Medical Condition</label><br />
+      <textarea rows="2" cols="20" name="medical_condition" placeholder="Medical condition"></textarea><br />
+      <label for="doct-field">Needs to visit the doctor:</label><br />
+      <input type="text" name="doctor_appt" placeholder="YYYY-M-D"><br />
+      <label for="home-field">Situation:</label><br />
+      <textarea rows="3" cols="40" name="situation" placeholder="Situation at home and at school."></textarea><br />
+      <label for="doct-field">Next home visit:</label><br />
+      <input type="text" name="home_visit" placeholder="YYYY-M-D"><br />
+      <input type="text" id="lat" name="latitude" class="hidden">
+      <input type="text" id="lng" name="longitude" class="hidden">
+    <h3> Home location </h3>
+    <div class="mapcontainer">
+    <div id="map"></div>
+    </div>
+    <button class="btn btn-sm btn-primary" type="submit">Save</button> 
+  <a href="/overview"><button type="button" class="btn btn-sm btn-danger" value="edit">Cancel</button></a>
+</form>
+
+<br style="clear: both" />
+
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
+var map = L.mapbox.map('map', 'mapbox.streets')
+    .setView([18.542769, -69.801216],16);
+
+var marker;
+var clicked = false;
+
+map.on('click', function(e) {
+    var child_latitude = e.latlng.lat;
+    var child_longitude = e.latlng.lng;
+    $("#lat").val(child_latitude)
+    $("#lng").val(child_longitude)
+  
+   if (clicked === false) {
+           marker = L.marker(new L.LatLng(child_latitude, child_longitude), {
+    icon: L.mapbox.marker.icon({
+        'marker-color': 'ff8888'
+    }),
+    draggable: false
+});
+    marker.bindPopup('This marker is draggable! Move it around.');
+       
+       marker.addTo(map);
+   	   clicked = true;
+   }
+   else {
+   	marker.setLatLng(new L.LatLng(child_latitude, child_longitude)).update();
+    }
+});
+</script>
+</div>
+</div>
+{% endblock %}

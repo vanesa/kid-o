@@ -27,6 +27,7 @@
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
+    vertical-align: baseline;
 }
 
 .imagesedit-style {
@@ -67,13 +68,14 @@
 	margin-bottom: 20px;
 }
 
-.floatleft {
-	float: left;
+.leftbox {
+	display: inline-block;
 
 }
 
-.floatright {
-	float: right;
+.rightbox {
+	display: inline-block;
+
 }
 
 
@@ -81,3 +83,13 @@
 	float: right!important;
 	margin-top: 10px;
 } 
+
+.icons {
+	margin-left: 12px;
+}
+
+.childrow {
+	background-color: #f0fafe;
+	padding: 7px;
+	border: 1px solid #888888;
+}

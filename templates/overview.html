@@ -3,19 +3,18 @@
 <table>
 	{% for child in child_profiles %}
 	<tr>
-		<td>
+		<td class="childrow">
 			{% if child.pic_url %}
-			<div class="pull-left"><a href="../child/{{child.id}}"><img src="{{child.pic_url}}" class="images-style"></a></div>
+			<div class="leftbox"><a href="../child/{{child.id}}"><img src="{{child.pic_url}}" class="images-style"></a></div>
 			{% else %}
-			<div class="pull-left"><a href="../child/{{child.id}}"><img src="/static/images/childphotopreview.png" class="images-style"></a></div>
+			<div class="leftbox"><a href="../child/{{child.id}}"><img src="/static/images/childphotopreview.png" class="images-style"></a></div>
 			{% endif %}
-			<div class="info pull-right"> 
+			<div class="info rightbox"> 
 				<h4>{{ child.first_name}} {{ child.last_name }}</h4>
 				<p>{{ child.age }} years old,</p>
 				<p>Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
-				<p>- status -</p>
+				<p>{% if child.pic_url %}<img src="/static/images/photoiconchecked.png" class=""> {% else %}<img src="/static/images/photoiconunchecked.png" class=""> {% endif %} {% if child.situation %}<img src="/static/images/infoiconchecked.png" class="icons"> {% else %}<img src="/static/images/infoiconchecked.png" class="icons"> {% endif %} {% if child.home_visit %}<img src="/static/images/homeiconchecked.png" class="icons"> {% else %}<img src="/static/images/homeiconunchecked.png" class="icons"> {% endif %} {% if child.doctor_appt %}<img src="/static/images/mediconchecked.png" class="icons"> {% else %} {% endif %}</p>
 			</div>
-			<br style="clear: both" />
 		</td>
 	</tr>
 	{% endfor %}

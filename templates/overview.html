@@ -4,7 +4,11 @@
 	{% for child in child_profiles %}
 	<tr>
 		<td>
+			{% if child.pic_url %}
 			<div class="pull-left"><a href="../child/{{child.id}}"><img src="{{child.pic_url}}" class="images-style"></a></div>
+			{% else %}
+			<div class="pull-left"><a href="../child/{{child.id}}"><img src="/static/images/childphotopreview.png" class="images-style"></a></div>
+			{% endif %}
 			<div class="info pull-right"> 
 				<h4>{{ child.first_name}} {{ child.last_name }}</h4>
 				<p>{{ child.age }} years old,</p>

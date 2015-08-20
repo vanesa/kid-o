@@ -217,8 +217,9 @@ def add_profile():
 
         this_child = db.session.query(Child).order_by(Child.id.desc()).first()
         child_info = [ChildView(this_child)]
+        child_id = this_child.id
 
-        return render_template('child_profile.html', child_info=child_info)
+        return redirect('/child/%d' % child_id)
     else:
         return render_template('add_profile.html')
 

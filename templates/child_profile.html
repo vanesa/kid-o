@@ -3,7 +3,11 @@
 
 {% for child in child_info %}
 <div class="profile">
-	<div class="pull-left"><img src="{{child.pic_url}}" class="images-style"></div>
+    {% if child.pic_url %}
+    <div class="pull-left"><img src="{{child.pic_url}}" class="images-style"></div>
+    {% else %}
+	<div class="pull-left"><img src="/static/images/childphotopreview.png" class="images-style"></div>
+    {% endif %}
 	<div class="info pull-right"> <h4> {{ child.first_name}} {{ child.last_name }}</h4>
 		<p>{{ child.age }} years old,</p>
 		<p>Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}</p>

@@ -25,14 +25,18 @@
         {% if child.doctor_appt %}
 		<p>Needs to visit the doctor: {{ child.doctor_appt.strftime('%d-%m-%Y') }}</p>
         {% elif child.medical_condition %}
-        <p class="alerttext"><a href="/child/edit{{child.id}}">Please add a new doctors appointment for {{ child.first_name }}'s check-up.</a></p>
+        <p><a href="/child/edit{{child.id}}" class="alerttext">Please add a new doctors appointment for {{ child.first_name }}'s check-up.</a></p>
         {% else %}
         <p></p>
         {% endif %}
 	</div>
 	<div>
+        {% if child.situation %}
 		<h4> Situation</h4>
 		<p>{{ child.situation }}</p>
+        {% else %}
+        <p class="alerttext"><a href="/child/edit{{child.id}}">Please write information about {{ child.first_name }}'s situation.</a></p>
+        {% endif %}
         {% if child.home_visit %}
 		<p>Next home visit: {{ child.home_visit.strftime('%d-%m-%Y') }}</p>
         {% else %}

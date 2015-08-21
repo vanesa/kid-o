@@ -129,6 +129,9 @@ def child_profile(id):
         if medical_condition == "":
             medical_condition = None
 
+        if situation == "":
+            situation = None
+
         # seed into database
 
         child_entry = db.session.query(Child).filter_by(id=id).one()

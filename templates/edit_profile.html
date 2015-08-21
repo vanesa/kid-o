@@ -26,8 +26,13 @@
 			{% else %}
 			<input type="text" name="doctor_appt" placeholder="YYYY-M-D"><br />
 			{% endif %}
+			{% if child.situation %}
 			<label for="home-field">Situation:</label><br />
 			<textarea rows="3" cols="40" name="situation" placeholder="{{child.situation}}">{{child.situation}}</textarea><br />
+			{% else %}
+			<label for="home-field">Situation:</label><br />
+			<textarea rows="3" cols="40" name="situation" placeholder="Please write about {{ child.first_name }}'s situation."></textarea><br />
+			{% endif %}
 			<label for="doct-field">Next home visit:</label><br />
 			{% if child.home_visit %}
 			<input type="text" name="home_visit" value="{{child.home_visit.strftime('%Y-%m-%d')}}" placeholder="{{child.home_visit.strftime('%Y-%m-%d')}}"><br />

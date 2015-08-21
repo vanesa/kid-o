@@ -3,16 +3,18 @@
 
 {% for child in child_info %}
 <div class="profile">
+
     {% if child.pic_url %}
-    <div class="pull-left"><img src="{{child.pic_url}}" class="images-style"></div>
+    <div class="leftbox"><img src="{{child.pic_url}}" class="images-style"></div>
     {% else %}
-	<div class="pull-left"><img src="/static/images/childphotopreview.png" class="images-style"></div>
+	<div class="leftbox"><img src="/static/images/childphotopreview.png" class="images-style"></div>
     {% endif %}
-	<div class="info pull-right"> <h4> {{ child.first_name}} {{ child.last_name }}</h4>
+	<div class="info rightbox"> <h4> {{ child.first_name}} {{ child.last_name }}</h4>
 		<p>{{ child.age }} years old,</p>
 		<p>Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
 		<p>{{ child.guardian_type}}: {{ child.guardian_fname}} {{ child.guardian_lname }}</p>
 	</div>
+    <a href="/child/edit{{child.id}}" style="display: inline-block; position: absolute;"><button type="button" class="btn btn-sm btn-danger" value="edit">Edit</button></a>
 	<div class="lowerform">
         {% if child.medical_condition %}
 		<h4> Medical condition</h4>
@@ -22,6 +24,8 @@
         {% endif %}
         {% if child.doctor_appt %}
 		<p>Needs to visit the doctor: {{ child.doctor_appt.strftime('%d-%m-%Y') }}</p>
+        {% elif child.medical_condition %}
+        <p class="alerttext"><a href="/child/edit{{child.id}}">Please add a new doctors appointment for {{ child.first_name }}'s check-up.</a></p>
         {% else %}
         <p></p>
         {% endif %}
@@ -68,7 +72,6 @@ L.mapbox.featureLayer({
 }).addTo(map);
 </script>
 
-	<a href="/child/edit{{child.id}}"><button type="button" class="btn btn-sm btn-danger" value="edit">Edit</button></a>
 </div>
 	{% endfor %}
 {% endblock %}

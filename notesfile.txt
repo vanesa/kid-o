@@ -13,6 +13,7 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 
 - http://dillinger.io/ - cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
 - gmaps - http://hpneo.github.io/gmaps/
+- mapbox.com
 
 
 
@@ -30,7 +31,7 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 	(.) create routes
 
 - Templates
-	(.) create HTML for routes
+	(x) create HTML for routes
 
 - Signup page
 	(x) create forms
@@ -45,35 +46,37 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 - Edit Profile
  	(x) New html page
  	(x) Create the forms
- 		() Prepopulate the form fields
+ 		(x) Prepopulate the form fields
  	() Verify data (check that all fields are filled out)
- 	() Clicking submit is going to overwrite the existing date
- 		() send to profile page after submit
+ 	(x) Clicking submit is going to overwrite the existing date
+ 		(x) send to profile page after submit
  	() Option of delete Profile with Alert <are you sure????>
 
 - Create profile
 	() Verify existence of child
-	() Create the forms
+	(x) Create the forms
  	() Verify data (check that all fields are filled out)
- 	() Clicking submit is going to create data in data base
- 		() send to profile page after submit
+ 	(x) Clicking submit is going to create data in data base
+ 		(x) send to profile page after submit
  	() Upload Photo option
- 	() Option to Cancel
+ 	(x) Option to Cancel
 
- - Add Siblings
- 	() relationship solution
- 	() Link to profile page
+ - Overview
+ 	() Order the children by alerts
 
 .....
 
 - Image
+	() Upload to disk
 	() Amazon S3 or Dropbox API (or others)
 ......
 
  - Bootstrap
- 	() responsive
+ 	(x) responsive
 
 ......
+
+- LazyLoad
 
 ********* END MVP *********
 
@@ -83,15 +86,19 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 
 ********* EXTRA FEATURES IN SCOPE *********
 
+ - Add Siblings
+ 	() relationship solution
+ 	() Link to profile page
+
 
 - Logging of situation changes
 
 - Search function
 	() specialized full-text search option handling: stemming, thesaurus, sounds-like
 
-- Google Maps API
-	() Show location of child
-	() Save location of child
+- Mapbox.js
+	(x) Show location of child
+	(x) Save location of child
 
 ********* END EXTRA FEATURES IN SCOPE ********* 
 

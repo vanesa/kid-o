@@ -2,7 +2,10 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session
+import os
+from flask import Flask, render_template, redirect, request, flash, session, url_for
+from werkzeug import secure_filename
+
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Child, connect_to_db, db
@@ -10,7 +13,11 @@ from datetime import datetime
 
 from child import ChildView
 
+UPLOAD_FOLDER = '/static/images/photos'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Required to use Flask sessions and debug toolbar
 
@@ -155,7 +162,26 @@ def child_profile(id):
 # Look up: GET attr
 
 
+################
+# UPLOAD IMAGE #
+###############
 
+
+# def allowed_file(filename):
+#     return '.' in filename and \
+#            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+# @app.route('/upload', methods=['GET', 'POST'])
+# def upload_file():
+#     """ Upload images of the children """
+#     if request.method == 'POST':
+#         file = request.files['file']
+#         if file and allowed_file(file.filename):
+#             filename = secure_filename(file.filename)
+#             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#             return redirect(url_for('uploaded_file',
+#                                     filename=filename))
+#     return redirect('/child/edit<int:id>')
 
 ######################
 # EDIT CHILD PROFILE #

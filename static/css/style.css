@@ -86,10 +86,29 @@
 
 .icons {
 	margin-left: 12px;
+	padding: 2px;
+}
+
+.iconsalert {
+	background-color: #fba49c;
+	padding: 2px;
+	border: 2px solid #888888;
+	border-radius: 3px;
 }
 
 .childrow {
 	background-color: #f0fafe;
-	padding: 7px;
+	padding: 5px 5px 0px 5px;
 	border: 1px solid #888888;
+}
+
+.childrow_alert {
+	background-color: #fed1cc;
+	padding: 5px 5px 0px 5px;
+	border: 1px solid #888888;
+}
+
+.alerttext {
+	color: #ff1800;
+	font-size: 0.8em;
 }

@@ -2,11 +2,11 @@
 {% block content %}
 
 <div class="profile">
-  <div class="pull-left photobox"><img src="/static/images/childphotopreview.png" class="imagesedit-style"><a href="uploadlink" class="uploadlink">Upload photo</a><form action="/upload" method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
-    </form></div>
-  <form action="/child/add" id="" class="form-signin" method="POST">
+  <form action="/child/add" class="form-signin" method="POST" enctype="multipart/form-data">
+  <div class="pull-left photobox">
+    <input type="file" name="file" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Upload" data-classIcon="glyphicon-camera">
+    </div>
+
     <div class="info pull-right">
       <input type="text" name="first_name" placeholder="First name"><br />
       <input type="text" name="last_name" placeholder="Last name"><br />
@@ -35,38 +35,10 @@
 </form>
 
 <br style="clear: both" />
-
 <script>
-L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
-var map = L.mapbox.map('map', 'mapbox.streets')
-    .setView([18.542769, -69.801216],16);
-
-var marker;
-var clicked = false;
-
-map.on('click', function(e) {
-    var child_latitude = e.latlng.lat;
-    var child_longitude = e.latlng.lng;
-    $("#lat").val(child_latitude)
-    $("#lng").val(child_longitude)
-  
-   if (clicked === false) {
-           marker = L.marker(new L.LatLng(child_latitude, child_longitude), {
-    icon: L.mapbox.marker.icon({
-        'marker-color': 'ff8888'
-    }),
-    draggable: false
-});
-    marker.bindPopup('This marker is draggable! Move it around.');
-       
-       marker.addTo(map);
-   	   clicked = true;
-   }
-   else {
-   	marker.setLatLng(new L.LatLng(child_latitude, child_longitude)).update();
-    }
-});
+$(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera"});
 </script>
+<script src='static/js/mapedit.js'></script>
 </div>
 </div>
 {% endblock %}

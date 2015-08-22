@@ -13,8 +13,9 @@ from datetime import datetime
 
 from child import ChildView
 
-UPLOAD_FOLDER = '/Users/Vanesa/Apps/kid-o/static/images/photos'
+UPLOAD_FOLDER = 'static/images/photos/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -170,26 +171,6 @@ def child_profile(id):
 ###############
 
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
-    return render_template('add_profile.html')
-
-@app.route('/upload/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
-
 ######################
 # EDIT CHILD PROFILE #
 ######################
@@ -209,9 +190,9 @@ def edit_profile(id):
 # ADD NEW CHILD #
 #################
 
-# def allowed_file(filename):
-#     return '.' in filename and \
-#            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route('/child/add', methods=['GET', 'POST'])
 def add_profile():
@@ -221,12 +202,14 @@ def add_profile():
     if request.method == 'POST':
         # get all new data
         # Upload image 
-        # file = request.files['file']
-        # if file and allowed_file(file.filename):
-        #     filename = secure_filename(file.filename)
-        #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        #     return redirect(url_for('uploaded_file',
-        #                             filename=filename))
+        # import pdb; pdb.set_trace()
+        file = request.files['file']
+        print "This should be the file: ", file
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # Save the image path to send to the database
+            imgroot = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
 
         # Get all the other contents
         first_name = request.form.get("first_name")
@@ -254,7 +237,7 @@ def add_profile():
 
 
         # seed into database
-        child_entry = Child(first_name=first_name, last_name=last_name,
+        child_entry = Child(pic_url=imgroot, first_name=first_name, last_name=last_name,
                             birth_date=birth_date, guardian_type=guardian_type, guardian_fname=guardian_fname,
                             guardian_lname=guardian_lname, medical_condition=medical_condition, doctor_appt=doctor_appt, situation=situation,
                             home_visit=home_visit, latitude=latitude, longitude=longitude)
@@ -268,11 +251,6 @@ def add_profile():
         return redirect('/child/%d' % child_id)
     else:
         return render_template('add_profile.html')
-
-# @app.route('/upload/<filename>')
-# def uploaded_file(filename):
-#     return send_from_directory(app.config['UPLOAD_FOLDER'],
-#                                filename)
 
 ########
 # MAIN #

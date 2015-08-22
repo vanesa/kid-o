@@ -2,7 +2,10 @@
 {% block content %}
 
 <div class="profile">
-  <div class="pull-left photobox"><img src="/static/images/childphotopreview.png" class="imagesedit-style"><a href="uploadlink" class="uploadlink">Upload photo</a></div>
+  <div class="pull-left photobox"><img src="/static/images/childphotopreview.png" class="imagesedit-style"><a href="uploadlink" class="uploadlink">Upload photo</a><form action="/upload" method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form></div>
   <form action="/child/add" id="" class="form-signin" method="POST">
     <div class="info pull-right">
       <input type="text" name="first_name" placeholder="First name"><br />

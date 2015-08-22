@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 
 import os
-from flask import Flask, render_template, redirect, request, flash, session, url_for
+from flask import Flask, render_template, redirect, request, flash, session, url_for, send_from_directory
 from werkzeug import secure_filename
 
 from flask_debugtoolbar import DebugToolbarExtension
@@ -13,7 +13,7 @@ from datetime import datetime
 
 from child import ChildView
 
-UPLOAD_FOLDER = '/static/images/photos'
+UPLOAD_FOLDER = '/Users/Vanesa/Apps/kid-o/static/images/photos'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
@@ -170,21 +170,25 @@ def child_profile(id):
 ###############
 
 
-# def allowed_file(filename):
-#     return '.' in filename and \
-#            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-# @app.route('/upload', methods=['GET', 'POST'])
-# def upload_file():
-#     """ Upload images of the children """
-#     if request.method == 'POST':
-#         file = request.files['file']
-#         if file and allowed_file(file.filename):
-#             filename = secure_filename(file.filename)
-#             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#             return redirect(url_for('uploaded_file',
-#                                     filename=filename))
-#     return redirect('/child/edit<int:id>')
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploaded_file',
+                                    filename=filename))
+    return render_template('add_profile.html')
+
+@app.route('/upload/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
 
 ######################
 # EDIT CHILD PROFILE #
@@ -205,6 +209,10 @@ def edit_profile(id):
 # ADD NEW CHILD #
 #################
 
+# def allowed_file(filename):
+#     return '.' in filename and \
+#            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 @app.route('/child/add', methods=['GET', 'POST'])
 def add_profile():
 
@@ -212,6 +220,15 @@ def add_profile():
 
     if request.method == 'POST':
         # get all new data
+        # Upload image 
+        # file = request.files['file']
+        # if file and allowed_file(file.filename):
+        #     filename = secure_filename(file.filename)
+        #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #     return redirect(url_for('uploaded_file',
+        #                             filename=filename))
+
+        # Get all the other contents
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         birth_date = request.form.get("birth_date")
@@ -252,6 +269,10 @@ def add_profile():
     else:
         return render_template('add_profile.html')
 
+# @app.route('/upload/<filename>')
+# def uploaded_file(filename):
+#     return send_from_directory(app.config['UPLOAD_FOLDER'],
+#                                filename)
 
 ########
 # MAIN #

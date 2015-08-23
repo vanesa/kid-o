@@ -45,6 +45,7 @@
 	width: 85px;
 	height: auto;
 	position: relative;
+	margin-right: 15px;
 }
 
 .lowerform {
@@ -110,4 +111,14 @@
 .alerttext {
 	color: #ff1800;
 	font-size: 0.8em;
+}
+
+/* Image preview */
+.imgpreview {
+	opacity: 0.6;
+	width: 84px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5px;
 }

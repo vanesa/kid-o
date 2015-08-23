@@ -3,11 +3,12 @@
 
 <div class="profile">
   <form action="/child/add" class="form-signin" method="POST" enctype="multipart/form-data">
-  <div class="pull-left photobox">
-    <input type="file" name="file" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Upload" data-classIcon="glyphicon-camera">
+  <div class="leftbox photobox">
+    <img id="imgpreview" src="../static/images/childphotopreview.png" class="imgpreview" alt="Child's photo preview.">
+    <input type="file" name="file" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Upload" data-classIcon="glyphicon-camera" data-size="sm">
     </div>
 
-    <div class="info pull-right">
+    <div class="info rightbox">
       <input type="text" name="first_name" placeholder="First name"><br />
       <input type="text" name="last_name" placeholder="Last name"><br />
       <input type="text" name="birth_date" placeholder="Birth date YYYY-M-D"><br />
@@ -36,9 +37,10 @@
 
 <br style="clear: both" />
 <script>
-$(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera"});
+$(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera", size: "sm"});
 </script>
-<script src='static/js/mapedit.js'></script>
+<script src='../static/js/mapadd.js'></script>
+<script src='../static/js/imgpreview.js'></script>
 </div>
 </div>
 {% endblock %}

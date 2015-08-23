@@ -108,6 +108,7 @@ def child_profile(id):
     if request.method == 'POST': # update child info from edit_profile.html form
 
         # get all new data
+        pic_url = request.form.get("file")
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         birth_date = request.form.get("birth_date")
@@ -136,6 +137,7 @@ def child_profile(id):
         # seed into database
 
         child_entry = db.session.query(Child).filter_by(id=id).one()
+        child_entry.pic_url = pic_url
         child_entry.first_name = first_name
         child_entry.last_name = last_name
         child_entry.birth_date = birth_date

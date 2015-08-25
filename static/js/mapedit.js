@@ -1,3 +1,5 @@
+// unfortunately doesn't understand Jinja. 
+
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
 var map = L.mapbox.map('map', 'mapbox.streets')
     .setView([{{child.latitude}}, {{child.longitude}}],15);

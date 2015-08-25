@@ -1,5 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="row searchform">
+    <form action="/overview" method="POST">
+  <div class="col-lg-12">
+    <div class="input-group">
+      <input type="text" class="form-control" name="searchform" placeholder="Search for...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">Go!</button>
+      </span>
+    </div>
+    <!-- /input-group -->
+  </div>
+    </form>
+</div>
 <table>
 	{% for child in child_profiles %}
 	<tr>

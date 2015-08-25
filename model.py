@@ -1,6 +1,7 @@
 """Models and database functions for Kid-O project."""
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.hybrid import hybrid_property
 
 # This is the connection to the SQLite database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
@@ -62,13 +63,19 @@ class Child(db.Model):
 
     # Add here a model to calculate age?
 
+    @hybrid_property
+    def fullname(self):
+
+        return self.first_name + " " + self.last_name
+
+
 #####################
 # Helper functions #
 ###################
 
 def connect_to_db(app):
     """Connect the database to our Flask app."""
-    app.config['SQLALCHEMY_DATABASE_URI']= 'postgresql://localhost/kid-o'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/kid-o'
     db.app = app
     db.init_app(app)
 

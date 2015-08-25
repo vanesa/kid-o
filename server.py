@@ -5,6 +5,7 @@ from jinja2 import StrictUndefined
 import os
 from flask import Flask, render_template, redirect, request, flash, session, url_for, send_from_directory
 from werkzeug import secure_filename
+from sqlalchemy import or_, and_
 
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -64,7 +65,9 @@ def index():
 # LOG OUT #
 ###########
 
-
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 ###########
 # SIGN UP #
@@ -80,18 +83,29 @@ def signup_form():
 # CHILDREN OVERVIEW #
 #####################
 
-@app.route('/overview')
+@app.route('/overview', methods=['GET', 'POST'])
 def show_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
 
-    all_children = db.session.query(Child).order_by(Child.last_name.asc()).all() # 
-    child_views = []
+    if request.method == 'POST':  # Search function
+        child_search = request.form.get('searchform')
+        # split string and if statement len 1, 2, 3 query. 
+        found_children = db.session.query(Child).filter(Child.fullname.ilike("%"+child_search+"%")).all()
+        child_views = []
 
-    for child in all_children:
-        child_views.append(ChildView(child))
+        for child in found_children:
+            child_views.append(ChildView(child))
 
+        return render_template('overview.html', child_profiles=child_views)
 
-    return render_template('overview.html', child_profiles=child_views)
+    else:
+        all_children = db.session.query(Child).order_by(Child.last_name.asc()).all()
+        child_views = []
+
+        for child in all_children:
+            child_views.append(ChildView(child))
+
+        return render_template('overview.html', child_profiles=child_views)
 
 
 ##################
@@ -107,8 +121,19 @@ def child_profile(id):
 
     if request.method == 'POST': # update child info from edit_profile.html form
 
+        
+        # Set pic_url to empty string to keep original path in case no changes are made.
+        pic_url = ""
+        file = request.files['file']
+        # print "This should be the file: ", file
+        if file and allowed_file(file.filename):
+            # If no image is uploaded, this never passes.
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # Save the image path to send to the database
+            pic_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
         # get all new data
-        pic_url = request.form.get("file")
+        # pic_url = request.form.get("file")
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         birth_date = request.form.get("birth_date")
@@ -137,7 +162,9 @@ def child_profile(id):
         # seed into database
 
         child_entry = db.session.query(Child).filter_by(id=id).one()
-        child_entry.pic_url = pic_url
+        if pic_url != "":
+            child_entry.pic_url = pic_url
+        # print "This should be a pic path: ", pic_url
         child_entry.first_name = first_name
         child_entry.last_name = last_name
         child_entry.birth_date = birth_date
@@ -191,10 +218,6 @@ def edit_profile(id):
 #################
 # ADD NEW CHILD #
 #################
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route('/child/add', methods=['GET', 'POST'])
 def add_profile():
@@ -253,6 +276,15 @@ def add_profile():
         return redirect('/child/%d' % child_id)
     else:
         return render_template('add_profile.html')
+
+################
+# Test Ratchet #
+###############
+
+@app.route('/test')
+def test():
+   
+    return render_template('test.html')
 
 ########
 # MAIN #

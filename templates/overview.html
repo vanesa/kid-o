@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row searchform">
-    <form action="/overview" method="POST">
+    <form action="/overview" method="POST" id="searchform">
   <div class="col-lg-12">
     <div class="input-group">
       <input type="text" class="form-control" name="searchform" placeholder="Search for...">
@@ -32,5 +32,5 @@
 	</tr>
 	{% endfor %}
 </table>
-
+<script src="/static/js/overview.js"></script>
 {% endblock %}

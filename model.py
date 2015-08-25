@@ -3,6 +3,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
 
+
+
 # This is the connection to the SQLite database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
 # object, where we do most of our interactions (like committing, etc.)
@@ -68,6 +70,23 @@ class Child(db.Model):
 
         return self.first_name + " " + self.last_name
 
+    def to_dict(self):
+        return dict(
+            id = self.id,
+            pic_url = self.pic_url,
+            first_name = self.first_name,
+            last_name = self.last_name,
+            birth_date = self.birth_date,
+            guardian_type = self.guardian_type,
+            guardian_fname = self.guardian_fname,
+            guardian_lname = self.guardian_lname,
+            medical_condition = self.medical_condition,
+            doctor_appt = self.doctor_appt,
+            situation = self.situation,
+            home_visit = self.home_visit,
+            latitude = self.latitude,
+            longitude = self.longitude,
+        )
 
 #####################
 # Helper functions #

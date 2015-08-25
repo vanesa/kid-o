@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 
 import os
-from flask import Flask, render_template, redirect, request, flash, session, url_for, send_from_directory
+from flask import Flask, render_template, redirect, request, flash, session, url_for, send_from_directory, jsonify
 from werkzeug import secure_filename
 from sqlalchemy import or_, and_
 
@@ -13,6 +13,7 @@ from model import User, Child, connect_to_db, db
 from datetime import datetime
 
 from child import ChildView
+from forms import LoginForm
 
 UPLOAD_FOLDER = 'static/images/photos/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -32,34 +33,32 @@ app.jinja_env.undefined = StrictUndefined
 # INDEX & LOGIN #
 #################
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     """" Starting page with either login or personal profile if login session exists.
      For Log in: take email, password from user and check if credentials exist in the database
      by checking if email is in the users table. If email in table, redirect to the children overview.
      If not: redirect to sign up page."""
+    form = LoginForm(request.form)
+    if request.method == 'POST' and form.validate(): # Process form if route gets POST request from /index
 
-    if request.method == 'POST': # Process form if route gets POST request from /index
-        email = request.form.get("email")
-        password = request.form.get("password") #
+        credentials = (form.data.email, form.data.password)
 
-        credentials = (email, password)
+        user = User.query.filter_by(email=form.data.email).first()
 
-        user = User.query.filter_by(email=email).first()
-
-        if not user:
-            flash('Please sign up!')
-            return redirect('/signup')
-        else:
-            if user.password != password:
-                flash('Incorrect password.')
-                return redirect('/')
-
+        if user and user.password == form.data.password:
             session['login_id']= credentials # Save session
             flash('You have sucessfully logged in.')
             return redirect("/overview.html") # Redirect to children's overview
 
-    return render_template("index.html")
+        if not user:
+            flash('Please sign up!')
+            return redirect('/signup')
+
+        # flash('Incorrect password.')
+        form.errors["password"] = ["Incorrect password"]
+
+    return render_template("index.html", form=form)
 
 ###########
 # LOG OUT #
@@ -77,7 +76,24 @@ def allowed_file(filename):
 def signup_form():
     """ Sign up user """
 
-    return render_template("signup.html")
+    form = SignUpForm(request.form)
+    if request.method == 'POST' and form.validate(): # Process form if route gets POST request from /index
+
+        user = User(**form.data)
+
+        if user and user.password == form.data.password:
+            session['login_id']= credentials # Save session
+            flash('You have sucessfully logged in.')
+            return redirect("/overview.html") # Redirect to children's overview
+
+        if not user:
+            flash('Please sign up!')
+            return redirect('/signup')
+
+        # flash('Incorrect password.')
+        form.errors["password"] = ["Incorrect password"]
+
+    return render_template("index.html", form=form)
 
 #####################
 # CHILDREN OVERVIEW #
@@ -90,16 +106,19 @@ def show_overview():
     if request.method == 'POST':  # Search function
         child_search = request.form.get('searchform')
         # split string and if statement len 1, 2, 3 query. 
-        found_children = db.session.query(Child).filter(Child.fullname.ilike("%"+child_search+"%")).all()
+        found_children = Child.query.filter(Child.fullname.ilike("%"+child_search+"%")).all()
         child_views = []
 
         for child in found_children:
             child_views.append(ChildView(child))
 
+        if request.headers.get('Accept') == 'json':
+            return jsonify(profiles=[x.to_dict() for x in child_views])
+
         return render_template('overview.html', child_profiles=child_views)
 
     else:
-        all_children = db.session.query(Child).order_by(Child.last_name.asc()).all()
+        all_children = Child.query.order_by(Child.last_name.asc()).all()
         child_views = []
 
         for child in all_children:

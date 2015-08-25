@@ -6,13 +6,17 @@
 <form action="/" class="form-signin" method="POST">
 
 	<div class="form-group">
+		{{ form.csrf_token }}
 		<label for="email-field" class="sr-only">E-Mail</label>
-		<input type="email" name="email" placeholder="Email">
+		<input type="email" name="email" placeholder="Email" value="{{form.data.email or ''}}">
 	</div>
 
 	<div class="form-group">
 		<label for="password-field" class="sr-only">Password</label>
-		<input type="password" name="password" placeholder="Password">
+		<input type="password" name="password" placeholder="Password" value="{{form.data.password or ''}}">
+		{% if form.errors and "password" in form.errors %}
+			{{ form.errors.password[0]}}
+		{% endif %}
 	</div>
 	<button class="btn btn-sm btn-primary" type="submit">Sign In</button>
 </form>

@@ -77,7 +77,7 @@ def signup_form():
     """ Sign up user """
 
     form = SignUpForm(request.form)
-    if request.method == 'POST' and form.validate(): # Process form if route gets POST request from /index
+    if request.method == 'POST' and form.validate():  # Process form if route gets POST request from /index
 
         user = User(**form.data)
 
@@ -93,7 +93,7 @@ def signup_form():
         # flash('Incorrect password.')
         form.errors["password"] = ["Incorrect password"]
 
-    return render_template("index.html", form=form)
+    return render_template("signup.html", form=form)
 
 #####################
 # CHILDREN OVERVIEW #
@@ -105,7 +105,7 @@ def show_overview():
 
     if request.method == 'POST':  # Search function
         child_search = request.form.get('searchform')
-        # split string and if statement len 1, 2, 3 query. 
+        #  split string and if statement len 1, 2, 3 query.
         found_children = Child.query.filter(Child.fullname.ilike("%"+child_search+"%")).all()
         child_views = []
 

@@ -2,11 +2,11 @@ from flask_wtf import Form
 from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired, Email, Length
 
-def myfilter(data):
-	return data.lower()
+# def myfilter(data):
+# 	return data.lower()
 
 class LoginForm(Form):
-    email = StringField('email', validators=[DataRequired(), Email()], filters=[myfilter])
+    email = StringField('email', validators=[DataRequired(), Email()])
     password = PasswordField('password', validators=[DataRequired(), Length(min=6, max=200)])
 
 

@@ -15,6 +15,8 @@ from datetime import datetime
 from child import ChildView
 from forms import LoginForm
 
+from twilio import twiml
+
 UPLOAD_FOLDER = 'static/images/photos/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
@@ -295,6 +297,18 @@ def add_profile():
         return redirect('/child/%d' % child_id)
     else:
         return render_template('add_profile.html')
+
+#############
+# Twilio ###
+############
+
+@app.route('/twilio', methods=['GET', 'POST'])
+def registerbysms():
+
+    resp = twiml.Response()
+    resp.message("Hi user! PLease add a child!")
+
+    return str(resp)
 
 ################
 # Test Ratchet #

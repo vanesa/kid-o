@@ -16,6 +16,11 @@ class SignUpForm(Form):
     password = PasswordField('password', validators=[DataRequired(), Length(min=6, max=200)])
     confirm = PasswordField('Repeat Password')
 
+    # user_entry = User(first_name=first_name, last_name=last_name, email=email, password=password)
+
+    # db.session.add(user_entry)
+    # db.session.commit()
+
 class ChildForm(Form):
     first_name = StringField('first_name', validators=[DataRequired(), Length(max=15)])
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])

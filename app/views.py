@@ -1,5 +1,4 @@
 from app import app
-from flask import request
 
 import urllib
 import re
@@ -7,7 +6,7 @@ import os
 from flask import render_template, redirect, request, flash, session, url_for, send_from_directory, jsonify, make_response, abort
 from werkzeug import secure_filename
 from sqlalchemy import or_, and_
-
+import flask_login
 from app.models import User, Child, db
 from datetime import datetime, timedelta
 
@@ -65,11 +64,17 @@ def login():
         return redirect(next or url_for('/'))
     return render_template('index.html', form=form)
 
+@app.route("/logout")
+# @login_required
+def logout():
+    logout_user()
+    return redirect('/')
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
-@app.route('/signup')
+@app.route('/signup', methods="['GET', 'POST']")
 def signup_form():
     """ Sign up user """
 
@@ -81,7 +86,7 @@ def signup_form():
         if user and user.password == form.data.password:
             session['login_id']= credentials # Save session
             flash('You have sucessfully logged in.')
-            return redirect("/overview.html") # Redirect to children's overview
+            return redirect("/overview") # Redirect to children's overview
 
         if not user:
             flash('Please sign up!')

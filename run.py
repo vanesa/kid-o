@@ -10,10 +10,10 @@ if __name__ == '__main__':
 
     # debug = True as DebugToolbarExtension is invoked
 
-    app.debug = False
+    app.debug = True
     connect_to_db(app)
 
     # User the DebugToolbar
-    DebugToolbarExtension(app)
+    # DebugToolbarExtension(app)
 
     app.run()

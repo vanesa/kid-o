@@ -6,28 +6,35 @@
 <form action="/signup" class="form-signin" method="POST">
 
 	<div class="form-group">
+		{{ form.csrf_token }}
 		<label for="name-field" class="sr-only">First name</label>
-		<input type="text" name="first_name" placeholder="First name">
+		<input type="text" name="first_name" placeholder="First name" value="{{form.data.first_name or ''}}">
 	</div>
 
 	<div class="form-group">
 		<label for="name-field" class="sr-only">Last name</label>
-		<input type="text" name="last_name" placeholder="Last name">
+		<input type="text" name="last_name" placeholder="Last name" value="{{form.data.last_name or ''}}">
 	</div>
 
 	<div class="form-group">
 		<label for="email-field" class="sr-only">E-Mail</label>
-		<input type="email" name="email" placeholder="Email">
+		<input type="email" name="email" placeholder="Email" value="{{form.data.email or ''}}">
 	</div>
 
 	<div class="form-group">
 		<label for="password-field" class="sr-only">Password</label>
-		<input type="password" name="password" placeholder="Password">
+		<input type="password" name="password" placeholder="Password" value="{{form.data.password or ''}}">
+		{% if form.errors and "password" in form.errors %}
+			{{ form.errors.password[0]}}
+		{% endif %}
 	</div>
 
 	<div class="form-group">
 		<label for="password-field" class="sr-only">Repeate Password</label>
-		<input type="password" name="password" placeholder="Repeate Password">
+		<input type="password" name="password" placeholder="Repeate Password" value="{{form.data.password or ''}}">
+		{% if form.errors and "password" in form.errors %}
+			{{ form.errors.password[0]}}
+		{% endif %}
 	</div>
 	<button class="btn btn-sm btn-primary" type="submit">Sign Up</button>
 </form>

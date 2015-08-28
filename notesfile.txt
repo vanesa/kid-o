@@ -47,7 +47,7 @@ Children's aid projects often struggle with maintaining a clear overview of the 
  	(x) New html page
  	(x) Create the forms
  		(x) Prepopulate the form fields
- 	() Verify data (check that all fields are filled out)
+ 	(.) Verify data (check that all fields are filled out)
  	(x) Clicking submit is going to overwrite the existing date
  		(x) send to profile page after submit
  	() Option of delete Profile with Alert <are you sure????>
@@ -72,6 +72,8 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 
 ......
 
+Add more children to the database
+	() Add 10 more children
 
 ********* END MVP *********
 

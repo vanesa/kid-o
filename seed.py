@@ -1,7 +1,7 @@
 """ Utility file to seed children database from the list of our children's aid project in seed_data/"""
 
-from model import Child, User, connect_to_db, db
-from server import app
+from app.models import Child, User, connect_to_db, db
+from app import app
 from datetime import datetime
 
 def load_users():

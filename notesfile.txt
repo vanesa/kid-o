@@ -58,7 +58,7 @@ Children's aid projects often struggle with maintaining a clear overview of the 
  	() Verify data (check that all fields are filled out)
  	(x) Clicking submit is going to create data in data base
  		(x) send to profile page after submit
- 	() Upload Photo option
+ 	(x) Upload Photo option
  	(x) Option to Cancel
 
  - Overview
@@ -100,6 +100,11 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 - Mapbox.js
 	(x) Show location of child
 	(x) Save location of child
+
+- Twilio
+	(x) Create a child's profile through SMS
+	(x) Create a child's profile including a photo of the child through SMS/MMS
+
 
 ********* END EXTRA FEATURES IN SCOPE ********* 
 

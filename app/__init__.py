@@ -1,21 +1,21 @@
 """ Kid-O server"""
 
 from jinja2 import StrictUndefined
-
+import urllib
+import re
 import os
-from flask import Flask, render_template, redirect, request, flash, session, url_for, send_from_directory, jsonify
+from flask import Flask, render_template, redirect, request, flash, session, url_for, send_from_directory, jsonify, make_response
 from werkzeug import secure_filename
 from sqlalchemy import or_, and_
 
-from flask_debugtoolbar import DebugToolbarExtension
+from app.models import User, Child, connect_to_db, db
+from datetime import datetime, timedelta
 
-from model import User, Child, connect_to_db, db
-from datetime import datetime
-
-from child import ChildView
-from forms import LoginForm
+from app.child import ChildView
+from app.forms import LoginForm, SignUpForm
 
 from twilio import twiml
+import secrets
 
 UPLOAD_FOLDER = 'static/images/photos/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -23,6 +23,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config.from_object(__name__)
 
 # Required to use Flask sessions and debug toolbar
 
@@ -44,11 +45,11 @@ def index():
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate(): # Process form if route gets POST request from /index
 
-        credentials = (form.data.email, form.data.password)
+        credentials = (form.data['email'], form.data['password'])
 
-        user = User.query.filter_by(email=form.data.email).first()
+        user = User.query.filter_by(email=form.data['email']).first()
 
-        if user and user.password == form.data.password:
+        if user and user.password == form.data['password']:
             session['login_id']= credentials # Save session
             flash('You have sucessfully logged in.')
             return redirect("/overview.html") # Redirect to children's overview
@@ -302,13 +303,55 @@ def add_profile():
 # Twilio ###
 ############
 
+# create empty file for image#
+def touch(path):
+    with open(path, 'a'):
+        os.utime(path, None)
+
+# Adding numbers of trusted users
+
 @app.route('/twilio', methods=['GET', 'POST'])
 def registerbysms():
 
-    resp = twiml.Response()
-    resp.message("Hi user! PLease add a child!")
+    from_number = request.values.get('From', None)
+    body = request.values.get('Body', None)
+    nummedia = request.values.get('NumMedia', None)
+    mediaurl = request.values.get('MediaUrl0', None)
+    message = "Hi! Please type in: REGISTER (First name of child) (Last name of Child) (Birth date (dd-mm-YYYY))"
+    if from_number in callers:
 
+        if body is not None:
+            if body.find('REGISTER') != -1:
+                child_info = body.split(" ")
+                child_first_name = child_info[1]
+                child_last_name = child_info[2]
+                child_birth_date = child_info[3]
+                date_check = re.match("([0-9]{2}-[0-9]{2}-[0-9]{4})", child_birth_date)
+                if date_check is None:
+                    message = "Hi " + callers[from_number] + "! " + "Can you please format the date correctly to: (mm)month-(dd)day-(YYYY)year?"
+                else:
+                    imgurl = '../static/images/childphotopreview.png'
+
+                    if nummedia and mediaurl is not None:
+                        imgurl = mediaurl
+                        # touch(imgurl)
+                        # urllib.urlretrieve(mediaurl, imgurl)
+
+                    child_entry = Child(pic_url=imgurl, first_name=child_first_name, last_name=child_last_name, birth_date=child_birth_date)
+
+                    db.session.add(child_entry)
+                    db.session.commit()
+                    message = "Hi " + callers[from_number] + "! " + "Thank you for registering " + child_first_name + "! Please complete " + child_first_name + "'s profile on the Kid-O website."
+
+    else:
+        message = "Hello friend! If you want to use Kid-O please register on our website!"
+
+    resp = twiml.Response()
+    resp.message(message)
     return str(resp)
+
+
+
 
 ################
 # Test Ratchet #
@@ -318,19 +361,3 @@ def registerbysms():
 def test():
    
     return render_template('test.html')
-
-########
-# MAIN #
-########
-
-if __name__ == '__main__':
-
-    # debug = True as DebugToolbarExtension is invoked
-
-    app.debug = True
-    connect_to_db(app)
-
-    # User the DebugToolbar
-    DebugToolbarExtension(app)
-
-    app.run()

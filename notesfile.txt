@@ -4,7 +4,7 @@ ______________________________
 
 Project Description and Goals:
 
-Children's aid projects often struggle with maintaining a clear overview of the children who are part of the project. This problem is foremost apparent when briefing new incoming volunteers which occures every 3-6 months. An app that gives a clear overview of the chidlren, including a photo and additional information such as their current situation, name of their guardian, location of their home etc. would ease the volunteers work and make it more efficient. 
+Children's aid projects often struggle with maintaining a clear overview of the children who are part of these projects. This is a day to day issue which hinders the work of aid workers and can lead to the lack of addressing a child's special needs. Kid-O solves this challenge by creating a children's profile management system. Aid workers can now get a clear overview of each child's basic info in the overview page and get a more detailed view on the child's profile page. Information such as the child's name, age, guardian's name, their current situation at home and school, their home location visualized in a map are shown in this detailed view. Aid workers can create new profiles, edit old profiles and see in the overview which information of the child is missing. Furthermore, they can even add new children profiles through textmessaging, so that the lack of internet does not Keeping the children's information uptodate and accessible for the aid workers can facilitate and improve the aid workers efficiency in the project and make sure that no child is left behind.
 
 
 ####################
@@ -61,14 +61,10 @@ Children's aid projects often struggle with maintaining a clear overview of the 
  	(x) Upload Photo option
  	(x) Option to Cancel
 
- - Overview
- 	() Order the children by alerts
-
 .....
 
 - Image
 	(x) Upload to disk
-	() Amazon S3 or Dropbox API (or others)
 ......
 
  - Bootstrap
@@ -76,8 +72,6 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 
 ......
 
-- LazyLoad
-	() Do this
 
 ********* END MVP *********
 
@@ -91,20 +85,29 @@ Children's aid projects often struggle with maintaining a clear overview of the 
  	() relationship solution
  	() Link to profile page
 
+- Image 
+	() Amazon S3 or Dropbox API (or others)
+
+ - Overview
+ 	() Order the children by alerts
 
 - Logging of situation changes
 
 - Search function
+	(x) First name, Last name, or both.
 	() specialized full-text search option handling: stemming, thesaurus, sounds-like
+	(x) Make a dynamic search (load while typing)
 
 - Mapbox.js
 	(x) Show location of child
 	(x) Save location of child
 
-- Twilio
+- Twilio API
 	(x) Create a child's profile through SMS
 	(x) Create a child's profile including a photo of the child through SMS/MMS
 
+- LazyLoad
+	() Do this
 
 ********* END EXTRA FEATURES IN SCOPE ********* 
 

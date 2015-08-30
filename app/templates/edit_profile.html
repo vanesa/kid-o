@@ -12,9 +12,21 @@
 			<input type="text" name="first_name" value="{{child.first_name}}" placeholder="{{child.first_name}}"><br />
 			<input type="text" name="last_name" value="{{child.last_name}}" placeholder="{{child.last_name}}"><br />
 			<input type="text" name="birth_date" value="{{child.birth_date.strftime('%Y-%m-%d')}}" placeholder="{{child.birth_date.strftime('%Y-%m-%d')}}"><br />
-			<input type="text" name="guardian_fname" value="{{child.guardian_fname}}" placeholder="{{child.guardian_fname}}"><br />
-			<input type="text" name="guardian_lname" value="{{child.guardian_lname}}" placeholder="{{child.guardian_lname}}"><br />
+			{% if child.guardian_type %}
 			<input type="text" name="guardian_type" value="{{child.guardian_type}}" placeholder="{{child.guardian_type}}"><br />
+			{% else %}
+			<input type="text" name="guardian_type" placeholder="Guardian type"><br />
+			{% endif %}
+			{% if child.guardian_fname %}
+			<input type="text" name="guardian_fname" value="{{child.guardian_fname}}" placeholder="{{child.guardian_fname}}"><br />
+			{% else %}
+			<input type="text" name="guardian_fname" placeholder="Guardian first name"><br />
+			{% endif %}
+			{% if child.guardian_lname %}
+			<input type="text" name="guardian_lname" value="{{child.guardian_lname}}" placeholder="{{child.guardian_lname}}"><br />
+			{% else %}
+			<input type="text" name="guardian_lname" placeholder="Guardian last name"><br />
+			{% endif %}
 		</div>
 		<div class="lowerform">
 			<label for="med-field">Medical Condition</label><br />

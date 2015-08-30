@@ -75,6 +75,8 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 Add more children to the database
 	() Add 10 more children
 
+
+FIX LOGIN! MAKE SESSIONS WORK! Depending if in session or not
 ********* END MVP *********
 
 

@@ -29,12 +29,22 @@ class User(db.Model):
     email = db.Column(db.String(64), nullable=True)
     password = db.Column(db.String(64), nullable=True)
 
-
     def __repr__(self):
         """Provide helpful representation when printed."""
-
         return "<User id=%s first_name=%s last_name=%s email=%s password=%s>" % (self.id, self.first_name, self.last_name, self.email, self.password)
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+    
+    def is_anonymous(self):
+        return False
+    
+    def get_id(self):
+        return unicode(self.id)
+    
 
 class Child(db.Model):
     """Child of Kid-O App."""

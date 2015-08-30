@@ -1,40 +1,65 @@
 from app import app
 
-import urllib
+from datetime import datetime, timedelta
 import re
 import os
-from flask import render_template, redirect, request, flash, session, url_for, send_from_directory, jsonify, make_response, abort
-from werkzeug import secure_filename
+import secrets
 from sqlalchemy import or_, and_
-import flask_login
-from app.models import User, Child, db
-from datetime import datetime, timedelta
+from twilio import twiml
+import urllib
+from werkzeug import secure_filename
 
+from flask import (
+    render_template, 
+    redirect, 
+    request, 
+    flash, 
+    session, 
+    url_for, 
+    send_from_directory, 
+    jsonify, 
+    make_response, 
+    abort,
+)
+from flask.ext.login import login_required, login_user, logout_user, current_user
+
+from app.models import User, Child, db
+from app import auth 
 from app.child import ChildView
 from app.forms import LoginForm, SignUpForm
 
-from twilio import twiml
-import secrets
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     """" Starting page with either login or personal profile if login session exists.
-     For Log in: take email, password from user and check if credentials exist in the database
-     by checking if email is in the users table. If email in table, redirect to the children overview.
-     If not: redirect to sign up page."""
-    form = LoginForm(request.form)
-    if request.method == 'POST' and form.validate(): # Process form if route gets POST request from /index
+    For Log in: take email, password from user and check if credentials exist in the database
+    by checking if email is in the users table. If email in table, redirect to the children overview.
+    If not: redirect to sign up page.
+    """
+    # if current_user.is_authenticated():
+    #     return redirect("/overview")
+    return render_template("index.html")
 
-        credentials = (form.data['email'], form.data['password'])
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # Here we use a class of some kind to represent and validate our
+    # client-side form data. For example, WTForms is a library that will
+    # handle this for us.
+
+    form = LoginForm(request.form)
+    next_url = request.args.get('next', '/overview')
+    if request.method == 'POST' and form.validate(): # Process form if route gets POST request from /index
+        next_url = request.form.get('next', '/overview')
+        # credentials = (form.data['email'], form.data['password'])
 
         user = User.query.filter_by(email=form.data['email']).first()
-        print "This should be a user: ", user
-        print "This should be the user's password: ", user.password
         if user and user.password == form.data['password']:
-            session['login_id']= credentials # Save session
-            flash('You have sucessfully logged in.')
-            return redirect("/overview") # Redirect to children's overview
+            login_user(user)
+            if not auth.is_safe_url(next_url):
+                return abort(400)
+            app.logger.info(next_url)
+            return redirect(next_url or '/overview')
 
         if not user:
             flash('Please sign up!')
@@ -43,29 +68,10 @@ def index():
         # Show error message ('Incorrect password.')
         form.errors["password"] = ["Incorrect password"]
 
-    return render_template("index.html", form=form)
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    # Here we use a class of some kind to represent and validate our
-    # client-side form data. For example, WTForms is a library that will
-    # handle this for us.
-    form = LoginForm()
-    if form.validate_on_submit():
-        # Login and validate the user.
-        login_user(user)
-
-        flash('Logged in successfully.')
-
-        next = request.args.get('next')
-        if not next_is_valid(next):
-            return abort(400)
-
-        return redirect(next or url_for('/'))
-    return render_template('index.html', form=form)
+    return render_template("login.html", form=form, next=next_url)
 
 @app.route("/logout")
-# @login_required
+@login_required
 def logout():
     logout_user()
     return redirect('/')
@@ -74,30 +80,29 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
-@app.route('/signup', methods="['GET', 'POST']")
+@app.route('/signup', methods=['GET', 'POST'])
 def signup_form():
     """ Sign up user """
 
     form = SignUpForm(request.form)
+    next_url = request.form.get('next', '/overview')
+    # app.logger.debug(form.validate())
     if request.method == 'POST' and form.validate():  # Process form if route gets POST request from /index
+        next_url = request.form.get('next', '/overview')
+        user_data = form.data
+        del user_data['confirm']
+        user = User(**user_data)
+        db.session.add(user)
+        db.session.commit()
 
-        user = User(**form.data)
+        login_user(user)
 
-        if user and user.password == form.data.password:
-            session['login_id']= credentials # Save session
-            flash('You have sucessfully logged in.')
-            return redirect("/overview") # Redirect to children's overview
+        return redirect('/overview')
 
-        if not user:
-            flash('Please sign up!')
-            return redirect('/signup')
-
-        # flash('Incorrect password.')
-        form.errors["password"] = ["Incorrect password"]
-
-    return render_template("signup.html", form=form)
+    return render_template("signup.html", form=form, next=next_url)
 
 @app.route('/overview', methods=['GET', 'POST'])
+@login_required
 def show_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
 
@@ -125,6 +130,7 @@ def show_overview():
         return render_template('overview.html', child_profiles=child_views)
 
 @app.route('/child/<int:id>', methods=['GET', 'POST'])
+@login_required
 def child_profile(id):
     """ Show's each child's profile with the following information: First name, last name,
     age, birth date, guardian, siblings, medical condition, next doctor's appointment, sitution at
@@ -158,6 +164,15 @@ def child_profile(id):
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
 
+        if guardian_type == "":
+            guardian_type = None
+
+        if guardian_fname == "":
+            guardian_fname = None
+
+        if guardian_lname == "":
+            guardian_lname = None
+
         if doctor_appt == "":
             doctor_appt = None
 
@@ -169,6 +184,7 @@ def child_profile(id):
 
         if situation == "":
             situation = None
+
 
         # seed into database
 
@@ -205,6 +221,7 @@ def child_profile(id):
 # Look up: GET attr
 
 @app.route('/child/edit<int:id>')
+@login_required
 def edit_profile(id):
     """ Edit child profile """
 
@@ -215,6 +232,7 @@ def edit_profile(id):
     return render_template('edit_profile.html', child_info=child_info)
 
 @app.route('/child/add', methods=['GET', 'POST'])
+@login_required
 def add_profile():
 
     """add a child profile"""
@@ -255,6 +273,12 @@ def add_profile():
         if medical_condition == "":
             medical_condition = None
 
+        # if latitude is None:
+        #     latitude = 18.542769
+
+        # if longitude is None:
+        #     longitude = -69.801216
+
 
         # seed into database
         child_entry = Child(pic_url=imgroot, first_name=first_name, last_name=last_name,
@@ -277,11 +301,9 @@ def touch(path):
     with open(path, 'a'):
         os.utime(path, None)
 
-# Adding numbers of trusted users
-
 @app.route('/twilio', methods=['GET', 'POST'])
 def registerbysms():
-
+    callers = secrets.callers
     from_number = request.values.get('From', None)
     body = request.values.get('Body', None)
     nummedia = request.values.get('NumMedia', None)
@@ -300,13 +322,10 @@ def registerbysms():
                     message = "Hi " + callers[from_number] + "! " + "Can you please format the date correctly to: (mm)month-(dd)day-(YYYY)year?"
                 else:
                     imgurl = '../static/images/childphotopreview.png'
-
                     if nummedia and mediaurl is not None:
                         imgurl = mediaurl
-                        # touch(imgurl)
-                        # urllib.urlretrieve(mediaurl, imgurl)
 
-                    child_entry = Child(pic_url=imgurl, first_name=child_first_name, last_name=child_last_name, birth_date=child_birth_date)
+                    child_entry = Child(pic_url=imgurl, first_name=child_first_name, last_name=child_last_name, birth_date=child_birth_date, latitude=18.542769, longitude=-69.801216)
 
                     db.session.add(child_entry)
                     db.session.commit()

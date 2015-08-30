@@ -3,10 +3,9 @@
 <html>
 	<head>
 		<title>Kid-O - Children's overview app for children's aid projects</title>
-		<link rel="stylesheet"
-          href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css"/>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css"/>
         <link rel="stylesheet" href="/static/css/style.css"/>
-
+        <!-- <link rel="stylesheet" href="/static/css/login.css"/> -->
 		<script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
 		<link href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -19,10 +18,13 @@
 
     <body>
     	<div class="container">
+
         <div class="row">
+        {% if current_user.is_authenticated() %} 
     		<div class="addchildicon"><a href="/child/add"><img src="/static/images/addchildicon.png"></a></div>
+        {% endif %}
     	<div id="top">
-    		<h1> Kid-O </h1>
+    		<img src="/static/images/kid-ologo.png" class="logo">
     	</div>
         </div>
     	{% with messages = get_flashed_messages() %}
@@ -38,7 +40,7 @@
 <ul class="nav nav-tabs">
   <li role="presentation"><a href="/overview">Children</a></li>
   <li role="presentation"><a href="#">Profile</a></li>
-  <li role="presentation"><a href="#">Log Out</a></li>
+  <li role="presentation"><a href="/logout">Log Out</a></li>
 </ul>
 </div>
     </body>

@@ -1,6 +1,7 @@
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, DateField, FloatField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Email, Length, ValidationError
+from app import app
 
 def lower(data):
     return data.lower() if data else data
@@ -14,12 +15,17 @@ class SignUpForm(Form):
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
     email = StringField('email', validators=[DataRequired(), Email()], filters=[lower])
     password = PasswordField('password', validators=[DataRequired(), Length(min=6, max=200)])
-    confirm = PasswordField('Repeat Password')
+    confirm = PasswordField('Repeat Password', validators=[DataRequired()])
 
-    # user_entry = User(first_name=first_name, last_name=last_name, email=email, password=password)
+    def validate_confirm(form, field):
+        confirm_value = field.data
+        password_value = form._fields.get('password').data
+        app.logger.debug(confirm_value)
+        app.logger.debug(password_value)
+        if password_value != confirm_value:
+            raise ValidationError('Please type in the same password as in the password field.')
 
-    # db.session.add(user_entry)
-    # db.session.commit()
+
 
 class ChildForm(Form):
     first_name = StringField('first_name', validators=[DataRequired(), Length(max=15)])

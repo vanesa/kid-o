@@ -20,8 +20,6 @@ class SignUpForm(Form):
     def validate_confirm(form, field):
         confirm_value = field.data
         password_value = form._fields.get('password').data
-        app.logger.debug(confirm_value)
-        app.logger.debug(password_value)
         if password_value != confirm_value:
             raise ValidationError('Please type in the same password as in the password field.')
 

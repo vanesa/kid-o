@@ -86,7 +86,6 @@ def signup_form():
 
     form = SignUpForm(request.form)
     next_url = request.form.get('next', '/overview')
-    # app.logger.debug(form.validate())
     if request.method == 'POST' and form.validate():  # Process form if route gets POST request from /index
         next_url = request.form.get('next', '/overview')
         user_data = form.data

@@ -4,7 +4,8 @@
 body {
     background-color: #444;
     background: url(/static/images/kidsdaycare2.jpg);
-    background-size: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
     
 }
 .form-signin input[type="text"], .form-signin input[type="email"] {

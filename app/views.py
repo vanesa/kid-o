@@ -30,18 +30,18 @@ from app.forms import LoginForm, SignUpForm
 
 
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    """" Starting page with either login or personal profile if login session exists.
-    For Log in: take email, password from user and check if credentials exist in the database
-    by checking if email is in the users table. If email in table, redirect to the children overview.
-    If not: redirect to sign up page.
-    """
-    # if current_user.is_authenticated():
-    #     return redirect("/overview")
-    return render_template("index.html")
+# @app.route('/', methods=['GET', 'POST'])
+# def index():
+#     """" Starting page with either login or personal profile if login session exists.
+#     For Log in: take email, password from user and check if credentials exist in the database
+#     by checking if email is in the users table. If email in table, redirect to the children overview.
+#     If not: redirect to sign up page.
+#     """
+#     # if current_user.is_authenticated():
+#     #     return redirect("/overview")
+#     return render_template("index.html")
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     # Here we use a class of some kind to represent and validate our
     # client-side form data. For example, WTForms is a library that will

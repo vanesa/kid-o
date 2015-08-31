@@ -25,6 +25,7 @@ from flask.ext.login import login_required, login_user, logout_user, current_use
 
 from app.models import User, Child, db
 from app import auth 
+from app import settings
 from app.child import ChildView
 from app.forms import LoginForm, SignUpForm
 
@@ -145,7 +146,7 @@ def child_profile(id):
         if file and allowed_file(file.filename):
             # If no image is uploaded, this never passes.
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
             # Save the image path to send to the database
             pic_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
         # get all new data
@@ -244,7 +245,7 @@ def add_profile():
         print "This should be the file: ", file
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
             # Save the image path to send to the database
             imgroot = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
 

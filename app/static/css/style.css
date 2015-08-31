@@ -1,9 +1,8 @@
 @charset "UTF-8";
 /* CSS Document */
 
-#top {
-	margin: auto;
-	width: 100px;
+.toppad {
+	padding-top: 160px;
 }
 
 .info {
@@ -15,12 +14,8 @@
 	margin-top: 0px;
 }
 
-.profile {
-	max-width: 270px;
-}
-
 .images-style {
-	width: 84px;
+	max-height: 250px;
     z-index: 10;
     padding: 5px;
     line-height: 1.42857143;
@@ -72,17 +67,37 @@
 .leftbox, form.leftbox {
 	display: inline-block;
 	text-align: center;
+	max-height: 100%;
 
 }
 
 .rightbox {
 	display: inline-block;
+	vertical-align: top;
 
+}
+
+.ov-rightbox {
+	border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-left: 10px;
+    padding: 10px;
 }
 
 .addchildicon {
 	float: right!important;
-	margin-top: 10px;
+	margin-top: 8px;
+	max-height: 60px;
+	margin-right: 10px;
+	z-index: 10;
+} 
+
+.addchildicon-sm {
+	float: right!important;
+	margin-top: 3px;
+	max-height: 40px;
+	margin-right: 10px;
+	z-index: 10;
 } 
 
 .icons {
@@ -97,17 +112,6 @@
 	border-radius: 3px;
 }
 
-.childrow {
-	background-color: #f0fafe;
-	padding: 5px 5px 0px 5px;
-	border: 1px solid #888888;
-}
-
-.childrow_alert {
-	background-color: #fed1cc;
-	padding: 5px 5px 0px 5px;
-	border: 1px solid #888888;
-}
 
 .alerttext {
 	color: #ff1800;
@@ -132,4 +136,43 @@
 	height: 70px;
 	margin-top: 10px;
 
+}
+
+.logo-sm {
+	height: 35px;
+	margin-top: 6px;
+}
+
+.panel-heading {
+    padding: 1px 15px;
+    }
+
+.panel-footer {
+    padding: 3px 15px;
+    }
+
+.panel-body:
+{
+	max-height: 100%;
+}
+.watercolor {
+	background: url("/static/images/watercolorback.jpg")
+
+}
+
+.row {
+	text-align: center;
+}
+
+.icon-warning {
+	color: #F24E54;
+}
+
+.icon-success {
+	color: #8CC640;
+}
+
+.row{
+	padding-left: 20px;
+	padding-right: 20px;
 }

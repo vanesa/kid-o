@@ -2,7 +2,7 @@
 {% block content %}
 
 {% for child in child_info %}
-<div class="profile">
+<div>
 	<form action="/child/{{child.id}}" class="form-signin" method="POST" enctype="multipart/form-data">
 	<div class="leftbox photobox">
 		<img src="{{child.pic_url}}" id="imgpreview" class="imgpreview" alt="{{child.first_name}}'s photo.">

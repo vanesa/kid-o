@@ -1,36 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="row searchform">
-    <form action="/overview" method="POST" id="searchform">
-  <div class="col-lg-12">
-    <div class="input-group">
-      <input type="text" class="form-control" name="searchform" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="submit">Go!</button>
-      </span>
-    </div>
-    <!-- /input-group -->
-  </div>
-    </form>
-</div>
-<table>
+
+<div class="container">
 	{% for child in child_profiles %}
-	<tr>
-		<td class="{% if child.pic_url is none %}childrow_alert{% elif child.home_visit is none %}childrow_alert{% elif child.situation is none %}childrow_alert{% elif child.medical_condition and child.doctor_appt is none %}childrow_alert{% elif child.doctor_appt and child.medical_condition is none %}childrow_alert{% else %}childrow{% endif %}">
+	<div class="panel {% if child.pic_url is none %}panel-danger% elif child.home_visit is none %}panel-danger{% elif child.situation is none %}panel-danger{% elif child.medical_condition and child.doctor_appt is none %}panel-danger{% elif child.doctor_appt and child.medical_condition is none %}panel-danger{% else %}panel-success{% endif %}">
+			<div class="panel-heading">
+				<h4>{{ child.first_name}} {{ child.last_name }}</h4>
+			</div>
+			<div class="panel-body">
 			{% if child.pic_url %}
 			<div class="leftbox"><a href="../child/{{child.id}}"><img src="{{child.pic_url}}" class="images-style"></a></div>
 			{% else %}
 			<div class="leftbox"><a href="../child/{{child.id}}"><img src="/static/images/childphotopreview.png" class="images-style"></a></div>
 			{% endif %}
-			<div class="info rightbox"> 
-				<h4>{{ child.first_name}} {{ child.last_name }}</h4>
-				<p>{{ child.age }} years old,</p>
-				<p>Birth date: {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
-				<p>{% if child.pic_url == "../static/images/childphotopreview.png" %} <img src="/static/images/photoiconunchecked.png" class="iconsalert">{% elif child.pic_url %}<img src="/static/images/photoiconchecked.png" class="icons">{% else %}<img src="/static/images/photoiconunchecked.png" class="iconsalert"> {% endif %} {% if child.situation %}<img src="/static/images/infoiconchecked.png" class="icons"> {% else %}<img src="/static/images/infoiconunchecked.png" class="iconsalert"> {% endif %} {% if child.home_visit %}<img src="/static/images/homeiconchecked.png" class="icons"> {% else %}<img src="/static/images/homeiconunchecked.png" class="iconsalert"> {% endif %} {% if child.doctor_appt is none and child.medical_condition %} <img src="/static/images/mediconunchecked.png" class="iconsalert"> {% elif child.medical_condition is none and child.doctor_appt %} <img src="/static/images/mediconunchecked.png" class="iconsalert">{% elif child.doctor_appt %}<img src="/static/images/mediconchecked.png" class="icons">{% else %} {% endif %}</p>
+			<div class="info rightbox ov-rightbox"> 
+				<p><strong>Age: </strong>{{ child.age }} years old</p>
+				<p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
+				<p><strong>Situation:</strong> {{ child.situation }}</p>
 			</div>
-		</td>
-	</tr>
+			
+		</div>
+		<div class="panel-footer">{% if child.pic_url == "../static/images/childphotopreview.png" %} <i class="fa fa-camera-retro fa-fw icon-warning fa-2x"></i>{% elif child.pic_url %}<i class="fa fa-camera-retro fa-fw icon-success fa-2x"></i>{% else %}<i class="fa fa-camera-retro fa-fw icon-warning fa-2x"></i> {% endif %}
+
+		{% if child.situation %}<i class="fa fa-list fa-fw icon-success fa-2x"></i>{% else %}<i class="fa fa-list fa-fw icon-warning fa-2x"></i></i> {% endif %}
+
+		{% if child.home_visit %}<i class="fa fa-home fa-fw icon-success fa-2x"></i> {% else %}<i class="fa fa-home fa-fw icon-warning fa-2x"></i>{% endif %}
+
+		{% if child.doctor_appt is none and child.medical_condition %} <i class="fa fa-medkit fa-fw icon-warning fa-2x"></i> {% elif child.medical_condition is none and child.doctor_appt %} <i class="fa fa-medkit fa-fw icon-warning fa-2x"></i>{% elif child.doctor_appt %}<i class="fa fa-medkit fa-fw icon-success fa-2x"></i>{% else %} {% endif %}
+			</div>
+	</div>
 	{% endfor %}
-</table>
+</div>
 <script src="/static/js/overview.js"></script>
 {% endblock %}

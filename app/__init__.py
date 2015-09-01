@@ -6,6 +6,7 @@ from flask.ext.login import LoginManager
 
 
 app = Flask(__name__)
+from .models import db
 
 app.config.from_object('app.settings')
 

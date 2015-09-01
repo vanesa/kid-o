@@ -8,8 +8,10 @@
         <script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
         <link href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" src="../static/bootstrap-filestyle.min.js"> </script>
+        <script type="text/javascript" src="/static/bootstrap-filestyle.min.js"> </script>
+        <script src="/static/js/overview.js"></script>
         <link rel="stylesheet" href="/static/css/font-awesome/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/animate.css"/>
         <link rel="stylesheet" href="/static/css/style.css"/>
 		<style>
 			body { margin:0; padding:0; }
@@ -18,20 +20,19 @@
     </head>
 
     <body class="toppad">
-    	<div class="container">
+    	
 
         <nav class="navbar navbar-default navbar-fixed-top row">
-            <a href="/overview">
-        		<img src="/static/images/kid-ologo.png" class="logo">
-            </a>
+            <!-- <div class="logobox"> -->
+                <a href="/overview" class="logolink">
+            		<img src="/static/images/kid-ologo.png" class="logo">
+                </a>
+            <!-- </div> -->
             {% if current_user.is_authenticated() %} 
             <div class="addchildicon"><a href="/child/add"><img src="/static/images/addchildicon.png" class="addchildicon"></a></div>
             {% endif %}
-        <!-- <div id="top"> -->
-    	<!-- </div> -->
-            <div class="row searchform">
                 <form action="/overview" method="POST" id="searchform">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 searchform">
                         <div class="input-group">
                             <input type="text" class="form-control" name="searchform" placeholder="Search for...">
                             <span class="input-group-btn">
@@ -41,9 +42,8 @@
             <!-- /input-group -->
                     </div>
                 </form>
-            </div>
         </nav>
-
+<div class="container">
     	{% with messages = get_flashed_messages() %}
     		{% if messages %}
     			{% for message in messages %}
@@ -54,11 +54,14 @@
 
     	{%block content %} here goes the content {% endblock %}
 
-<ul class="nav nav-tabs">
-  <li role="presentation"><a href="/overview">Children</a></li>
-  <li role="presentation"><a href="#">Profile</a></li>
-  <li role="presentation"><a href="/logout">Log Out</a></li>
-</ul>
+<nav class="nav nav-tabs navbar-fixed-bottom bottomnav">
+          <li role="presentation"><a href="/overview"><button type="button" class="btn btn-warning">
+  <span class="fa fa-child" aria-hidden="true"></span> Children
+</button></a></li>
+          <li role="presentation"><a href="/logout"><button type="button" class="btn btn-danger">
+  <span class="fa fa-paper-plane" aria-hidden="true"></span> Log Out
+</button></a></li>
+</nav>
 </div>
     </body>
 </html>

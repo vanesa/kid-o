@@ -6,6 +6,7 @@ body {
     background: url(/static/images/kidsdaycare2.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     
 }
 .form-signin input[type="text"], .form-signin input[type="email"] {

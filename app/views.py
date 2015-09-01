@@ -69,7 +69,9 @@ def login():
         # Show error message ('Incorrect password.')
         form.errors["password"] = ["Incorrect password"]
 
-    return render_template("login.html", form=form, next=next_url)
+    print "Check these out: ", form.errors, form.validate(), request.method
+    status_code = 400 if form.errors else 200
+    return render_template("login.html", form=form, next=next_url), status_code
 
 @app.route("/logout")
 @login_required

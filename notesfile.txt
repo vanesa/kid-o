@@ -25,16 +25,17 @@ Children's aid projects often struggle with maintaining a clear overview of the 
 
 ********* MVP *********
 
-- Model py
+- Models py
 	(x) create tables
-- Server.py
-	(.) create routes
+- Views.py
+	(x) create routes
 
 - Templates
 	(x) create HTML for routes
 
 - Signup page
 	(x) create forms
+	(x) validate forms with WTforms
 	() authentification with e.g. Flask Auth
 
 - Children profile show
@@ -53,7 +54,6 @@ Children's aid projects often struggle with maintaining a clear overview of the 
  	() Option of delete Profile with Alert <are you sure????>
 
 - Create profile
-	() Verify existence of child
 	(x) Create the forms
  	() Verify data (check that all fields are filled out)
  	(x) Clicking submit is going to create data in data base
@@ -61,15 +61,26 @@ Children's aid projects often struggle with maintaining a clear overview of the 
  	(x) Upload Photo option
  	(x) Option to Cancel
 
-.....
-
 - Image
 	(x) Upload to disk
-......
+
+- Mapbox.js
+	(x) Show location of child
+	(x) Save location of child
+	(x) Edit location of child
+
+- Twilio API
+	(x) Create a child's profile through SMS
+	(x) Create a child's profile including a photo of the child through SMS/MMS
 
  - Bootstrap
  	(x) responsive
 
+- Add Tooltips Bootstrap that appear when hovering over the icons
+
+- Add Bootstrap calender picker
+
+- Filter out children who's profile aren't complete
 ......
 
 Add more children to the database
@@ -84,11 +95,15 @@ FIX LOGIN! MAKE SESSIONS WORK! Depending if in session or not
 
 
 ********* EXTRA FEATURES IN SCOPE *********
+- Add a ? Section in a Modal Box for first time users.
+	() Add modal box
 
  - Add Siblings
  	() relationship solution
  	() Link to profile page
 
+- Creating a child profile 
+	() Verify existence of child
 - Image 
 	() Amazon S3 or Dropbox API (or others)
 
@@ -100,15 +115,7 @@ FIX LOGIN! MAKE SESSIONS WORK! Depending if in session or not
 - Search function
 	(x) First name, Last name, or both.
 	() specialized full-text search option handling: stemming, thesaurus, sounds-like
-	(x) Make a dynamic search (load while typing)
-
-- Mapbox.js
-	(x) Show location of child
-	(x) Save location of child
-
-- Twilio API
-	(x) Create a child's profile through SMS
-	(x) Create a child's profile including a photo of the child through SMS/MMS
+	() Make a dynamic search (load while typing)
 
 - LazyLoad
 	() Do this

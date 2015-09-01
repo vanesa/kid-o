@@ -3,7 +3,7 @@
 
 <div class="container">
 	{% for child in child_profiles %}
-	<div class="panel {% if child.pic_url is none %}panel-danger% elif child.home_visit is none %}panel-danger{% elif child.situation is none %}panel-danger{% elif child.medical_condition and child.doctor_appt is none %}panel-danger{% elif child.doctor_appt and child.medical_condition is none %}panel-danger{% else %}panel-success{% endif %}">
+	<div class="panel {% if child.pic_url is none %}panel-danger{% elif child.home_visit is none %}panel-danger{% elif child.situation is none %}panel-danger{% elif child.medical_condition and child.doctor_appt is none %}panel-danger{% elif child.doctor_appt and child.medical_condition is none %}panel-danger{% else %}panel-success{% endif %}">
 			<div class="panel-heading">
 				<h4>{{ child.first_name}} {{ child.last_name }}</h4>
 			</div>
@@ -17,6 +17,9 @@
 				<p><strong>Age: </strong>{{ child.age }} years old</p>
 				<p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
 				<p><strong>Situation:</strong> {{ child.situation }}</p>
+				<a href="../child/{{child.id}}"><button type="button" class="btn btn-warning btn-sm">
+  				<span class="fa fa-child" aria-hidden="true"></span> View profile
+				</button></a>
 			</div>
 			
 		</div>
@@ -31,5 +34,4 @@
 	</div>
 	{% endfor %}
 </div>
-<script src="/static/js/overview.js"></script>
 {% endblock %}

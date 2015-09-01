@@ -5,8 +5,8 @@ $('#searchform input[name="searchform"]').on("keyup", function(e) {
 
 $(window).scroll(function() {
   if ($(document).scrollTop() > 50) {
-    $('nav').addClass('shrink');
+    $('nav.navbar').addClass('shrink');
   } else {
-    $('nav').removeClass('shrink');
+    $('nav.navbar').removeClass('shrink');
   }
 });

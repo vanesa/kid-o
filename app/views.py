@@ -46,7 +46,6 @@ from app.forms import LoginForm, SignUpForm
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
-     index():
     """ Starting page with login.
 
     For Log in: take email, password from user and check if credentials exist in the database

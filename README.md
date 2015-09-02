@@ -168,7 +168,7 @@ Using CSS3, I customized the checkboxes and select dropdowns.  I didn't like the
 
 I used Bootstrap for certain things, like button shapes and the navbar, but found its responsive elements restrictive.  Because of this, I custom coded all the responsive design seen on the site (with the exception of the navbar).
 
-#### JQuery
+##### JQuery
 I used JQuery to dynamically shrink the navbar header on scroll by adding a CSS class to the nav element. I also used JQuery to allow the user to drop a pin on the home location of the child in the map.
 
 ##### Code structure

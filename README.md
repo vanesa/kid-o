@@ -24,7 +24,7 @@ Overview
 ----------------
 
 Kid-O solves these common problems for aid workers:
-* keeping acccurate and up-to-date information about each child in a central sharable CMS
+* keeping accurate and up-to-date information about each child in a central sharable CMS
 * managing child profiles without internet access (via SMS)
 * structures a child's information in an easily editable format
 * organizes information such as name, age, home situation, etc.

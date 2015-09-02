@@ -118,17 +118,20 @@
 
 .alerttext {
 	color: #ff1800;
-	font-size: 0.8em;
 }
 
 /* Image preview */
 .imgpreview {
 	opacity: 0.6;
-	width: 84px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	margin-bottom: 5px;
+	margin-bottom: 20px;
+	max-height: 250px;
+}
+
+div.bootstrap-filestyle.input-group {
+	max-width: 250px;
 }
 
 .searchform {
@@ -263,6 +266,16 @@ nav.shrink div.searchform {
 .animated3 {
 	color: #888888;
 	background-image: -webkit-linear-gradient(92deg,#FCD036,#119BD1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+}
+
+
+
+.animated4 {
+	color: #888888;
+	background-image: -webkit-linear-gradient(92deg,#34475f,#119BD1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-animation: hue 60s infinite linear;

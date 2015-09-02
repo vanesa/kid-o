@@ -30,7 +30,6 @@ from app.child import ChildView
 from app.forms import LoginForm, SignUpForm
 
 
-
 # @app.route('/', methods=['GET', 'POST'])
 # def index():
 #     """" Starting page with either login or personal profile if login session exists.
@@ -166,25 +165,25 @@ def child_profile(id):
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
 
-        if guardian_type == "":
+        if guardian_type == '':
             guardian_type = None
 
-        if guardian_fname == "":
+        if guardian_fname == '':
             guardian_fname = None
 
-        if guardian_lname == "":
+        if guardian_lname == '':
             guardian_lname = None
 
-        if doctor_appt == "":
+        if doctor_appt == '':
             doctor_appt = None
 
-        if home_visit == "":
+        if home_visit == '':
             home_visit = None
 
-        if medical_condition == "":
+        if medical_condition == '':
             medical_condition = None
 
-        if situation == "":
+        if situation == '':
             situation = None
 
 
@@ -244,8 +243,9 @@ def add_profile():
         # Upload image 
         # import pdb; pdb.set_trace()
         file = request.files['file']
-        print "This should be the file: ", file
+        imgroot = ''
         if file and allowed_file(file.filename):
+            print "This should be the file: ", file
             filename = secure_filename(file.filename)
             file.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
             # Save the image path to send to the database
@@ -265,21 +265,24 @@ def add_profile():
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
 
-        # Wordaround to avoid syntax errors for empty fields
-        if doctor_appt == "":
+        # Workaround to avoid syntax errors for empty fields
+        if doctor_appt == '':
             doctor_appt = None
 
-        if home_visit == "":
+        if home_visit == '':
             home_visit = None
 
-        if medical_condition == "":
+        if medical_condition == '':
             medical_condition = None
 
-        # if latitude is None:
-        #     latitude = 18.542769
+        if imgroot == '':
+            imgroot = None
 
-        # if longitude is None:
-        #     longitude = -69.801216
+        if latitude == '':
+            latitude = 18.542769
+
+        if longitude == '':
+            longitude = -69.801216
 
 
         # seed into database
@@ -287,6 +290,7 @@ def add_profile():
                             birth_date=birth_date, guardian_type=guardian_type, guardian_fname=guardian_fname,
                             guardian_lname=guardian_lname, medical_condition=medical_condition, doctor_appt=doctor_appt, situation=situation,
                             home_visit=home_visit, latitude=latitude, longitude=longitude)
+        
         db.session.add(child_entry)
         db.session.commit()
 

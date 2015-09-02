@@ -18,7 +18,7 @@ map.on('click', function(e) {
     }),
     draggable: false
 });
-    marker.bindPopup('This marker is draggable! Move it around.');
+    marker.bindPopup("Child's home location.");
        
        marker.addTo(map);
    	   clicked = true;

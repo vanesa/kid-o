@@ -16,7 +16,7 @@
 			<div class="info rightbox ov-rightbox"> 
 				<p><strong>Age: </strong>{{ child.age }} years old</p>
 				<p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
-				<p><strong>Situation:</strong> {{ child.situation }}</p>
+				{% if child.situation %}<p><strong>Situation:</strong> {{ child.situation }}</p>{% else %} {% endif %}
 				<a href="../child/{{child.id}}"><button type="button" class="btn btn-warning btn-sm">
   				<span class="fa fa-child" aria-hidden="true"></span> View profile
 				</button></a>

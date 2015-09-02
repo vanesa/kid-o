@@ -9,7 +9,7 @@ class ChildViewTestCase(unittest.TestCase):
     def test_child_view(self):
         first_name = "Martha"
         last_name = "Sosa"
-        birth_date= datetime.strptime("2009-02-02", "%Y-%m-%d")
+        # birth_date= datetime.strptime("2009-02-02", "%Y-%m-%d")
 
         child = Child(first_name=first_name, last_name=last_name, birth_date=birth_date)
 

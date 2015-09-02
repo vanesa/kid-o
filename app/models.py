@@ -2,13 +2,17 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
+from flask.ext.bcrypt import Bcrypt
 
+from . import app
 
 # This is the connection to the SQLite database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
 # object, where we do most of our interactions (like committing, etc.)
 
 db = SQLAlchemy()
+
+bcrypt = Bcrypt(app)
 
 ########
 
@@ -29,6 +33,11 @@ class User(db.Model):
     email = db.Column(db.String(64), nullable=True)
     password = db.Column(db.String(64), nullable=True)
 
+    def __init__(self, **kwargs):
+        if 'password' in kwargs:
+            kwargs['password'] = bcrypt.generate_password_hash(kwargs['password'])
+        super(User, self).__init__(**kwargs)
+
     def __repr__(self):
         """Provide helpful representation when printed."""
         return "<User id=%s first_name=%s last_name=%s email=%s password=%s>" % (self.id, self.first_name, self.last_name, self.email, self.password)
@@ -44,6 +53,14 @@ class User(db.Model):
     
     def get_id(self):
         return unicode(self.id)
+
+    def set_password(self, password):
+        self.password = bcrypt.generate_password_hash(password)
+
+    def check_password(self, password):
+        """ Returns True if the password is correct for the user.
+        """
+        return bcrypt.check_password_hash(self.password, password)
     
 
 class Child(db.Model):

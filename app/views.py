@@ -54,7 +54,7 @@ def login():
         # credentials = (form.data['email'], form.data['password'])
 
         user = User.query.filter_by(email=form.data['email']).first()
-        if user and user.password == form.data['password']:
+        if user and user.check_password(form.data['password']):
             login_user(user)
             if not auth.is_safe_url(next_url):
                 return abort(400)

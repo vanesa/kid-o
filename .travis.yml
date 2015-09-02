@@ -5,6 +5,6 @@ python:
 install:
     - travis_retry pip install --use-mirrors -r requirements.txt
 # command to run tests
-script: test.py
+script: ./test.py
 # use new travis-ci container-based infrastructure 
 sudo: false

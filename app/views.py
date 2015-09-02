@@ -46,9 +46,13 @@ from app.forms import LoginForm, SignUpForm
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
-    # Here we use a class of some kind to represent and validate our
-    # client-side form data. For example, WTForms is a library that will
-    # handle this for us.
+     index():
+    """ Starting page with login.
+
+    For Log in: take email, password from user and check if credentials exist in the database
+    by checking if email is in the users table. If email in table, redirect to the children overview.
+    If not: redirect to sign up page. WTForms validates the form. 
+    """
 
     form = LoginForm(request.form)
     next_url = request.args.get('next', '/overview')
@@ -71,7 +75,6 @@ def login():
         # Show error message ('Incorrect password.')
         form.errors["password"] = ["Incorrect password"]
 
-    print "Check these out: ", form.errors, form.validate(), request.method
     status_code = 400 if form.errors else 200
     return render_template("login.html", form=form, next=next_url), status_code
 

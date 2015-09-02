@@ -279,10 +279,10 @@ def add_profile():
             imgroot = None
 
         if latitude == '':
-            latitude = 18.542769
+            latitude = None
 
         if longitude == '':
-            longitude = -69.801216
+            longitude = None
 
 
         # seed into database

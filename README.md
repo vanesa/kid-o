@@ -53,39 +53,39 @@ Mapbox.js(OpenStreetMaps), Twilio.
 Features
 -------------------
 
-[X] Shows children's profiles
+- [x] Shows children's profiles
 
-[X] Previews and uploads images
+- [x] Previews and uploads images
 
-[X] Saves new or updated home location data from the map into the database and show it on the map.
+- [x] Saves new or updated home location data from the map into the database and show it on the map.
 
-[X] Flask app routes requests to the database and manages form validation via Flask-WTForms.
+- [x] Flask app routes requests to the database and manages form validation via Flask-WTForms.
 
-[X] Enables search by first-, last-, both names or part of the name.
+- [x] Enables search by first-, last-, both names or part of the name.
 
 
 ##### Security with Bcrypt and Flask-Login
-[X] Encrypt and verify user passwords using hashes.
+- [x] Encrypt and verify user passwords using hashes.
 
-[X] Secure user sessions let users stay logged in.
+- [x] Secure user sessions let users stay logged in.
 
 
 ##### APIs
-[X] Twilio API integration allows users to create new child profiles through a text message, including the photo of the child(through MMS). No internet is required.
+- [x] Twilio API integration allows users to create new child profiles through a text message, including the photo of the child(through MMS). No internet is required.
 
 
 ##### Data visualization and interaction
-[X] Shows what information is missing from the child's profile in the overview page.
+- [x] Shows what information is missing from the child's profile in the overview page.
 
-[X] Requests missing information in the child's profile.
+- [x] Requests missing information in the child's profile.
 
-[X] Child's home location shown and editable on a map.
+- [x] Child's home location shown and editable on a map.
 
-[X] Child's age is calculated from their birth date.
+- [x] Child's age is calculated from their birth date.
 
-[X] Users can preview the image that will be uploaded to the child's profile.
+- [x] Users can preview the image that will be uploaded to the child's profile.
 
-[X] Custom responsive web design (RWD) using CSS3.
+- [x] Custom responsive web design (RWD) using CSS3.
 
 
 ### In-depth use cases

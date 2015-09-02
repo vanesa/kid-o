@@ -19,4 +19,5 @@ class ChildViewTestCase(unittest.TestCase):
 
 
 if __name__ == "__main__":
+	app.testing = True
     unittest.main()

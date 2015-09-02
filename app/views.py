@@ -3,7 +3,10 @@ from app import app
 from datetime import datetime, timedelta
 import re
 import os
-import secrets
+try:
+    import secrets
+except ImportError:
+    pass
 from sqlalchemy import or_, and_
 from twilio import twiml
 import urllib

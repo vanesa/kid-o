@@ -12,12 +12,10 @@ Check out my [LinkedIn](https://www.linkedin.com/in/vanesaortiz) profile for mor
 - [Overview](#overview)
 - [Technologies & Stack](#technologies-and-stack)
 - [Features](#features)
+	- [In-depth use cases](#in-depth-use-cases)
 - [Future plans](#future-plans)
 - [Technical choices](#technical-choices)
 - [Screenshots](#screenshots)
-	- [User actions](#user-actions)
-	- [Responsive design](#responsive-design)
-	- [Twilio Demo](#twilio-demo)
 - [Forking](#forking)
 
 
@@ -90,7 +88,7 @@ Features
 [X] Custom responsive web design (RWD) using CSS3.
 
 
-### In-Depth Use cases
+### In-depth use cases
 
 #### Overview page
 - List's a short preview of the children's profiles

@@ -25,7 +25,7 @@
                         </div>
                         <div class="panel-body">
                             <form accept-charset="UTF-8" role="form" class="form-signin" method="POST">
-                                    
+                                    {{ form.csrf_token }}
                                     <input type="hidden" name="next" value="{{ next }}">
                                 <fieldset>
                                     <label class="panel-login">

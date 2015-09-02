@@ -25,7 +25,7 @@
 			{% if child.guardian_lname %}
 			<input type="text" name="guardian_lname" value="{{child.guardian_lname}}" placeholder="{{child.guardian_lname}}" class="form-control addchildinput"><br />
 			{% else %}
-			<input type="text" name="guardian_lname" placeholder="Guardian last name"><br />
+			<input type="text" name="guardian_lname" placeholder="Guardian last name" class="form-control addchildinput"><br />
 			{% endif %}
 		</div>
 		<div class="lowerform">
@@ -54,8 +54,8 @@
 			{% else %}
 			<input type="text" name="home_visit" placeholder="YYYY-M-D" class="form-control addchildinput"><br />
 			{% endif %}
-			<input type="text" id="lat" name="latitude" class="hidden" value="{{child.latitude}}" class="form-control addchildinput">
-			<input type="text" id="lng" name="longitude" class="hidden" value="{{child.longitude}}" class="form-control addchildinput">
+			<input type="text" id="lat" name="latitude" class="hidden" value="{{child.latitude}}">
+			<input type="text" id="lng" name="longitude" class="hidden" value="{{child.longitude}}">
 			<h3> Home Location </h3>
 			<div class="mapcontainer">
 			<div id="map"></div>

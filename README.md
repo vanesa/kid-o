@@ -1,7 +1,9 @@
 # Kid-O
-================
+----------------
 
 [![Build Status](https://travis-ci.org/vanesa/kid-o.svg?branch=master)](https://travis-ci.org/vanesa/kid-o)
+
+![Kid-O](app/static/images/kid-ologo.png "Kid-O")
 
 Kid-O helps Non-Profit children’s aid orgs keep an overview of their children.  
 
@@ -185,7 +187,7 @@ Screenshots
 -----------------------
 
 ###### Overview of the children
-![Overview of the children](screenshots/overview1.jpg "Missing Info")
+![Overview of the children](screenshots/overview1.jpg "Children's overview")
 
 ###### Display of missing information on the child profile preview
 ![Display of missing information on the child profile preview](screenshots/overview2.jpg "Missing Info")

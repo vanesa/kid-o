@@ -120,6 +120,12 @@
 	color: #ff1800;
 }
 
+/* Tooltip background color on Overview page */
+
+.tooltip-inner {
+	background-color: #34485f;
+}
+
 /* Image preview */
 .imgpreview {
 	opacity: 0.6;

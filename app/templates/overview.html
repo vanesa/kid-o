@@ -23,13 +23,13 @@
 			</div>
 			
 		</div>
-		<div class="panel-footer">{% if child.pic_url == "../static/images/childphotopreview.png" %} <i class="fa fa-camera-retro fa-fw icon-warning fa-2x"></i>{% elif child.pic_url %}<i class="fa fa-camera-retro fa-fw icon-success fa-2x"></i>{% else %}<i class="fa fa-camera-retro fa-fw icon-warning fa-2x"></i> {% endif %}
+		<div class="panel-footer">{% if child.pic_url == "../static/images/childphotopreview.png" %} <i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload {{child.first_name}}'s photo!"></i>{% elif child.pic_url %}<i class="fa fa-camera-retro fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Photo available."></i>{% else %}<i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload photo!"></i> {% endif %}
 
-		{% if child.situation %}<i class="fa fa-list fa-fw icon-success fa-2x"></i>{% else %}<i class="fa fa-list fa-fw icon-warning fa-2x"></i></i> {% endif %}
+		{% if child.situation %}<i class="fa fa-list fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Situation info available."></i>{% else %}<i class="fa fa-list fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please add missing info about {{child.first_name}}'s situation!"></i></i> {% endif %}
 
-		{% if child.home_visit %}<i class="fa fa-home fa-fw icon-success fa-2x"></i> {% else %}<i class="fa fa-home fa-fw icon-warning fa-2x"></i>{% endif %}
+		{% if child.home_visit %}<i class="fa fa-home fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Home visit appointment available"></i> {% else %}<i class="fa fa-home fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please add a home visit appointment!"></i>{% endif %}
 
-		{% if child.doctor_appt is none and child.medical_condition %} <i class="fa fa-medkit fa-fw icon-warning fa-2x"></i> {% elif child.medical_condition is none and child.doctor_appt %} <i class="fa fa-medkit fa-fw icon-warning fa-2x"></i>{% elif child.doctor_appt %}<i class="fa fa-medkit fa-fw icon-success fa-2x"></i>{% else %} {% endif %}
+		{% if child.doctor_appt is none and child.medical_condition %} <i class="fa fa-medkit fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please add a doctors appointment!"></i> {% elif child.medical_condition is none and child.doctor_appt %} <i class="fa fa-medkit fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please missing medical condition!"></i>{% elif child.doctor_appt %}<i class="fa fa-medkit fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Doctor's appointment available."></i>{% else %} {% endif %}
 			</div>
 	</div>
 	{% endfor %}

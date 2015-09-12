@@ -73,8 +73,8 @@ var marker;
 var clicked = false;
 
 
-marker = L.marker(new L.LatLng({{child.latitude}}, {{child.longitude}}));
-console.log({{child.latitude}}, {{child.longitude}});
+marker = L.marker(new L.LatLng({% if child.latitude and child.longitude %}{{ child.latitude}}, {{child.longitude}}{% else %}18.542769, -69.801216{% endif %}));
+console.log({% if child.latitude and child.longitude %}{{ child.latitude}}, {{child.longitude}}{% else %}18.542769, -69.801216{% endif %});
 marker.addTo(map);
 
 map.on('click', function(e) {

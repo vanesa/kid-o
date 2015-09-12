@@ -68,7 +68,6 @@ def login():
             return redirect(next_url or '/overview')
 
         if not user:
-            flash('Please sign up!')
             return redirect('/signup')
 
         # Show error message ('Incorrect password.')

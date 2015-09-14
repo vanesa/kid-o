@@ -83,6 +83,7 @@ class Child(db.Model):
     home_visit = db.Column(db.DateTime, nullable=True)
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)
+    activity = db.Column(db.Boolean, nullable=True)
 
 
     def __repr__(self):

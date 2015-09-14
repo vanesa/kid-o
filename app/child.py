@@ -28,6 +28,7 @@ class ChildView:
         self.home_visit = child.home_visit
         self.latitude = child.latitude
         self.longitude = child.longitude
+        self.activity = child.activity
 
         # import pdb; pdb.set_trace()
 

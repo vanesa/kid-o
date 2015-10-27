@@ -53,6 +53,8 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
 var map = L.mapbox.map('map', 'mapbox.streets')
     .setView([{% if child.latitude and child.longitude %}{{ child.latitude}}, {{child.longitude}}{% else %}18.542769, -69.801216{% endif %}], 15);
+// Disable the scroll Zoom
+    map.scrollWheelZoom.disable();
 L.mapbox.featureLayer({
     // this feature is in the GeoJSON format: see geojson.org
     // for the full specification

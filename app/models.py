@@ -7,7 +7,7 @@ import os
 
 from . import app
 
-# This is the connection to the SQLite database; we're getting this through
+# This is the connection to the postgres database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
 # object, where we do most of our interactions (like committing, etc.)
 
@@ -91,7 +91,7 @@ class Child(db.Model):
 
         return "<Child id=%s first_name=%s last_name=%s>" % (self.id, self.first_name, self.last_name)
 
-    # Add here a model to calculate age?
+# Search function 
 
     @hybrid_property
     def fullname(self):
@@ -123,7 +123,7 @@ class Child(db.Model):
 def connect_to_db(app):
     """Connect the database to our Flask app."""
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/kid-o'
     db.app = app
     db.init_app(app)
 

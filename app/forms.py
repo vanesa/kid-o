@@ -38,15 +38,3 @@ class ChildForm(Form):
     home_visit = DateField('home_visit')
     latitude = FloatField('latitude')
     longitude = FloatField('longitude')
-
-
-    # birth_date = request.form.get("birth_date")
-    # guardian_type = request.form.get("guardian_type")
-    # guardian_fname = request.form.get("guardian_fname")
-    # guardian_lname = request.form.get("guardian_lname")
-    # medical_condition = request.form.get("medical_condition")
-    # doctor_appt = request.form.get("doctor_appt")
-    # situation = request.form.get("situation")
-    # home_visit = request.form.get("home_visit")
-    # latitude = request.form.get("latitude")
-    # longitude = request.form.get("longitude")

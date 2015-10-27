@@ -33,16 +33,11 @@ from app.child import ChildView
 from app.forms import LoginForm, SignUpForm
 
 
-# @app.route('/', methods=['GET', 'POST'])
-# def index():
-#     """" Starting page with either login or personal profile if login session exists.
-#     For Log in: take email, password from user and check if credentials exist in the database
-#     by checking if email is in the users table. If email in table, redirect to the children overview.
-#     If not: redirect to sign up page.
-#     """
-#     # if current_user.is_authenticated():
-#     #     return redirect("/overview")
-#     return render_template("index.html")
+"""" Starting page with login.
+For Log in: take email, password from user and check if credentials exist in the database
+by checking if email is in the users table. If email in table, redirect to the children overview.
+If not: redirect to sign up page.
+"""
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -57,14 +52,12 @@ def login():
     next_url = request.args.get('next', '/overview')
     if request.method == 'POST' and form.validate(): # Process form if route gets POST request from /index
         next_url = request.form.get('next', '/overview')
-        # credentials = (form.data['email'], form.data['password'])
-
         user = User.query.filter_by(email=form.data['email']).first()
         if user and user.check_password(form.data['password']):
             login_user(user)
             if not auth.is_safe_url(next_url):
                 return abort(400)
-            app.logger.info(next_url)
+            app.logger.debug(next_url)
             return redirect(next_url or '/overview')
 
         if not user:
@@ -115,10 +108,7 @@ def show_overview():
         child_search = request.form.get('searchform')
         #  split string and if statement len 1, 2, 3 query.
         found_children = Child.query.filter(Child.fullname.ilike("%"+child_search+"%")).all()
-        child_views = []
-
-        for child in found_children:
-            child_views.append(ChildView(child))
+        child_views = [ChildView(child) for child in found_children]
 
         if request.headers.get('Accept') == 'json':
             return jsonify(profiles=[x.to_dict() for x in child_views])
@@ -127,10 +117,7 @@ def show_overview():
 
     else:
         all_children = Child.query.order_by(Child.last_name.asc()).all()
-        child_views = []
-
-        for child in all_children:
-            child_views.append(ChildView(child))
+        child_views = [ChildView(child) for child in all_children]
 
         return render_template('overview.html', child_profiles=child_views)
 
@@ -268,6 +255,7 @@ def add_profile():
         home_visit = request.form.get("home_visit")
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
+        activity = True
 
         # Workaround to avoid syntax errors for empty fields
         if doctor_appt == '':
@@ -293,7 +281,7 @@ def add_profile():
         child_entry = Child(pic_url=imgroot, first_name=first_name, last_name=last_name,
                             birth_date=birth_date, guardian_type=guardian_type, guardian_fname=guardian_fname,
                             guardian_lname=guardian_lname, medical_condition=medical_condition, doctor_appt=doctor_appt, situation=situation,
-                            home_visit=home_visit, latitude=latitude, longitude=longitude)
+                            home_visit=home_visit, latitude=latitude, longitude=longitude, activity=activity)
         
         db.session.add(child_entry)
         db.session.commit()
@@ -307,7 +295,7 @@ def add_profile():
         return render_template('add_profile.html')
 
 def touch(path):
-    # create empty file for image#
+    # create empty file for image
     with open(path, 'a'):
         os.utime(path, None)
 

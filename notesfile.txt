@@ -134,3 +134,14 @@ FIX LOGIN! MAKE SESSIONS WORK! Depending if in session or not
 
 PostgreSQL: Use Array for sibling ids? Look up each sibling through child table: If not in table, just show as string?
 
+
+#####################
+# Add-ons Dominiño #
+###################
+
+- Add Godparents database table with relationship to children
+- Add a messaging system between Godparents and children, including a history
+- Add alerts in chidlren profiles if there hasn't been communation with the Godparents for a specific period of time
+- Visualize children on map that live in the same neighbourhood
+
+

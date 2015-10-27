@@ -1,7 +1,8 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
 var map = L.mapbox.map('map', 'mapbox.streets')
     .setView([18.542769, -69.801216],16);
-
+// Disable the scroll Zoom
+    map.scrollWheelZoom.disable();
 var marker;
 var clicked = false;
 

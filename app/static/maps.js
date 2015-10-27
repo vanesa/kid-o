@@ -1,7 +1,8 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
-var map = L.mapbox.map('map', 'mapbox.streets')
-    .setView([37.9, -77],4);
-
+var map = L.mapbox.map('map', 'mapbox.streets', {
+  zoomControl: false }).setView([37.9, -77],4);
+// Disable the scroll Zoom
+    map.scrollWheelZoom.disable();
 var marker = L.marker(new L.LatLng(37.9, -77), {
     icon: L.mapbox.marker.icon({
         'marker-color': 'ff8888'
@@ -9,7 +10,8 @@ var marker = L.marker(new L.LatLng(37.9, -77), {
     draggable: true
 });
 
-marker.bindPopup('This marker is draggable! Move it around.');
+
+marker.bindPopup('This marker is draggable! Click Edit on the profile to move it around.');
 
 addMarker = function() {
     marker.addTo(map);

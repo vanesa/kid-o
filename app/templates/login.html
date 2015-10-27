@@ -1,10 +1,18 @@
 <html>
     <head>
         <title>Kid-O - Children's overview app for children's aid projects</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css"/>
-        <script type="text/javascript" src='//api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
-        <link rel="stylesheet" href="//api.mapbox.com/mapbox.js/v2.2.1/mapbox.css" rel='stylesheet' />
-        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css"/> -->
+        <!-- // <script type="text/javascript" src='//api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script> -->
+        <!-- <link rel="stylesheet" href="//api.mapbox.com/mapbox.js/v2.2.1/mapbox.css" rel='stylesheet' /> -->
+        <!-- // <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script> -->
+        <link rel="stylesheet" href="/static/css/bootstrap.css"/>
+        <link href='/static/css/mapbox.css' rel='stylesheet' />
+        <script src='/static/js/mapbox.js'></script>
+        <script src="/static/js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="/static/js/bootstrap-filestyle.min.js"> </script>
+        <link rel="stylesheet" href="/static/css/font-awesome/font-awesome.min.css">
+        <link rel="stylesheet" href="/static/css/animate.css"/>
+        <link rel="stylesheet" href="/static/css/style.css"/>
         <script type="text/javascript" src="/static/js/bootstrap-filestyle.min.js"> </script>
         <link rel="stylesheet" href="/static/css/style.css"/>
         <link rel="stylesheet" href="/static/css/login.css"/>
@@ -18,7 +26,14 @@
             <div class="row vertical-offset-100">
                 <div class="col-md-4 col-md-offset-4">
                     <div class="panel panel-default">
-                        <div>                                
+                        <div>
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                    {{ message }}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}                                
                             <div class="row-fluid user-row">
                                 <img src="/static/images/kid-ologo.png" class="img-responsive logo" alt="Conxole Admin"/>
                             </div>

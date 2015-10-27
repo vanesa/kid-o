@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% for child in child_info %}
 <div>
-	<form action="/child/{{child.id}}" class="form-signin" method="POST" enctype="multipart/form-data">
+	<form action="/child/edit{{child.id}}" class="form-signin" method="POST" enctype="multipart/form-data">
+	{{ form.csrf_token }}
 	<div class="leftbox">
 		<img src="{{child.pic_url}}" id="imgpreview" class="imgpreview" alt="{{child.first_name}}'s photo.">
 		<input type="file" name="file" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Upload" data-classIcon="glyphicon-camera" data-size="sm" value="{{child.pic_url}}">
@@ -89,5 +89,4 @@ map.on('click', function(e) {
 </script>
 <script src='../static/js/imgpreview.js'></script>
 </div>
-	{% endfor %}
 {% endblock %}

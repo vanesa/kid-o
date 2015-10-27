@@ -23,6 +23,7 @@ from flask import (
     jsonify, 
     make_response, 
     abort,
+    send_from_directory,
 )
 from flask.ext.login import login_required, login_user, logout_user, current_user
 
@@ -30,7 +31,7 @@ from app.models import User, Child, db
 from app import auth 
 from app import settings
 from app.child import ChildView
-from app.forms import LoginForm, SignUpForm
+from app.forms import LoginForm, SignUpForm, ChildForm
 
 
 """" Starting page with login.
@@ -121,15 +122,31 @@ def show_overview():
 
         return render_template('overview.html', child_profiles=child_views)
 
-@app.route('/child/<int:id>', methods=['GET', 'POST'])
+@app.route('/child/<int:id>')
 @login_required
 def child_profile(id):
     """ Show's each child's profile with the following information: First name, last name,
     age, birth date, guardian, siblings, medical condition, next doctor's appointment, sitution at
     home and school and when the next home visit is due. """
 
-    if request.method == 'POST': # update child info from edit_profile.html form
+    child = db.session.query(Child).filter_by(id=id).first()
+    if child is None:
+        abort(404)
+    
+    return render_template('child_profile.html', child=child)
 
+@app.route('/child/edit<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_profile(id):
+    """ Edit child profile """
+
+    child = db.session.query(Child).filter_by(id=id).first()
+    if child is None:
+        abort(404)
+    form = ChildForm(request.form)
+    app.logger.debug(form.validate())
+    app.logger.debug(form.errors)
+    if request.method == 'POST' and form.validate():  # update child info from edit_profile.html form
         
         # Set pic_url to empty string to keep original path in case no changes are made.
         pic_url = ""
@@ -143,93 +160,40 @@ def child_profile(id):
             pic_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
         # get all new data
         # pic_url = request.form.get("file")
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        birth_date = request.form.get("birth_date")
-        guardian_fname = request.form.get("guardian_fname")
-        guardian_lname = request.form.get("guardian_lname")
-        guardian_type = request.form.get("guardian_type")
-        medical_condition = request.form.get("medical_condition")
-        doctor_appt = request.form.get("doctor_appt")
-        situation = request.form.get("situation")
-        home_visit = request.form.get("home_visit")
-        latitude = request.form.get("latitude")
-        longitude = request.form.get("longitude")
 
-        if guardian_type == '':
-            guardian_type = None
-
-        if guardian_fname == '':
-            guardian_fname = None
-
-        if guardian_lname == '':
-            guardian_lname = None
-
-        if doctor_appt == '':
-            doctor_appt = None
-
-        if home_visit == '':
-            home_visit = None
-
-        if medical_condition == '':
-            medical_condition = None
-
-        if situation == '':
-            situation = None
-
-
+        app.logger.debug("inside this code")
         # seed into database
-
-        child_entry = db.session.query(Child).filter_by(id=id).one()
         if pic_url != "":
-            child_entry.pic_url = pic_url
+            child.pic_url = pic_url
         # print "This should be a pic path: ", pic_url
-        child_entry.first_name = first_name
-        child_entry.last_name = last_name
-        child_entry.birth_date = birth_date
-        child_entry.guardian_type = guardian_type
-        child_entry.guardian_fname = guardian_fname
-        child_entry.guardian_lname = guardian_lname
-        child_entry.medical_condition = medical_condition
-        child_entry.doctor_appt = doctor_appt
-        child_entry.situation = situation
-        child_entry.home_visit = home_visit
-        child_entry.latitude = latitude
-        child_entry.longitude = longitude
+        child.first_name = form.data['first_name']
+        child.last_name = form.data['last_name']
+        child.birth_date = form.data['birth_date']
+        child.guardian_type = form.data['guardian_type']
+        child.guardian_fname = form.data['guardian_fname']
+        child.guardian_lname = form.data['guardian_lname']
+        child.medical_condition = form.data['medical_condition']
+        child.doctor_appt = form.data['doctor_appt']
+        child.situation = form.data['situation']
+        child.home_visit = form.data['home_visit']
+        child.latitude = form.data['latitude']
+        child.longitude = form.data['longitude']
 
         db.session.commit()
-        this_child = db.session.query(Child).filter_by(id=id).one()
-        child_info = [ChildView(this_child)]
 
-        return render_template('child_profile.html', child_info=child_info)
+        return redirect('/child/%d' % child.id)
 
-    else:
-        this_child = db.session.query(Child).filter_by(id=id).one()
-
-        child_info = [ChildView(this_child)]
-
-        return render_template('child_profile.html', child_info=child_info)
-
-# Look up: GET attr
-
-@app.route('/child/edit<int:id>')
-@login_required
-def edit_profile(id):
-    """ Edit child profile """
-
-    this_child = db.session.query(Child).filter_by(id=id).one()
-
-    child_info = [ChildView(this_child)]
-
-    return render_template('edit_profile.html', child_info=child_info)
+    return render_template('edit_profile.html', form=form, child=child)
 
 @app.route('/child/add', methods=['GET', 'POST'])
 @login_required
 def add_profile():
 
     """add a child profile"""
-
-    if request.method == 'POST':
+    form = ChildForm(request.form)
+    app.logger.debug(form.validate())
+    app.logger.debug(form.errors)
+    if request.method == 'POST' and form.validate(): 
         # get all new data
         # Upload image 
         # import pdb; pdb.set_trace()
@@ -243,38 +207,19 @@ def add_profile():
             imgroot = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
 
         # Get all the other contents
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        birth_date = request.form.get("birth_date")
-        guardian_type = request.form.get("guardian_type")
-        guardian_fname = request.form.get("guardian_fname")
-        guardian_lname = request.form.get("guardian_lname")
-        medical_condition = request.form.get("medical_condition")
-        doctor_appt = request.form.get("doctor_appt")
-        situation = request.form.get("situation")
-        home_visit = request.form.get("home_visit")
-        latitude = request.form.get("latitude")
-        longitude = request.form.get("longitude")
+        first_name = form.data['first_name']
+        last_name = form.data['last_name']
+        birth_date = form.data['birth_date']
+        guardian_type = form.data['guardian_type']
+        guardian_fname = form.data['guardian_fname']
+        guardian_lname = form.data['guardian_lname']
+        medical_condition = form.data['medical_condition']
+        doctor_appt = form.data['doctor_appt']
+        situation = form.data['situation']
+        home_visit = form.data['home_visit']
+        latitude = form.data['latitude']
+        longitude = form.data['longitude']
         activity = True
-
-        # Workaround to avoid syntax errors for empty fields
-        if doctor_appt == '':
-            doctor_appt = None
-
-        if home_visit == '':
-            home_visit = None
-
-        if medical_condition == '':
-            medical_condition = None
-
-        if imgroot == '':
-            imgroot = None
-
-        if latitude == '':
-            latitude = None
-
-        if longitude == '':
-            longitude = None
 
 
         # seed into database
@@ -286,13 +231,11 @@ def add_profile():
         db.session.add(child_entry)
         db.session.commit()
 
-        this_child = db.session.query(Child).order_by(Child.id.desc()).first()
-        child_info = [ChildView(this_child)]
-        child_id = this_child.id
+        child = db.session.query(Child).order_by(Child.id.desc()).first()
 
-        return redirect('/child/%d' % child_id)
+        return redirect('/child/%d' % child.id)
     else:
-        return render_template('add_profile.html')
+        return render_template('add_profile.html', form=form)
 
 def touch(path):
     # create empty file for image
@@ -335,6 +278,11 @@ def registerbysms():
     resp = twiml.Response()
     resp.message(message)
     return str(resp)
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static', 'images'),
+                               'favicon.ico', mimetype='image/x-icon')
 
 @app.route('/test')
 def test():

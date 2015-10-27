@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask.ext.bcrypt import Bcrypt
 import os
+from datetime import datetime
 
 from . import app
 
@@ -95,8 +96,13 @@ class Child(db.Model):
 
     @hybrid_property
     def fullname(self):
-
         return self.first_name + " " + self.last_name
+
+    def get_age(self):
+        currenttime = datetime.now()
+        age = currenttime - self.birth_date
+        age = age.days / 365
+        return age
 
     def to_dict(self):
         return dict(

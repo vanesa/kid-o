@@ -3,6 +3,7 @@
 
 <div>
   <form action="/child/add" class="form-signin" method="POST" enctype="multipart/form-data">
+  {{ form.csrf_token }}
   <div class="leftbox">
     <img id="imgpreview" src="../static/images/childphotopreview.png" class="imgpreview" alt="Child's photo preview.">
     <input type="file" name="file" id ="imgInput" class="filestyle inputimg" data-classButton="btn btn-primary" data-input="true" data-buttonText="Upload" data-classIcon="glyphicon-camera" data-size="sm">

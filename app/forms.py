@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, DateField, FloatField
-from wtforms.validators import DataRequired, Email, Length, ValidationError
+from wtforms.validators import DataRequired, Email, Length, ValidationError, Optional
 from app import app
 
 def lower(data):
@@ -33,8 +33,8 @@ class ChildForm(Form):
     guardian_fname = StringField('guardian_fname', validators=[Length(max=15)])
     guardian_lname = StringField('guardian_lname', validators=[Length(max=15)])
     medical_condition = StringField('medical_condition')
-    doctor_appt = DateField('doctor_appt')
+    doctor_appt = DateField('doctor_appt', validators=[Optional()])
     situation = StringField('situation')
-    home_visit = DateField('home_visit')
-    latitude = FloatField('latitude')
-    longitude = FloatField('longitude')
+    home_visit = DateField('home_visit', validators=[Optional()])
+    latitude = FloatField('latitude', validators=[Optional()])
+    longitude = FloatField('longitude', validators=[Optional()])

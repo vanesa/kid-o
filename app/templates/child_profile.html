@@ -2,14 +2,15 @@
 {% block content %}
 
 <div class="container-fluid">
-
+    <div class="leftbox">
     {% if child.pic_url == "../static/images/childphotopreview.png" %}
-    <div class="leftbox"><img src="{{child.pic_url}}" class="images-style"><br><a href="/child/edit{{child.id}}" class="alerttext">Upload photo</a></div>
+    <img src="{{child.pic_url}}" class="images-style"><br><a href="/child/edit{{child.id}}" class="alerttext">Upload photo</a>
     {% elif child.pic_url %}
-    <div class="leftbox"><img src="{{child.pic_url}}" class="images-style"></div>
+    <img src="{{child.pic_url}}" class="images-style">
     {% else %}
-	<div class="leftbox"><img src="/static/images/childphotopreview.png" class="images-style"><br><a href="/child/edit{{child.id}}" class="alerttext">Upload photo</a></div>
+	<img src="/static/images/childphotopreview.png" class="images-style"><br><a href="/child/edit{{child.id}}" class="alerttext">Upload photo</a>
     {% endif %}
+    </div>
 	<div class="info rightbox"> <span id="animationSandbox"><h2 class="animated1"> {{ child.first_name}} {{ child.last_name }} </h2></span><a href="/child/edit{{child.id}}" style="display: inline-block;"><button type="button" class="btn btn-sm btn-danger" value="edit"><i class="fa fa-pencil fa-fw edit-icon"></i> Edit</button></a>
 		<p><strong>Age: </strong>{{ child.get_age() }} years old,</p>
 		<p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
@@ -45,12 +46,16 @@
         {% endif %}
 	</div>
 	 <h3 class="animated4">Home location</h3>
+        {% if child.latitude %}
+        {% else %}
+        <a href="/child/edit{{child.id}}" class="alerttext">Please add {{ child.first_name}}'s home location.</a>
+        {% endif %}         
 	<div class="mapcontainer">
 	<div id='map'></div>
 </div>
 <script>
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
-var map = L.mapbox.map('map', 'mapbox.streets')
+var map = L.mapbox.map('map', 'vanesa.e4c935ef')
     .setView([{% if child.latitude and child.longitude %}{{ child.latitude}}, {{child.longitude}}{% else %}18.542769, -69.801216{% endif %}], 15);
 // Disable the scroll Zoom
     map.scrollWheelZoom.disable();

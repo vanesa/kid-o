@@ -1,5 +1,5 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
-var map = L.mapbox.map('map', 'mapbox.streets', {
+var map = L.mapbox.map('map', 'vanesa.e4c935ef', {
   zoomControl: false }).setView([37.9, -77],4);
 // Disable the scroll Zoom
     map.scrollWheelZoom.disable();

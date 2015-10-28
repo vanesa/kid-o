@@ -122,6 +122,14 @@ def show_overview():
 
         return render_template('overview.html', child_profiles=child_views)
 
+@app.route('/map')
+@login_required
+def load_map():
+    all_children = Child.query.order_by(Child.last_name.asc()).all()
+    child_views = [ChildView(child) for child in all_children]
+    return render_template('map.html', child_profiles=child_views)
+
+
 @app.route('/child/<int:id>')
 @login_required
 def child_profile(id):
@@ -242,9 +250,10 @@ def add_profile():
 def delete_profile(id):
 
     child = db.session.query(Child).filter_by(id=id).first()
+    child_name = child.first_name + " " + child.last_name
     db.session.delete(child)
     db.session.commit()
-    flash('You have deleted the child profile.')
+    flash('You have deleted' + child_name)
     return redirect('/overview')
 
 def touch(path):

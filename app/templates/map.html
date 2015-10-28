@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+	<div class="mainmapcontainer">
+	   <div id='map'></div>
+    </div>
+
+	<script>
+	L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
+	var geojson = [
+  {% for child in child_profiles %}
+  {% if child.latitude and child.longitude %}
+  {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [{{ child.longitude }},{{ child.latitude }}]
+   },
+    "properties": {
+      "title": "{{ child.first_name }} {{ child.last_name }}",
+      "description": "lives here {% if child.guardian_fname and child.guardian_lname %} with {{ child.guardian_fname }} {{ child.guardian_lname }} {% else %}{% endif %} {% if child.guardian_type %}({{ child.guardian_type }}){% else %} {% endif %}",
+      "marker-color": "#fc4353",
+      "marker-size": "large",
+      "marker-symbol": "building"
+    }
+  },{% endif %}{% endfor %}
+];
+
+	var map = L.mapbox.map('map', 'vanesa.e4c935ef', {
+    scrollWheelZoom: false
+})
+    .setView([18.542769, -69.801216], 15)
+  .featureLayer.setGeoJSON(geojson);
+	</script>
+</div>
+{% endblock %}

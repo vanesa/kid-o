@@ -338,6 +338,12 @@ nav.shrink div.searchform {
 	}
 }
 
+/* Edit child */
+
+.center {
+	text-align: center;
+}
+
 /*.full {
 	width:100%;
 }*/

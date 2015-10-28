@@ -61,9 +61,35 @@
 			<div id="map"></div>
 			</div>
 			<button class="btn btn-sm btn-primary" type="submit">Save</button> 
-	<a href="/child/{{child.id}}"><button type="button" class="btn btn-sm btn-danger" value="edit">Cancel</button></a>
+			<a href="/child/{{child.id}}"><button type="button" class="btn btn-sm btn-warning" value="cancel">Cancel</button></a>
+			<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal" value="delete">Delete Profile</button>
 		</div>
 </form>
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog modal-sm" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title center" id="myModalLabel">WARNING</h4>
+			      </div>
+			      <div class="modal-body center">
+			        Are you sure you want to delete {{ child.first_name }}'s profile?
+			      </div>
+			      <div class="modal-footer center">
+			        <form role="form" method='POST' action='/delete-profile{{child.id}}' enctype="multipart/form-data">
+			        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>     
+				    <button class="btn btn-danger" type="submit">Delete profile</button> 
+				     </form>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+<script>
+	$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
 <script>
 L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
 var map = L.mapbox.map('map', 'mapbox.streets')

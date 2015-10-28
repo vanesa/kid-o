@@ -237,6 +237,16 @@ def add_profile():
     else:
         return render_template('add_profile.html', form=form)
 
+@app.route('/delete-profile<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_profile(id):
+
+    child = db.session.query(Child).filter_by(id=id).first()
+    db.session.delete(child)
+    db.session.commit()
+    flash('You have deleted the child profile.')
+    return redirect('/overview')
+
 def touch(path):
     # create empty file for image
     with open(path, 'a'):
@@ -283,8 +293,3 @@ def registerbysms():
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static', 'images'),
                                'favicon.ico', mimetype='image/x-icon')
-
-@app.route('/test')
-def test():
-
-    return render_template('test.html')

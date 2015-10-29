@@ -12,7 +12,7 @@ from . import app
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
 # object, where we do most of our interactions (like committing, etc.)
 
-db = SQLAlchemy()
+db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
 
@@ -86,19 +86,17 @@ class Child(db.Model):
     longitude = db.Column(db.Float, nullable=True)
     activity = db.Column(db.Boolean, nullable=True)
 
-
     def __repr__(self):
         """Provide helpful representation when printed."""
 
         return "<Child id=%s first_name=%s last_name=%s>" % (self.id, self.first_name, self.last_name)
 
-# Search function 
-
     @hybrid_property
     def fullname(self):
         return self.first_name + " " + self.last_name
 
-    def get_age(self):
+    @property
+    def age(self):
         currenttime = datetime.now()
         age = currenttime - self.birth_date
         age = age.days / 365
@@ -130,7 +128,7 @@ def connect_to_db(app):
     """Connect the database to our Flask app."""
 
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/kid-o'
-    db.app = app
+    # db.app = app
     db.init_app(app)
 
 

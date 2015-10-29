@@ -30,7 +30,6 @@ from flask.ext.login import login_required, login_user, logout_user, current_use
 from app.models import User, Child, db
 from app import auth 
 from app import settings
-from app.child import ChildView
 from app.forms import LoginForm, SignUpForm, ChildForm
 
 
@@ -109,25 +108,22 @@ def show_overview():
         child_search = request.form.get('searchform')
         #  split string and if statement len 1, 2, 3 query.
         found_children = Child.query.filter(Child.fullname.ilike("%"+child_search+"%")).all()
-        child_views = [ChildView(child) for child in found_children]
 
         if request.headers.get('Accept') == 'json':
-            return jsonify(profiles=[x.to_dict() for x in child_views])
+            return jsonify(profiles=[x.to_dict() for x in found_children])
 
         return render_template('overview.html', child_profiles=child_views)
 
     else:
         all_children = Child.query.order_by(Child.last_name.asc()).all()
-        child_views = [ChildView(child) for child in all_children]
 
-        return render_template('overview.html', child_profiles=child_views)
+        return render_template('overview.html', child_profiles=all_children)
 
 @app.route('/map')
 @login_required
 def load_map():
     all_children = Child.query.order_by(Child.last_name.asc()).all()
-    child_views = [ChildView(child) for child in all_children]
-    return render_template('map.html', child_profiles=child_views)
+    return render_template('map.html', child_profiles=all_children)
 
 
 @app.route('/child/<int:id>')
@@ -253,7 +249,7 @@ def delete_profile(id):
     child_name = child.first_name + " " + child.last_name
     db.session.delete(child)
     db.session.commit()
-    flash('You have deleted' + child_name)
+    flash('You have deleted ' + child_name)
     return redirect('/overview')
 
 def touch(path):

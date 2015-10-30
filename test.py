@@ -49,7 +49,27 @@ class AuthTestCase(unittest.TestCase):
         db.session.commit()
 
     def test_can_sign_out(self):
-        return "signed out"
+        password = "testpass"
+        user = User(
+            first_name="Testuser",
+            last_name="Tester",
+            email="test@tester.com",
+            password=password,
+        )
+        db.session.add(user)
+        db.session.commit()
+
+        response = self.client.post('/', data=dict(
+            email=user.email,
+            password=password,
+        ), follow_redirects=True)
+        response = self.client.get('/logout', follow_redirects=True)
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Login", response.get_data())
+
+        db.session.delete(user)
+        db.session.commit()
 
 if __name__ == "__main__":
     app.config['TESTING'] = True

@@ -21,7 +21,7 @@ class ChildViewTestCase(unittest.TestCase):
 class AuthTestCase(unittest.TestCase):
 
     def setUp(self):
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/kid-o'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/travis_ci_test'
         app.config['WTF_CSRF_ENABLED'] = False
         # db.app = app
         db.init_app(app)

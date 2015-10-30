@@ -5,6 +5,8 @@ python:
 install:
     - travis_retry pip install --use-mirrors -r requirements.txt
 # command to run tests
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
 script: python test.py
 # use new travis-ci container-based infrastructure 
 sudo: false

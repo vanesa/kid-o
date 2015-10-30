@@ -21,10 +21,6 @@ class ChildViewTestCase(unittest.TestCase):
 class AuthTestCase(unittest.TestCase):
 
     def setUp(self):
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/travis_ci_test'
-        app.config['WTF_CSRF_ENABLED'] = False
-        # db.app = app
-        db.init_app(app)
         self.client = app.test_client()
 
     def test_can_login(self):
@@ -74,4 +70,8 @@ class AuthTestCase(unittest.TestCase):
 if __name__ == "__main__":
     app.config['TESTING'] = True
     app.testing = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/travis_ci_test'
+    app.config['WTF_CSRF_ENABLED'] = False
+    db.init_app(app)
+    db.create_all()
     unittest.main()

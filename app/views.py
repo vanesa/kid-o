@@ -112,7 +112,7 @@ def show_overview():
         if request.headers.get('Accept') == 'json':
             return jsonify(profiles=[x.to_dict() for x in found_children])
 
-        return render_template('overview.html', child_profiles=child_views)
+        return render_template('overview.html', child_profiles=found_children)
 
     else:
         all_children = Child.query.order_by(Child.last_name.asc()).all()

@@ -60,6 +60,8 @@
     width: 80px;
 }
 
+/* Map */
+
 .mapcontainer {
 	position: relative;
 	height: 220px;
@@ -73,6 +75,12 @@
 	width: 100%;
 	margin-bottom: 20px;
 }
+
+.popup {
+	font-size: 14px;
+}
+
+/* End Map */
 
 .leftbox {
 	display: inline-block;

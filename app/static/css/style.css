@@ -154,6 +154,10 @@
 	color: #ff1800;
 }
 
+.alert {
+	font-weight: bold;
+}
+
 /* Tooltip background color on Overview page */
 
 .tooltip-inner {

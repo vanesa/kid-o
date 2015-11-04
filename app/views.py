@@ -249,13 +249,9 @@ def delete_profile(id):
     child_name = child.first_name + " " + child.last_name
     db.session.delete(child)
     db.session.commit()
-    flash('You have deleted ' + child_name)
+    flash('You have deleted ' + child_name + "'s profile.")
     return redirect('/overview')
 
-def touch(path):
-    # create empty file for image
-    with open(path, 'a'):
-        os.utime(path, None)
 
 @app.route('/twilio', methods=['GET', 'POST'])
 def registerbysms():
@@ -264,7 +260,7 @@ def registerbysms():
     body = request.values.get('Body', None)
     nummedia = request.values.get('NumMedia', None)
     mediaurl = request.values.get('MediaUrl0', None)
-    message = "Hi! Please type in: REGISTER (First name of child) (Last name of Child) (Birth date (dd-mm-YYYY))"
+    message = "Hi! Please type in: REGISTER (First name of child) (Last name of Child) (Birth date (mm-dd-YYYY))"
     if from_number in callers:
 
         if body is not None:
@@ -286,7 +282,8 @@ def registerbysms():
                     db.session.add(child_entry)
                     db.session.commit()
                     message = "Hi " + callers[from_number] + "! " + "Thank you for registering " + child_first_name + "! Please complete " + child_first_name + "'s profile on the Kid-O website."
-
+            else:
+                message = "Hi " + callers[from_number] + "! Please type in: REGISTER (First name of child) (Last name of child) (Birth date (mm-dd-YYYY))"
     else:
         message = "Hello friend! If you want to use Kid-O please register on our website!"
 

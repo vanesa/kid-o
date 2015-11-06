@@ -210,6 +210,10 @@ Screenshots
 ![Search](screenshots/search.jpg "Search child profile")
 
 
+###### Map
+![Map](screenshots/map.jpg "Display children's home location on a map")
+
+
 ###### Login
 ![Login](screenshots/login.jpg "Login")
 

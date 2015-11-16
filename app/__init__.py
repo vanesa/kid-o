@@ -9,8 +9,7 @@ app = Flask(__name__)
 from .models import db
 
 app.config.from_object('app.settings')
-app.config['DATABASE_URL'] = os.environ['DATABASE_URL']
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+
 
 # Required to use Flask sessions and debug toolbar
 

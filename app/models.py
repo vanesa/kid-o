@@ -127,8 +127,9 @@ class Child(db.Model):
 def connect_to_db(app):
     """Connect the database to our Flask app."""
 
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/kid-o'
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/kid-o'
+    # Heroku config
+    # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     # db.app = app
     db.init_app(app)
 

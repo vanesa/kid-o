@@ -174,6 +174,10 @@ def edit_profile(id):
         child.guardian_type = form.data['guardian_type']
         child.guardian_fname = form.data['guardian_fname']
         child.guardian_lname = form.data['guardian_lname']
+        child.godparent_prefix = form.data['godparent_prefix']
+        child.godparent_fname = form.data['godparent_fname']
+        child.godparent_lname = form.data['godparent_lname']
+        child.godparent_email = form.data['godparent_email']
         child.medical_condition = form.data['medical_condition']
         child.doctor_appt = form.data['doctor_appt']
         child.situation = form.data['situation']
@@ -215,6 +219,10 @@ def add_profile():
         guardian_type = form.data['guardian_type']
         guardian_fname = form.data['guardian_fname']
         guardian_lname = form.data['guardian_lname']
+        godparent_prefix = form.data['guardian_prefix']
+        godparent_fname = form.data['guardian_fname']
+        godparent_lname = form.data['guardian_lname']
+        godparent_email = form.data['guardian_email']
         medical_condition = form.data['medical_condition']
         doctor_appt = form.data['doctor_appt']
         situation = form.data['situation']
@@ -227,8 +235,10 @@ def add_profile():
         # seed into database
         child_entry = Child(pic_url=imgroot, first_name=first_name, last_name=last_name,
                             birth_date=birth_date, guardian_type=guardian_type, guardian_fname=guardian_fname,
-                            guardian_lname=guardian_lname, medical_condition=medical_condition, doctor_appt=doctor_appt, situation=situation,
-                            home_visit=home_visit, latitude=latitude, longitude=longitude, activity=activity)
+                            guardian_lname=guardian_lname, godparent_prefix=godparent_prefix, godparent_fname=godparent_fname, 
+                            godparent_lname=godparent_lname, godparent_email=godparent_email, medical_condition=medical_condition, 
+                            doctor_appt=doctor_appt, situation=situation, home_visit=home_visit, latitude=latitude, 
+                            longitude=longitude, activity=activity)
         
         db.session.add(child_entry)
         db.session.commit()

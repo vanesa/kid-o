@@ -78,6 +78,10 @@ class Child(db.Model):
     guardian_type = db.Column(db.String(50), nullable=True)
     guardian_fname = db.Column(db.String(32), nullable=True)
     guardian_lname = db.Column(db.String(32), nullable=True)
+    godparent_prefix = db.Column(db.String(32), nullable=True)
+    godparent_fname = db.Column(db.String(32), nullable=True)
+    godparent_lname = db.Column(db.String(32), nullable=True)
+    godparent_email = db.Column(db.String(32), nullable=True)
     medical_condition = db.Column(db.String, nullable=True)
     doctor_appt = db.Column(db.DateTime, nullable=True)
     situation = db.Column(db.Text, nullable=True)
@@ -119,6 +123,22 @@ class Child(db.Model):
             latitude = self.latitude,
             longitude = self.longitude,
         )
+
+# class Message(db.Model):
+#     """Message to godparent from Kid-O App."""
+
+#     __tablename__= "messages"
+
+#     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     recepients = db.relationship('Godparent', backref='messages', lazy='dynamic')
+#     from_email = db.Column(db.String())
+#     subject = db.Column(db.String())
+#     template = db.Column(db.String(4000), nullable=False) # filepath
+#     variables = db.Column(db.String(8000), nullable=False) # json
+#     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+#     sent_at = db.Column(db.DateTime)
+#     sent_ok = db.Column(db.Boolean)
+#     error = db.Column(db.String())
 
 #####################
 # Helper functions #

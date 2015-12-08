@@ -13,9 +13,11 @@
 		<input type="file" name="file" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Upload" data-classIcon="glyphicon-camera" data-size="sm" value="{{child.pic_url}}">
 	</div>
 		<div class="info rightbox">
+			<label for="doct-field">Child </label><br />
 			<input type="text" name="first_name" value="{{child.first_name}}" placeholder="{{child.first_name}}" class="form-control addchildinput"><br />
 			<input type="text" name="last_name" value="{{child.last_name}}" placeholder="{{child.last_name}}" class="form-control addchildinput"><br />
 			<input type="text" name="birth_date" value="{{child.birth_date.strftime('%Y-%m-%d')}}" placeholder="{{child.birth_date.strftime('%Y-%m-%d')}}" class="form-control addchildinput"><br />
+			<label for="doct-field">Guardian </label> <br />
 			{% if child.guardian_type %}
 			<input type="text" name="guardian_type" value="{{child.guardian_type}}" placeholder="{{child.guardian_type}}" class="form-control addchildinput"><br />
 			{% else %}
@@ -30,6 +32,29 @@
 			<input type="text" name="guardian_lname" value="{{child.guardian_lname}}" placeholder="{{child.guardian_lname}}" class="form-control addchildinput"><br />
 			{% else %}
 			<input type="text" name="guardian_lname" placeholder="Guardian last name" class="form-control addchildinput"><br />
+			{% endif %}
+		</div>
+		<div class="info rightbox">
+			<label for="doct-field">Godparent </label><br />
+			{% if child.godparent_prefix %}
+			<input type="text" name="godparent_prefix" value="{{child.godparent_prefix}}" placeholder="{{child.godparent_prefix}}" class="form-control addchildinput"><br />
+			{% else %}
+			<input type="text" name="godparent_prefix" placeholder="Godparent prefix" class="form-control addchildinput"><br />
+			{% endif %}
+			{% if child.godparent_fname %}
+			<input type="text" name="godparent_fname" value="{{child.godparent_fname}}" placeholder="{{child.godparent_fname}}" class="form-control addchildinput"><br />
+			{% else %}
+			<input type="text" name="godparent_fname" placeholder="Godparent First Name" class="form-control addchildinput"><br />
+			{% endif %}
+			{% if child.godparent_lname %}
+			<input type="text" name="godparent_lname" value="{{child.godparent_lname}}" placeholder="{{child.godparent_lname}}" class="form-control addchildinput"><br />
+			{% else %}
+			<input type="text" name="godparent_lname" placeholder="Godparent Last Name" class="form-control addchildinput"><br />
+			{% endif %}
+			{% if child.godparent_email %}
+			<input type="text" name="godparent_email" value="{{child.godparent_email}}" placeholder="{{child.godparent_email}}" class="form-control addchildinput"><br />
+			{% else %}
+			<input type="text" name="godparent_email" placeholder="Godparent email" class="form-control addchildinput"><br />
 			{% endif %}
 		</div>
 		<div class="lowerform">

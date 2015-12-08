@@ -23,7 +23,7 @@
 			</div>
 			
 		</div>
-		<div class="panel-footer">{% if child.pic_url == "../static/images/childphotopreview.png" %} <i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload {{child.first_name}}'s photo!"></i>{% elif child.pic_url %}<i class="fa fa-camera-retro fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Photo available."></i>{% else %}<i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload photo!"></i> {% endif %}
+		<div class="panel-footer">{% if child.pic_url == "../static/images/childphotopreview.png" or child.pic_url == "/static/images/photos/childphotopreview.png"%} <i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload {{child.first_name}}'s photo!"></i>{% elif child.pic_url %}<i class="fa fa-camera-retro fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Photo available."></i>{% else %}<i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload photo!"></i> {% endif %}
 
 		{% if child.situation %}<i class="fa fa-list fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Situation info available."></i>{% else %}<i class="fa fa-list fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please add missing info about {{child.first_name}}'s situation!"></i></i> {% endif %}
 

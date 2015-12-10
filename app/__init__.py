@@ -6,9 +6,9 @@ from flask.ext.login import LoginManager
 
 
 app = Flask(__name__)
-from .models import db
-
 app.config.from_object('app.settings')
+
+from .models import db
 
 
 # Required to use Flask sessions and debug toolbar

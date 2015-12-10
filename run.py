@@ -3,15 +3,12 @@
 from flask_debugtoolbar import DebugToolbarExtension
 
 from app import app
-from app.models import connect_to_db
 import os
 
 
 if __name__ == '__main__':
 
     # debug = True as DebugToolbarExtension is invoked
-
-    connect_to_db(app)
 
     # User the DebugToolbar
     # DebugToolbarExtension(app)

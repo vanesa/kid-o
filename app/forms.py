@@ -35,7 +35,7 @@ class ChildForm(Form):
     godparent_prefix = StringField('godparent_prefix', validators=[Length(max=25)])
     godparent_fname = StringField('godparent_fname', validators=[Length(max=25)])
     godparent_lname = StringField('godparent_lname', validators=[Length(max=25)])
-    godparent_email = StringField('godparent_email', validators=[Length(min=5, max=25), Email()])
+    godparent_email = StringField('godparent_email', validators=[Optional(), Length(min=5, max=25), Email()])
     medical_condition = StringField('medical_condition')
     doctor_appt = DateField('doctor_appt', validators=[Optional()])
     situation = StringField('situation')

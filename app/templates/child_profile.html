@@ -15,7 +15,7 @@
 		<p><strong>Age: </strong>{{ child.age }} years old</p>
 		<p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
 		<p><strong>{% if child.guardian_type %}{{ child.guardian_type}}{% else %}Guardian{% endif %}:</strong> {% if child.guardian_fname and child.guardian_lname %}{{ child.guardian_fname}} {{ child.guardian_lname }} {% else %} <a href="/child/edit{{child.id}}" class="alerttext">Please add {{ child.first_name }}'s guardian's name.</a> {% endif %}</p>
-        <p><strong>{% if child.godparent_fname and child.godparent_lname %}Godparent: </strong> {% if child.godparent_prefix %}{{ child.godparent_prefix}} {% else %}{% endif %}{{ child.godparent_fname}} {{ child.godparent_lname }} <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" value="msg"><i class="fa fa-envelope"></i> </button><br><br>
+        <p>{% if child.godparent_fname and child.godparent_lname %}<strong>Godparent: </strong> {% if child.godparent_prefix %}{{ child.godparent_prefix}} {% else %}{% endif %}{{ child.godparent_fname}} {{ child.godparent_lname }} <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" value="msg"><i class="fa fa-envelope"></i> </button><br><br>
         <strong>Last message sent:</strong> 15. August 2015{% else %} {% endif %}</p>
 	</div>
     
@@ -57,7 +57,7 @@
     </div>
         <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog modal-m" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

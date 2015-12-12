@@ -6,7 +6,7 @@
 
 Kid-O helps Non-Profit children’s aid orgs keep an overview of their children.  
 
-##### Winner of C-Base HACK OF THE MONTH PRIZE
+##### Winner of C-Base Hack 'N Tell HACK OF THE MONTH PRIZE
 
 Check out my [LinkedIn](https://www.linkedin.com/in/vanesaortiz) profile for more information on my experience, education, and projects.
 

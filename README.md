@@ -32,7 +32,7 @@ Kid-O solves these common problems for aid workers:
 * organizes information such as name, age, home situation, etc.
 * makes it easy to visualize a child's home location on a map even when no address is available
 
-Kid-O will be tested in October 2015 by the children's aid project [Dominiño](http://www.dominino.de) in the Dominican Republic.
+Kid-O will be tested in January 2016 by the children's aid project [Dominiño](http://www.dominino.de) in the Dominican Republic.
 
 
 

@@ -16,7 +16,7 @@ class ChildViewTestCase(unittest.TestCase):
 
         test_child_view = Child(first_name=first_name, last_name=last_name, birth_date=birth_date)
 
-        self.assertEqual(test_child_view.age, 6)
+        self.assertEqual(test_child_view.age, 7)
 
 class AuthTestCase(unittest.TestCase):
 

@@ -1,53 +1,68 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div>
-  <form action="/child/add" class="form-signin" method="POST" enctype="multipart/form-data">
-  {{ form.csrf_token }}
-  <div class="leftbox">
-    <img id="imgpreview" src="../static/images/childphotopreview.png" class="imgpreview" alt="Child's photo preview.">
-    <input type="file" name="file" id ="imgInput" class="filestyle inputimg" data-classButton="btn btn-primary" data-input="true" data-buttonText="Upload" data-classIcon="glyphicon-camera" data-size="sm">
-    </div>
+  <div>
+    <form action="/child/add" class="form-signin" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+      <div class="leftbox">
+        <img id="imgpreview" src="../static/images/childphotopreview.png" class="imgpreview" alt="Child's photo preview.">
+        <input type="file" name="file" id ="imgInput" class="filestyle inputimg" data-classButton="btn btn-primary" data-input="true" data-buttonText="Upload" data-classIcon="glyphicon-camera" data-size="sm">
+      </div>
 
-    <div class="info rightbox">
-      <input type="text" name="first_name" placeholder="First name" class="form-control addchildinput"><br />
-      <input type="text" name="last_name" placeholder="Last name" class="form-control addchildinput"><br />
-      <input type="text" name="birth_date" placeholder="Birth date YYYY-MM-DD" class="form-control addchildinput"><br />
-      <input type="text" name="guardian_fname" placeholder="Guardian First name" class="form-control addchildinput"><br />
-      <input type="text" name="guardian_lname" placeholder="Guardian Last name" class="form-control addchildinput"><br />
-      <input type="text" name="guardian_type" placeholder="Guardian type (Mother, Aunt etc.)" class="form-control addchildinput"><br />
-    </div>
-    <div class="info rightbox">
-      <input type="text" name="godparent_prefix" placeholder="Godparent prefix (Frau, Mann)" class="form-control addchildinput"><br />
-      <input type="text" name="godparent_fname" placeholder="Godparent First name" class="form-control addchildinput"><br />
-      <input type="text" name="godparent_lname" placeholder="Godparent Last name" class="form-control addchildinput"><br />
-      <input type="text" name="godparent_email" placeholder="Godparent Email" class="form-control addchildinput"><br />
-    </div>
-    <div class="lowerform">
-      <label for="med-field"><h3 class="animated2">Medical Condition</h3></label><br />
-      <textarea rows="2" cols="20" name="medical_condition" placeholder="Medical condition" class="form-control addchildinput"></textarea><br />
-      <label for="doct-field">Needs to visit the doctor:</label><br />
-      <input type="text" name="doctor_appt" placeholder="YYYY-M-D" class="form-control addchildinput"><br />
-      <label for="home-field"><h3 class="animated3">Situation:</h3></label><br />
-      <textarea rows="3" cols="40" name="situation" placeholder="Situation at home and at school." class="form-control addchildinput"></textarea><br />
-      <label for="doct-field">Next home visit:</label><br />
-      <input type="text" name="home_visit" placeholder="YYYY-M-D" class="form-control addchildinput"><br />
-      <input type="text" id="lat" name="latitude" class="hidden">
-      <input type="text" id="lng" name="longitude" class="hidden">
-    <h3 class="animated4"> Home location </h3>
-    <div class="mapcontainer">
-    <div id="map"></div>
-    </div>
-    <button class="btn btn-sm btn-primary" type="submit">Save</button> 
-  <a href="/overview"><button type="button" class="btn btn-sm btn-danger" value="edit">Cancel</button></a>
-</form>
+      <div class="info rightbox">
+        <input type="checkbox" checked data-toggle="toggle"> Active
+        <input type="text" name="first_name" placeholder="First name" class="form-control addchildinput"><br />
+        <input type="text" name="last_name" placeholder="Last name" class="form-control addchildinput"><br />
+        <input type="text" name="nick_name" placeholder="Nick name" class="form-control addchildinput"><br />
+        <input type="text" name="birth_date" placeholder="Birth date YYYY-MM-DD" class="form-control addchildinput"><br />
+        <select>
+          <option value="dominican">Dominican</option><br />
+          <option value="hatian">Hatian</option><br />
+        </select>
+        <input type="text" name="guardian_fname" placeholder="Guardian First name" class="form-control addchildinput"><br />
+        <input type="text" name="guardian_lname" placeholder="Guardian Last name" class="form-control addchildinput"><br />
+        <input type="text" name="guardian_type" placeholder="Guardian type (Mother, Aunt etc.)" class="form-control addchildinput"><br />
+      </div>
+      <div class="info rightbox">
+        <input type="text" name="godparent_fname" placeholder="Godparent First name" class="form-control addchildinput"><br />
+        <input type="text" name="godparent_lname" placeholder="Godparent Last name" class="form-control addchildinput"><br />
+        <input type="text" name="godparent_email" placeholder="Godparent Email" class="form-control addchildinput"><br />
+      </div>
+      <div class="lowerform">
+        <label for="med-field"><h3 class="animated2">School</h3></label><br />
+        <select>
+          <option value="maternal">Maternal</option>
+          <option value="preescolar">Pre-Escolar</option>
+          <option value="1schoolyear">1st school year</option>
+          <option value="2schoolyear">2nd school year</option>
+          <option value="3schoolyear">3rd school year</option>
+          <option value="4schoolyear">4th school year</option>
+          <option value="specialschool">Special school</option>
+          <option value="saladeactividades">Sala de Actividades</option>
+        </select>
+        <textarea rows="2" cols="20" name="situation" placeholder="Situation" class="form-control addchildinput"></textarea><br />
+        <!--       <label for="doct-field">Needs to visit the doctor:</label><br />
+        <input type="text" name="doctor_appt" placeholder="YYYY-M-D" class="form-control addchildinput"><br /> -->
+        <label for="home-field"><h3 class="animated3">Situation:</h3></label><br />
+        <textarea rows="3" cols="40" name="situation" placeholder="Situation at home and at school." class="form-control addchildinput"></textarea><br />
+        <!--       <label for="doct-field">Next home visit:</label><br />
+        <input type="text" name="home_visit" placeholder="YYYY-M-D" class="form-control addchildinput"><br /> -->
+        <input type="text" id="lat" name="latitude" class="hidden">
+        <input type="text" id="lng" name="longitude" class="hidden">
+        <h3 class="animated4"> Home location </h3>
+        <div class="mapcontainer">
+          <div id="map"></div>
+        </div>
+        <button class="btn btn-sm btn-primary" type="submit">Save</button>
+        <a href="/overview"><button type="button" class="btn btn-sm btn-danger" value="edit">Cancel</button></a>
+      </form>
 
-<br style="clear: both" />
-<script>
-$(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera", size: "sm"});
-</script>
-<script src='../static/js/mapadd.js'></script>
-<script src='../static/js/imgpreview.js'></script>
-</div>
-</div>
+      <br style="clear: both" />
+      <script>
+        $(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera", size: "sm"});
+      </script>
+      <script src='../static/js/mapadd.js'></script>
+      <script src='../static/js/imgpreview.js'></script>
+    </div>
+  </div>
 {% endblock %}

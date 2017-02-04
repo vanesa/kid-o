@@ -1,9 +1,11 @@
 """Models and database functions for Kid-O project."""
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.postgresql import UUID as PGUUID
 from sqlalchemy.ext.hybrid import hybrid_property
-from flask.ext.bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt
 import os
+from uuid import uuid4
 from datetime import datetime
 
 from . import app
@@ -17,10 +19,18 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
 
-class User(db.Model):
-    """User of Kid-O App."""
+class UUID(PGUUID):
+    """Custom UUID type to set some defaults on the Postgres UUID type"""
 
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    def __init__(self, *args, **kwargs):
+        if 'as_uuid' not in kwargs:
+            kwargs['as_uuid'] = True
+        super(UUID, self).__init__(*args, **kwargs)
+        self.__module__ = 'sa.dialects.postgresql'
+
+
+class User(db.Model):
+    id = db.Column(UUID(), primary_key=True, default=uuid4)
     first_name = db.Column(db.String(32), nullable=False)
     last_name = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(64), nullable=True)
@@ -57,33 +67,23 @@ class User(db.Model):
     
 
 class Child(db.Model):
-    """Child of Kid-O App."""
-
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    pic_url = db.Column(db.String, nullable=True)
+    id = db.Column(UUID(), primary_key=True, default=uuid4)
+    pic_url = db.Column(db.String(3000))
     first_name = db.Column(db.String(32), nullable=False)
     last_name = db.Column(db.String(32), nullable=False)
+    nick_name = db.Column(db.String(32), nullable=False)
     birth_date = db.Column(db.DateTime, nullable=False)
-    guardian_type = db.Column(db.String(50), nullable=True)
-    guardian_fname = db.Column(db.String(32), nullable=True)
-    guardian_lname = db.Column(db.String(32), nullable=True)
-    godparent_prefix = db.Column(db.String(32), nullable=True)
-    godparent_fname = db.Column(db.String(32), nullable=True)
-    godparent_lname = db.Column(db.String(32), nullable=True)
-    godparent_email = db.Column(db.String(32), nullable=True)
-    medical_condition = db.Column(db.String, nullable=True)
-    doctor_appt = db.Column(db.DateTime, nullable=True)
-    situation = db.Column(db.Text, nullable=True)
-    home_visit = db.Column(db.DateTime, nullable=True)
-    latitude = db.Column(db.Float, nullable=True)
-    longitude = db.Column(db.Float, nullable=True)
-    activity = db.Column(db.Boolean, nullable=True)
+    nationality = db.Column(db.String(200))
+    school_year = db.Column(db.String(50))
+    situation = db.Column(db.String)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
+    activity = db.Column(db.Boolean)
+    guardians = db.relationship('Guardian', secondary='child_to_guardian', backref='child', lazy='dynamic', collection_class=set)
+    godparents = db.relationship('Godparent', secondary='child_to_godparent', backref='child', lazy='dynamic', collection_class=set)
     messages = db.relationship('Message', backref='child', lazy='dynamic')
 
-
     def __repr__(self):
-        """Provide helpful representation when printed."""
-
         return "<Child id=%s first_name=%s last_name=%s>" % (self.id, self.first_name, self.last_name)
 
     @hybrid_property
@@ -103,23 +103,38 @@ class Child(db.Model):
             pic_url = self.pic_url,
             first_name = self.first_name,
             last_name = self.last_name,
+            nick_name = self.nick_name,
             birth_date = self.birth_date,
-            guardian_type = self.guardian_type,
-            guardian_fname = self.guardian_fname,
-            guardian_lname = self.guardian_lname,
-            medical_condition = self.medical_condition,
-            doctor_appt = self.doctor_appt,
+            nationality = self.nationality,
+            school_year = self.school_year,
             situation = self.situation,
-            home_visit = self.home_visit,
             latitude = self.latitude,
             longitude = self.longitude,
+            activity = self.activity,
         )
 
-class Godparent(db.Model):
-    """A child's godparent."""
 
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    prefix = db.Column(db.String(32), nullable=False)
+class ChildToGuardian(db.Model):
+    child_id = db.Column(UUID(), db.ForeignKey('child.id'), primary_key=True)
+    guardian_id = db.Column(UUID(), db.ForeignKey('guardian.id'), primary_key=True)
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+
+
+class Guardian(db.Model):
+    id = db.Column(UUID(), primary_key=True, default=uuid4)
+    guardian_type = db.Column(db.String(50))
+    guardian_fname = db.Column(db.String(32))
+    guardian_lname = db.Column(db.String(32))
+
+
+class ChildToGodparent(db.Model):
+    child_id = db.Column(UUID(), db.ForeignKey('child.id'), primary_key=True)
+    godparent_id = db.Column(UUID(), db.ForeignKey('godparent.id'), primary_key=True)
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+
+
+class Godparent(db.Model):
+    id = db.Column(UUID(), primary_key=True, default=uuid4)
     first_name = db.Column(db.String(32), nullable=False)
     last_name = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(64), nullable=True)
@@ -129,9 +144,9 @@ class Godparent(db.Model):
 class Message(db.Model):
     """Message to godparent from Kid-O App."""
 
-    id = db.Column(db.Integer(), autoincrement=True, primary_key=True)
-    godparent_id = db.Column(db.Integer(), db.ForeignKey("godparent.id"), nullable=False)
-    child_id = db.Column(db.Integer(), db.ForeignKey("child.id"), nullable=False)
+    id = db.Column(UUID(), primary_key=True, default=uuid4)
+    godparent_id = db.Column(UUID(), db.ForeignKey("godparent.id"), nullable=False)
+    child_id = db.Column(UUID(), db.ForeignKey("child.id"), nullable=False)
     subject = db.Column(db.String())
     text_content = db.Column(db.String(8000), nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)

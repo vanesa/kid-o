@@ -1,61 +1,97 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container-fluid">
+  <div class="container-fluid">
     <div class="leftbox">
-    {% if child.pic_url == "../static/images/childphotopreview.png" %}
-    <img src="{{child.pic_url}}" class="images-style"><br><a href="/child/edit{{child.id}}" class="alerttext">Upload photo</a>
-    {% elif child.pic_url %}
-    <img src="{{child.pic_url}}" class="images-style">
+
+      {% if child.pic_url == "../static/images/childphotopreview.png" %}
+        <img src="{{child.pic_url}}" class="images-style"><br><a href="/child/edit{{child.id}}" class="alerttext">Upload photo</a>
+      {% elif child.pic_url %}
+        <img src="{{child.pic_url}}" class="images-style">
+      {% else %}
+        <img src="/static/images/childphotopreview.png" class="images-style"><br><a href="/child/edit{{child.id}}" class="alerttext">Upload photo</a>
+      {% endif %}
+
+    </div>
+    <div class="info rightbox">
+      <!-- Basic Child information -->
+      <h2 class="animated1"> {{ child.first_name}} {{ child.last_name }} - child.nick_name </h2><a href="/child/edit{{child.id}}" style="display: inline-block;"><button type="button" class="btn btn-sm btn-danger" value="edit"><i class="fa fa-pencil fa-fw edit-icon"></i> Edit</button></a>
+      <p><strong>Age: </strong>{{ child.age }} years old</p>
+      <p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
+      <!-- End Basic Child information -->
+      <!-- Guardian information -->
+      <p>
+
+      <strong>
+        {% if child.guardian_type %}
+          {{ child.guardian_type}}
+        {% else %}
+          Guardian
+        {% endif %}
+        :</strong>
+
+      {% if child.guardian_fname and child.guardian_lname %}
+        {{ child.guardian_fname}} {{ child.guardian_lname }}
+      {% else %}
+        <a href="/child/edit{{child.id}}" class="alerttext">Please add {{ child.first_name }}'s guardian's name.</a>
+      {% endif %}
+
+      </p>
+      <!-- End Guardian information -->
+
+      <p><strong>Nationality:</strong> child.nationality </p>
+
+      <!-- Godparent information -->
+      {% if child.godparent_fname and child.godparent_lname %}
+        <strong>Godparent: </strong>
+
+        {{ child.godparent_fname}} {{ child.godparent_lname }} <!-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" value="msg"><i class="fa fa-envelope"></i>  Send Mail </button> -->
+        <br>
+        <br>
+      <strong>Last message sent:</strong> 15. August 2015{% else %} {% endif %}</p>
+      <!-- End Godparent information -->
+    </div>
+    <div class="lowerform">
+
+      <h3 class="animated3"> Situation</h3>
+      <!-- if child.number_siblings
+      <p><strong>Number of siblings: </strong> child.number_siblings </p>
+      else
+      <p class="alerttext">
+      <a href="/child/edit{{child.id}}">Please write information about child.first_name 's number of siblings.</a>
+      </p>
+      endif
+
+      if child.school_class
+      <p><strong>School class: </strong> child.school_class </p>
+      else
+      <p class="alerttext">
+      <a href="/child/edit{{child.id}}">Please write information about child.first_name 's school class.</a>
+      </p>
+      endif //-->
+      <p><strong>Number of siblings: </strong> 2</p>
+      <p><strong>School class: </strong> Pre-Escolar</p>
+
+      {% if child.situation %}
+        <p>{{ child.situation }}</p>
+      {% else %}
+        <p class="alerttext">
+        <a href="/child/edit{{child.id}}">Please write information about {{ child.first_name }}'s situation.</a>
+        </p>
+      {% endif %}
+
+    </div>
+    <h3 class="animated4">Home location</h3>
+
+    {% if child.latitude %}
     {% else %}
-	<img src="/static/images/childphotopreview.png" class="images-style"><br><a href="/child/edit{{child.id}}" class="alerttext">Upload photo</a>
+      <a href="/child/edit{{child.id}}" class="alerttext">Please add {{ child.first_name}}'s home location.</a>
     {% endif %}
+
+    <div class="mapcontainer">
+      <div id="map"></div>
     </div>
-	<div class="info rightbox"> <span id="animationSandbox"><h2 class="animated1"> {{ child.first_name}} {{ child.last_name }} </h2></span><a href="/child/edit{{child.id}}" style="display: inline-block;"><button type="button" class="btn btn-sm btn-danger" value="edit"><i class="fa fa-pencil fa-fw edit-icon"></i> Edit</button></a>
-		<p><strong>Age: </strong>{{ child.age }} years old</p>
-		<p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
-		<p><strong>{% if child.guardian_type %}{{ child.guardian_type}}{% else %}Guardian{% endif %}:</strong> {% if child.guardian_fname and child.guardian_lname %}{{ child.guardian_fname}} {{ child.guardian_lname }} {% else %} <a href="/child/edit{{child.id}}" class="alerttext">Please add {{ child.first_name }}'s guardian's name.</a> {% endif %}</p>
-        <p>{% if child.godparent_fname and child.godparent_lname %}<strong>Godparent: </strong> {% if child.godparent_prefix %}{{ child.godparent_prefix}} {% else %}{% endif %}{{ child.godparent_fname}} {{ child.godparent_lname }} <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" value="msg"><i class="fa fa-envelope"></i> </button><br><br>
-        <strong>Last message sent:</strong> 15. August 2015{% else %} {% endif %}</p>
-	</div>
-    
-	<div class="lowerform">
-        {% if child.medical_condition %}
-		<h3 class="animated2"> Medical condition</h3>
-		<p>{{ child.medical_condition }}</p>
-        {% else %}
-        <p></p>
-        {% endif %}
-        {% if child.doctor_appt %}
-		<p><strong>Needs to visit the doctor:</strong> {{ child.doctor_appt.strftime('%d-%m-%Y') }}</p>
-        {% elif child.medical_condition %}
-        <p><a href="/child/edit{{child.id}}" class="alerttext">Please add a new doctors appointment for {{ child.first_name }}'s check-up.</a></p>
-        {% else %}
-        <p></p>
-        {% endif %}
-	</div>
-	<div>
-        {% if child.situation %}
-		<h3 class="animated3"> Situation</h3>
-		<p>{{ child.situation }}</p>
-        {% else %}
-        <p class="alerttext"><a href="/child/edit{{child.id}}">Please write information about {{ child.first_name }}'s situation.</a></p>
-        {% endif %}
-        {% if child.home_visit %}
-		<p><strong>Next home visit:</strong> {{ child.home_visit.strftime('%d-%m-%Y') }}</p>
-        {% else %}
-        <p></p>
-        {% endif %}
-	</div>
-	 <h3 class="animated4">Home location</h3>
-        {% if child.latitude %}
-        {% else %}
-        <a href="/child/edit{{child.id}}" class="alerttext">Please add {{ child.first_name}}'s home location.</a>
-        {% endif %}         
-	<div class="mapcontainer">
-	   <div id='map'></div>
-    </div>
-        <!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -75,59 +111,59 @@
           </div>
           <div class="modal-footer center">
             <form role="form" method='POST' action='/sendmessage' enctype="multipart/form-data">
-            <input type="text" name="subject" placeholder="Subject title" class="form-control addchildinput">
-            <textarea rows="2" cols="20" name="message" placeholder="Type a message..." class="form-control addchildinput"></textarea>
-            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>     
-            <button class="btn btn-primary" type="submit">Send message</button> 
-             </form>
+              <input type="text" name="subject" placeholder="Subject title" class="form-control addchildinput">
+              <textarea rows="2" cols="20" name="message" placeholder="Type a message..." class="form-control addchildinput"></textarea>
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+              <button class="btn btn-primary" type="submit">Send message</button>
+            </form>
           </div>
         </div>
       </div>
     </div>
-<script>
-    $('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').focus()
-})
-</script>
-<script>
-L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
-var map = L.mapbox.map('map', 'vanesa.e4c935ef')
+    <script>
+      $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+      })
+    </script>
+    <script>
+      L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
+      var map = L.mapbox.map('map', 'vanesa.e4c935ef')
     .setView([{% if child.latitude and child.longitude %}{{ child.latitude}}, {{child.longitude}}{% else %}18.542769, -69.801216{% endif %}], 15);
-// Disable the scroll Zoom
+    // Disable the scroll Zoom
     map.scrollWheelZoom.disable();
-L.mapbox.featureLayer({
-    // this feature is in the GeoJSON format: see geojson.org
-    // for the full specification
-    type: 'Feature',
-    geometry: {
-        type: 'Point',
-        // coordinates here are in longitude, latitude order because
-        // x, y is the standard for GeoJSON and many formats
-        coordinates: [{% if child.latitude and child.longitude %}
-          {{ child.longitude }},
-          {{ child.latitude }}
-          {% else %}18.542769, -69.801216{% endif %}
-        ]
-    },
-    properties: {
-        title: '{{ child.first_name}} {{ child.last_name }}',
-        {% if child.latitude == 18.542769 %}
+    L.mapbox.featureLayer({
+      // this feature is in the GeoJSON format: see geojson.org
+      // for the full specification
+      type: 'Feature',
+      geometry: {
+      type: 'Point',
+      // coordinates here are in longitude, latitude order because
+      // x, y is the standard for GeoJSON and many formats
+      coordinates: [{% if child.latitude and child.longitude %}
+        {{ child.longitude }},
+        {{ child.latitude }}
+      {% else %}18.542769, -69.801216{% endif %}
+      ]
+      },
+      properties: {
+      title: '{{ child.first_name}} {{ child.last_name }}',
+      {% if child.latitude == 18.542769 %}
         description: 'lives in this area. <a href="http://6254c5ab.ngrok.io/child/edit{{child.id}}" class="alerttext">Please edit the profile and add the correct location.</a>',
-        {% else %}
+      {% else %}
         description: 'lives here with {{ child.guardian_fname}} {{ child.guardian_lname }} ({{ child.guardian_type }}).',
-        {% endif %}
-        // one can customize markers by adding simplestyle properties
-        // https://www.mapbox.com/guides/an-open-platform/#simplestyle
-        'marker-size': 'large',
-        'marker-color': '#BE9A6B',
-        {% if child.latitude == 18.542769 %}
+      {% endif %}
+      // one can customize markers by adding simplestyle properties
+      // https://www.mapbox.com/guides/an-open-platform/#simplestyle
+      'marker-size': 'large',
+      'marker-color': '#BE9A6B',
+      {% if child.latitude == 18.542769 %}
         'marker-symbol': 'marker-stroked'
-        {% else %}
+      {% else %}
         'marker-symbol': 'building'
-        {% endif %}
+      {% endif %}
     }
-}).addTo(map);
-</script>
+    }).addTo(map);
+  </script>
 
 </div>
 

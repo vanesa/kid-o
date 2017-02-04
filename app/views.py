@@ -15,7 +15,7 @@ from werkzeug import secure_filename
 from flask import (
     render_template, 
     redirect, 
-    request, 
+    request,
     flash, 
     session, 
     url_for, 
@@ -25,7 +25,7 @@ from flask import (
     abort,
     send_from_directory,
 )
-from flask.ext.login import login_required, login_user, logout_user, current_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 from app.models import User, Child, db
 from app import auth 
@@ -88,6 +88,7 @@ def signup_form():
     if request.method == 'POST' and form.validate():  # Process form if route gets POST request from /index
         next_url = request.form.get('next', '/overview')
         user_data = form.data
+        app.logger.debug(user_data)
         del user_data['confirm']
         user = User(**user_data)
         db.session.add(user)
@@ -145,6 +146,8 @@ def edit_profile(id):
     """ Edit child profile """
 
     child = db.session.query(Child).filter_by(id=id).first()
+    godparent = db.session.query(Godparent).filter_by(id=child_id).first()
+
     if child is None:
         abort(404)
     form = ChildForm(request.form)
@@ -170,20 +173,19 @@ def edit_profile(id):
         # print "This should be a pic path: ", pic_url
         child.first_name = form.data['first_name']
         child.last_name = form.data['last_name']
+        child.nick_name = form.data['nick_name']
         child.birth_date = form.data['birth_date']
         child.guardian_type = form.data['guardian_type']
         child.guardian_fname = form.data['guardian_fname']
         child.guardian_lname = form.data['guardian_lname']
-        child.godparent_prefix = form.data['godparent_prefix']
-        child.godparent_fname = form.data['godparent_fname']
-        child.godparent_lname = form.data['godparent_lname']
-        child.godparent_email = form.data['godparent_email']
-        child.medical_condition = form.data['medical_condition']
-        child.doctor_appt = form.data['doctor_appt']
+        godparent.first_name = form.data['godparent_fname']
+        godparent.last_name = form.data['godparent_lname']
+        godparent.email = form.data['godparent_email']
+        child.nationality = form.data['nationality']
         child.situation = form.data['situation']
-        child.home_visit = form.data['home_visit']
         child.latitude = form.data['latitude']
         child.longitude = form.data['longitude']
+        child.activity = form.data['activity']
 
         db.session.commit()
 
@@ -215,30 +217,27 @@ def add_profile():
         # Get all the other contents
         first_name = form.data['first_name']
         last_name = form.data['last_name']
+        nick_name = form.data['nick_name']
         birth_date = form.data['birth_date']
         guardian_type = form.data['guardian_type']
         guardian_fname = form.data['guardian_fname']
         guardian_lname = form.data['guardian_lname']
-        godparent_prefix = form.data['godparent_prefix']
         godparent_fname = form.data['godparent_fname']
         godparent_lname = form.data['godparent_lname']
         godparent_email = form.data['godparent_email']
-        medical_condition = form.data['medical_condition']
-        doctor_appt = form.data['doctor_appt']
+        nationality = form.data['nationality']
         situation = form.data['situation']
-        home_visit = form.data['home_visit']
         latitude = form.data['latitude']
         longitude = form.data['longitude']
         activity = True
 
 
         # seed into database
-        child_entry = Child(pic_url=imgroot, first_name=first_name, last_name=last_name,
+        child_entry = Child(pic_url=imgroot, first_name=first_name, last_name=last_name, nick_name=nick_name,
                             birth_date=birth_date, guardian_type=guardian_type, guardian_fname=guardian_fname,
                             guardian_lname=guardian_lname, godparent_prefix=godparent_prefix, godparent_fname=godparent_fname, 
-                            godparent_lname=godparent_lname, godparent_email=godparent_email, medical_condition=medical_condition, 
-                            doctor_appt=doctor_appt, situation=situation, home_visit=home_visit, latitude=latitude, 
-                            longitude=longitude, activity=activity)
+                            godparent_lname=godparent_lname, godparent_email=godparent_email, situation=situation, 
+                            nationality=nationality, latitude=latitude, longitude=longitude, activity=activity)
         
         db.session.add(child_entry)
         db.session.commit()

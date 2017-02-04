@@ -290,6 +290,7 @@ nav.shrink div.searchform {
 	margin-left: -3px;
 }
 
+/* Name title */
 .animated1 {
 	color: #888888;
 	background-image: -webkit-linear-gradient(92deg,#F24E54,#feab3a);
@@ -306,7 +307,7 @@ nav.shrink div.searchform {
     -webkit-animation: hue 60s infinite linear;
 }
 
-
+/* Situation title */
 .animated3 {
 	color: #888888;
 	background-image: -webkit-linear-gradient(92deg,#FCD036,#119BD1);
@@ -315,8 +316,7 @@ nav.shrink div.searchform {
     -webkit-animation: hue 60s infinite linear;
 }
 
-
-
+/* Home Address title */
 .animated4 {
 	color: #888888;
 	background-image: -webkit-linear-gradient(92deg,#34475f,#119BD1);

@@ -1,59 +1,59 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container">
-	<div class="mainmapcontainer">
-	   <div id='map'></div>
+  <div class="container">
+    <div class="mainmapcontainer">
+      <div id='map'></div>
     </div>
 
-	<script>
-	L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
-	var geojson = [
-  // Loop through each child and create marker and tooltip containing the information available
-  {% for child in child_profiles %}
-  {% if child.latitude and child.longitude %}
-  {
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [{{ child.longitude }},{{ child.latitude }}]
-   },
-    "properties": {
-      "image": "/static/images/photos/" + {% if child.pic_url == "/static/images/childphotopreview.png" %}"childphotopreview.png"{% elif child.pic_url == "/static/images/photos/" + child.first_name.lower() + ".jpg" %}"{{ child.first_name }}".toLowerCase() + ".jpg" {% else %} "childphotopreview.png"{% endif %},
-      "title": "{{ child.first_name }} {{ child.last_name }}",
-      "url": "/child/{{ child.id }}",
+    <script>
+      L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
+      var geojson = [
+      // Loop through each child and create marker and tooltip containing the information available
+      {% for child in child_profiles %}
+        {% if child.latitude and child.longitude %}
+          {
+          "type": "Feature",
+          "geometry": {
+          "type": "Point",
+          "coordinates": [{{ child.longitude }},{{ child.latitude }}]
+          },
+          "properties": {
+        "image": "/static/images/photos/" + {% if child.pic_url == "/static/images/childphotopreview.png" %}"childphotopreview.png"{% elif child.pic_url == "/static/images/photos/" + child.first_name.lower() + ".jpg" %}"{{ child.first_name }}".toLowerCase() + ".jpg" {% else %} "childphotopreview.png"{% endif %},
+        "title": "{{ child.first_name }} {{ child.last_name }}",
+        "url": "/child/{{ child.id }}",
       "description": "lives here {% if child.guardian_fname and child.guardian_lname %} with {{ child.guardian_fname }} {{ child.guardian_lname }} {% else %}{% endif %} {% if child.guardian_type %}({{ child.guardian_type }}){% else %} {% endif %}",
       "marker-color": "#fc4353",
       "marker-size": "large",
       "marker-symbol": "building"
-    }
-  },{% endif %}{% endfor %}
-];
+      }
+    },{% endif %}{% endfor %}
+    ];
 
-	var map = L.mapbox.map('map', 'vanesa.e4c935ef', {
-    scrollWheelZoom: false
-})
+    var map = L.mapbox.map('map', 'vanesa.e4c935ef', {
+      scrollWheelZoom: false
+    })
     .setView([18.542769, -69.801216], 15)
-  .featureLayer;
-  // Add custom feature to the tooltip
-  map.on('layeradd', function(e) {
-    var marker = e.layer,
-        feature = marker.feature;
+    .featureLayer;
+    // Add custom feature to the tooltip
+    map.on('layeradd', function(e) {
+      var marker = e.layer,
+      feature = marker.feature;
 
-    // Create custom popup content
-    var popupContent =  '<div class="popupleft"><a href="' + feature.properties.url + '">' +
-                          '<img class="popupimage" src="' + feature.properties.image + '" />' + '</div>' + '<div class="popupright">' + 
-                          '<a href="' + feature.properties.url + '">' + feature.properties.title + 
-                        '</a> ' + feature.properties.description + '</div>';
+      // Create custom popup content
+      var popupContent =  '<div class="popupleft"><a href="' + feature.properties.url + '">' +
+          '<img class="popupimage" src="' + feature.properties.image + '" />' + '</div>' + '<div class="popupright">' +
+          '<a href="' + feature.properties.url + '">' + feature.properties.title +
+            '</a> ' + feature.properties.description + '</div>';
 
-    // http://leafletjs.com/reference.html#popup
-    marker.bindPopup(popupContent,{
-        closeButton: false,
-        minWidth: 180
-    });
-});
+        // http://leafletjs.com/reference.html#popup
+        marker.bindPopup(popupContent,{
+          closeButton: false,
+          minWidth: 180
+          });
+          });
 
-  map.setGeoJSON(geojson);
-	</script>
-</div>
-{% endblock %}
+          map.setGeoJSON(geojson);
+        </script>
+      </div>
+    {% endblock %}

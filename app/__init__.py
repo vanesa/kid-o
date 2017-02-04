@@ -2,11 +2,14 @@
 
 from jinja2 import StrictUndefined
 from flask import Flask
-from flask.ext.login import LoginManager
+from flask_login import LoginManager
+from flask_seasurf import SeaSurf
 
 
 app = Flask(__name__)
 app.config.from_object('app.settings')
+
+csrf = SeaSurf(app)
 
 from .models import db
 

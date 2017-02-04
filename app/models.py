@@ -78,7 +78,7 @@ class Child(db.Model):
     situation = db.Column(db.String)
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
-    activity = db.Column(db.Boolean)
+    is_active = db.Column(db.Boolean, default=True)
     guardians = db.relationship('Guardian', secondary='child_to_guardian', backref='child', lazy='dynamic', collection_class=set)
     godparents = db.relationship('Godparent', secondary='child_to_godparent', backref='child', lazy='dynamic', collection_class=set)
     messages = db.relationship('Message', backref='child', lazy='dynamic')

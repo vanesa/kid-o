@@ -69,17 +69,24 @@ class User(db.Model):
 class Child(db.Model):
     id = db.Column(UUID(), primary_key=True, default=uuid4)
     pic_url = db.Column(db.String(3000))
+    is_active = db.Column(db.Boolean, default=True)
     first_name = db.Column(db.String(32), nullable=False)
     last_name = db.Column(db.String(32), nullable=False)
     nick_name = db.Column(db.String(32), nullable=False)
     birth_date = db.Column(db.DateTime, nullable=False)
     nationality = db.Column(db.String(200))
-    school_year = db.Column(db.String(50))
+    guardian_type = db.Column(db.String(50), nullable=True)
+    guardian_fname = db.Column(db.String(32), nullable=True)
+    guardian_lname = db.Column(db.String(32), nullable=True)
+    number_of_siblings = db.Column(db.Integer)
+    siblings_in_project = db.Column(db.String)
+    school_class = db.Column(db.String(50))
+    school_attendance = db.Column(db.String(50))
+    volunteer_task = db.Column(db.String)
     situation = db.Column(db.String)
+    godparent_status = db.Column(db.String)
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
-    is_active = db.Column(db.Boolean, default=True)
-    guardians = db.relationship('Guardian', secondary='child_to_guardian', backref='child', lazy='dynamic', collection_class=set)
     godparents = db.relationship('Godparent', secondary='child_to_godparent', backref='child', lazy='dynamic', collection_class=set)
     messages = db.relationship('Message', backref='child', lazy='dynamic')
 
@@ -101,30 +108,25 @@ class Child(db.Model):
         return dict(
             id = self.id,
             pic_url = self.pic_url,
+            is_active = self.is_active,
             first_name = self.first_name,
             last_name = self.last_name,
             nick_name = self.nick_name,
             birth_date = self.birth_date,
             nationality = self.nationality,
-            school_year = self.school_year,
+            guardian_fname = self.guardian_fname,
+            guardian_lname = self.guardian_lname,
+            guardian_type = self.guardian_type,
+            number_of_siblings = self.number_of_siblings,
+            siblings_in_project = self.siblings_in_project,
+            school_class = self.school_class,
+            school_attendance = self.school_attendance,
+            volunteer_task = self.volunteer_task,
             situation = self.situation,
+            godparent_status = self.godparent_status,
             latitude = self.latitude,
             longitude = self.longitude,
-            activity = self.activity,
         )
-
-
-class ChildToGuardian(db.Model):
-    child_id = db.Column(UUID(), db.ForeignKey('child.id'), primary_key=True)
-    guardian_id = db.Column(UUID(), db.ForeignKey('guardian.id'), primary_key=True)
-    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
-
-
-class Guardian(db.Model):
-    id = db.Column(UUID(), primary_key=True, default=uuid4)
-    guardian_type = db.Column(db.String(50))
-    guardian_fname = db.Column(db.String(32))
-    guardian_lname = db.Column(db.String(32))
 
 
 class ChildToGodparent(db.Model):

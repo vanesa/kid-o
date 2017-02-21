@@ -16,6 +16,13 @@
     <div class="info rightbox">
       <!-- Basic Child information -->
       <h2 class="animated1"> {{ child.first_name}} {{ child.last_name }} - child.nick_name </h2><a href="/child/edit{{child.id}}" style="display: inline-block;"><button type="button" class="btn btn-sm btn-danger" value="edit"><i class="fa fa-pencil fa-fw edit-icon"></i> Edit</button></a>
+      
+      {% if child.is_active %}
+        <p class="active"> Active </p> 
+      {% else %} 
+        <p class="inactive"> Inactive </p>
+      {% endif %}
+
       <p><strong>Age: </strong>{{ child.age }} years old</p>
       <p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
       <!-- End Basic Child information -->
@@ -27,8 +34,8 @@
           {{ child.guardian_type}}
         {% else %}
           Guardian
-        {% endif %}
-        :</strong>
+        {% endif %}:
+      </strong>
 
       {% if child.guardian_fname and child.guardian_lname %}
         {{ child.guardian_fname}} {{ child.guardian_lname }}
@@ -39,39 +46,51 @@
       </p>
       <!-- End Guardian information -->
 
-      <p><strong>Nationality:</strong> child.nationality </p>
+      <p><strong>Nationality:</strong> {% if child.nationality %} child.nationality{% else %} ? {% endif %} </p> 
 
       <!-- Godparent information -->
-      {% if child.godparent_fname and child.godparent_lname %}
+      {% if godparent.first_name and godparent.last_name %}
         <strong>Godparent: </strong>
 
-        {{ child.godparent_fname}} {{ child.godparent_lname }} <!-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" value="msg"><i class="fa fa-envelope"></i>  Send Mail </button> -->
+        {{ godparent.first_name}} {{ godparent.last_name }} <!-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" value="msg"><i class="fa fa-envelope"></i>  Send Mail </button> -->
         <br>
         <br>
       <strong>Last message sent:</strong> 15. August 2015{% else %} {% endif %}</p>
       <!-- End Godparent information -->
     </div>
     <div class="lowerform">
+      <h3 class="animated2"> Siblings</h3>
+      
+      {% if child.number_of_siblings %}
+        <p><strong>Number of siblings: </strong> {{ child.number_of_siblings }} </p>
+      {% else %}
+        <p class="alerttext">
+          <a href="/child/edit{{child.id}}">Please write information about {{ child.first_name }}'s number of siblings.</a>
+        </p>
+      {% endif %}
 
-      <h3 class="animated3"> Situation</h3>
-      <!-- if child.number_siblings
-      <p><strong>Number of siblings: </strong> child.number_siblings </p>
-      else
-      <p class="alerttext">
-      <a href="/child/edit{{child.id}}">Please write information about child.first_name 's number of siblings.</a>
-      </p>
-      endif
+      {% if child.siblings_in_project %}
+        <p><strong>Siblings in school: </strong> {{ child.siblings_in_project }} </p>
+      {% else %}
+        <p class="alerttext">
+          <a href="/child/edit{{child.id}}">Please write information about {{ child.first_name }}'s siblings that are also in the project.</a>
+        </p>
+      {% endif %}
+      
+      <h3 class="animated3"> School</h3>
+      
+      {% if child.school_class %}
+        <p><strong>School class: </strong> child.school_class </p>
+      {% else %}
+        <p class="alerttext">
+          <a href="/child/edit{{child.id}}">Please write information about child.first_name 's school class.</a>
+        </p>
+      {% endif %}
 
-      if child.school_class
-      <p><strong>School class: </strong> child.school_class </p>
-      else
-      <p class="alerttext">
-      <a href="/child/edit{{child.id}}">Please write information about child.first_name 's school class.</a>
-      </p>
-      endif //-->
-      <p><strong>Number of siblings: </strong> 2</p>
-      <p><strong>School class: </strong> Pre-Escolar</p>
-
+      {% if child.school_attendance %}
+        <p><strong>School attendance:</strong> {{ child.school_attendance }}</p>
+      <h3 class="animated4"> Situation</h3>
+      
       {% if child.situation %}
         <p>{{ child.situation }}</p>
       {% else %}

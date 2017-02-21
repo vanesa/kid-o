@@ -1,21 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <div>
+  <div class="row">
     <form action="/child/add" class="form-signin" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-      <div class="leftbox">
+      <div class="col-xs-12 col-md-3">
+        <p>
         <img id="imgpreview" src="../static/images/childphotopreview.png" class="imgpreview" alt="Child's photo preview.">
-        <input type="file" name="file" id ="imgInput" class="filestyle inputimg" data-classButton="btn btn-primary" data-input="true" data-buttonText="Upload" data-classIcon="glyphicon-camera" data-size="sm">
+        </p>
+        <p>
+          <input type="file" name="file" id ="imgInput" class="filestyle inputimg" data-classButton="btn btn-primary" data-input="true" data-buttonText="Upload" data-classIcon="glyphicon-camera" data-size="sm">
+        </p>
       </div>
-
-      <div class="info rightbox">
-        <input type="checkbox" checked data-toggle="toggle"> Active
+      <div class="info col-xs-12 col-md-6">
+        <h3 class="animated1"> Profile </h3>
+      </div>
+      <div class="info col-xs-12 col-md-3">
+        <p>Activity: <input type="checkbox" name="is_active" checked data-toggle="toggle" value="true" class="addchildinput"> </p>
         <input type="text" name="first_name" placeholder="First name" class="form-control addchildinput"><br />
         <input type="text" name="last_name" placeholder="Last name" class="form-control addchildinput"><br />
         <input type="text" name="nick_name" placeholder="Nick name" class="form-control addchildinput"><br />
         <input type="text" name="birth_date" placeholder="Birth date YYYY-MM-DD" class="form-control addchildinput"><br />
-        <select>
+      </div>
+      <div class="info col-xs-12 col-md-3">
+        Nationaltiy: 
+        <select class="addchildinput">
           <option value="dominican">Dominican</option><br />
           <option value="hatian">Hatian</option><br />
         </select>
@@ -23,14 +32,28 @@
         <input type="text" name="guardian_lname" placeholder="Guardian Last name" class="form-control addchildinput"><br />
         <input type="text" name="guardian_type" placeholder="Guardian type (Mother, Aunt etc.)" class="form-control addchildinput"><br />
       </div>
-      <div class="info rightbox">
-        <input type="text" name="godparent_fname" placeholder="Godparent First name" class="form-control addchildinput"><br />
-        <input type="text" name="godparent_lname" placeholder="Godparent Last name" class="form-control addchildinput"><br />
-        <input type="text" name="godparent_email" placeholder="Godparent Email" class="form-control addchildinput"><br />
-      </div>
-      <div class="lowerform">
-        <label for="med-field"><h3 class="animated2">School</h3></label><br />
-        <select>
+      <div class="lowerform col-xs-12 col-md-12">
+        <label for="siblings-field"><h3 class="animated3">Siblings</h3></label><br />
+        <p><strong> Number of siblings: </strong>
+        <select name="number_of_siblings">
+          <option> - Select number of siblings - </option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+        </p>
+        <p><strong>Siblings in project:</strong>
+        <input type="text" name="siblings_in_project" placeholder="Name of siblings in project" class="form-control addchildinput">
+        </p>
+        <label for="school_field"><h3 class="animated4">School</h3></label><br />
+        <p><strong>School class:</strong>
+        <select name="school_class">
+          <option> - Select school - </option>
           <option value="maternal">Maternal</option>
           <option value="preescolar">Pre-Escolar</option>
           <option value="1schoolyear">1st school year</option>
@@ -40,16 +63,23 @@
           <option value="specialschool">Special school</option>
           <option value="saladeactividades">Sala de Actividades</option>
         </select>
-        <textarea rows="2" cols="20" name="situation" placeholder="Situation" class="form-control addchildinput"></textarea><br />
+        </p>
+        <p><strong>School attendance: </strong>
+          <select name="school_class">
+            <option> - Select attendance rate - </option>
+            <option value="good">Good</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="bad">Bad</option>
+        </select>
         <!--       <label for="doct-field">Needs to visit the doctor:</label><br />
         <input type="text" name="doctor_appt" placeholder="YYYY-M-D" class="form-control addchildinput"><br /> -->
-        <label for="home-field"><h3 class="animated3">Situation:</h3></label><br />
+        <label for="situation-field"><h3 class="animated5">Situation:</h3></label><br />
         <textarea rows="3" cols="40" name="situation" placeholder="Situation at home and at school." class="form-control addchildinput"></textarea><br />
         <!--       <label for="doct-field">Next home visit:</label><br />
         <input type="text" name="home_visit" placeholder="YYYY-M-D" class="form-control addchildinput"><br /> -->
         <input type="text" id="lat" name="latitude" class="hidden">
         <input type="text" id="lng" name="longitude" class="hidden">
-        <h3 class="animated4"> Home location </h3>
+        <h3 class="animated6"> Home location </h3>
         <div class="mapcontainer">
           <div id="map"></div>
         </div>

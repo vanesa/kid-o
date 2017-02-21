@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, DateField, FloatField
+from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField
 from wtforms.validators import DataRequired, Email, Length, ValidationError, Optional
 from app import app
 
@@ -24,21 +24,22 @@ class SignUpForm(Form):
             raise ValidationError('Please type in the same password as in the password field.')
 
 
-
 class ChildForm(Form):
+    is_active = BooleanField('is_active')
     first_name = StringField('first_name', validators=[DataRequired(), Length(max=15)])
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
+    nick_name = StringField('nick_name', validators=[DataRequired(), Length(max=15)])
     birth_date = DateField('birth_date', validators=[DataRequired()])
+    nationality = StringField('nationality')
     guardian_type = StringField('guardian_type', validators=[Length(max=15)])
     guardian_fname = StringField('guardian_fname', validators=[Length(max=25)])
     guardian_lname = StringField('guardian_lname', validators=[Length(max=25)])
-    godparent_prefix = StringField('godparent_prefix', validators=[Length(max=25)])
-    godparent_fname = StringField('godparent_fname', validators=[Length(max=25)])
-    godparent_lname = StringField('godparent_lname', validators=[Length(max=25)])
-    godparent_email = StringField('godparent_email', validators=[Optional(), Length(min=5, max=25), Email()])
-    medical_condition = StringField('medical_condition')
-    doctor_appt = DateField('doctor_appt', validators=[Optional()])
+    number_of_siblings = IntegerField('number_of_siblings', validators=[Length(max=2)])
+    siblings_in_project = StringField('siblings_in_school', validators=[Length(max=40)])
+    school_class = StringField('school_year')
+    school_attendance = StringField('school_attendance')
+    volunteer_task = StringField('volunteer_task')
     situation = StringField('situation')
-    home_visit = DateField('home_visit', validators=[Optional()])
+    godparent_status = StringField('godparent_status')
     latitude = FloatField('latitude', validators=[Optional()])
     longitude = FloatField('longitude', validators=[Optional()])

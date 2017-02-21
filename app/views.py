@@ -201,6 +201,8 @@ def add_profile():
     form = ChildForm(request.form)
     app.logger.debug(form.validate())
     app.logger.debug(form.errors)
+    app.logger.debug(request.form)
+    
     if request.method == 'POST' and form.validate(): 
         # get all new data
         # Upload image 
@@ -214,30 +216,8 @@ def add_profile():
             # Save the image path to send to the database
             imgroot = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
 
-        # Get all the other contents
-        first_name = form.data['first_name']
-        last_name = form.data['last_name']
-        nick_name = form.data['nick_name']
-        birth_date = form.data['birth_date']
-        guardian_type = form.data['guardian_type']
-        guardian_fname = form.data['guardian_fname']
-        guardian_lname = form.data['guardian_lname']
-        godparent_fname = form.data['godparent_fname']
-        godparent_lname = form.data['godparent_lname']
-        godparent_email = form.data['godparent_email']
-        nationality = form.data['nationality']
-        situation = form.data['situation']
-        latitude = form.data['latitude']
-        longitude = form.data['longitude']
-        activity = True
-
-
         # seed into database
-        child_entry = Child(pic_url=imgroot, first_name=first_name, last_name=last_name, nick_name=nick_name,
-                            birth_date=birth_date, guardian_type=guardian_type, guardian_fname=guardian_fname,
-                            guardian_lname=guardian_lname, godparent_prefix=godparent_prefix, godparent_fname=godparent_fname, 
-                            godparent_lname=godparent_lname, godparent_email=godparent_email, situation=situation, 
-                            nationality=nationality, latitude=latitude, longitude=longitude, activity=activity)
+        child_entry = Child(**form.data)
         
         db.session.add(child_entry)
         db.session.commit()

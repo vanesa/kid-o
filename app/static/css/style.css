@@ -47,7 +47,7 @@
 }
 
 .lowerform {
-	clear: both;
+	text-align: left;
 }
 
 .uploadlink {
@@ -107,6 +107,8 @@
 	max-height: 100%;
 	max-width: 50%;
 }
+
+
 
 .rightbox {
 	display: inline-block;
@@ -168,9 +170,8 @@
 .imgpreview {
 	opacity: 0.6;
 	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 20px;
+	margin-left: 25%;
+	/*margin-bottom: 20px;*/
 	max-height: 250px;
 }
 
@@ -290,6 +291,26 @@ nav.shrink div.searchform {
 	margin-left: -3px;
 }
 
+/* is_active */
+
+.active {
+	font-style: bold;
+	color: #888888;
+	background-image: -webkit-linear-gradient(92deg,#4f9b07,#a8ff1c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+}
+
+.inactive {
+	font-style: bold;
+	color: #888888;
+	background-image: -webkit-linear-gradient(92deg,#555654,#b6b7b5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+}
+
 /* Name title */
 .animated1 {
 	color: #888888;
@@ -299,31 +320,53 @@ nav.shrink div.searchform {
     -webkit-animation: hue 60s infinite linear;
 }
 
+
+
+/* Godparents */
 .animated2 {
 	color: #888888;
-	background-image: -webkit-linear-gradient(92deg,#feab3a,#79A82F);
+	background-image: -webkit-linear-gradient(92deg,#f9d73b,#f9783b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+}
+
+/* Siblings */
+.animated3 {
+	color: #888888;
+	background-image: -webkit-linear-gradient(92deg,#79A82F,#f9d73b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+}
+
+/* School */
+.animated4 {
+	color: #888888;
+	background-image: -webkit-linear-gradient(92deg,#119BD1,#79A82F);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-animation: hue 60s infinite linear;
 }
 
 /* Situation title */
-.animated3 {
-	color: #888888;
-	background-image: -webkit-linear-gradient(92deg,#FCD036,#119BD1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear;
-}
-
-/* Home Address title */
-.animated4 {
+.animated5 {
 	color: #888888;
 	background-image: -webkit-linear-gradient(92deg,#34475f,#119BD1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-animation: hue 60s infinite linear;
 }
+
+/* Home Address title */
+.animated6 {
+	color: #888888;
+	background-image: -webkit-linear-gradient(92deg,#853ad1, #3365a5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+}
+
 
 /* Bottom Navigation */
 

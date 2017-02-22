@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-  <div>
+  <div class="row">
     <form action="/child/edit{{child.id}}" class="form-signin" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-      <div class="leftbox">
+      <div class="col-xs-12 col-md-3">
 
         {% if child.pic_url %}
           <img src="{{child.pic_url}}" id="imgpreview" class="imgpreview" alt="{{child.first_name}}'s photo.">
@@ -13,7 +13,7 @@
 
         <input type="file" name="file" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Photo" data-classIcon="glyphicon-camera" data-size="sm" value="{{child.pic_url}}">
       </div>
-      <div class="info rightbox">
+      <div class="info col-xs-12 col-md-3">
         <!-- Basic Child information -->
         <label for="doct-field">Child </label><br />
         <input type="text" name="first_name" value="{{child.first_name}}" placeholder="{{child.first_name}}" class="form-control addchildinput"><br />
@@ -86,7 +86,7 @@
         {% endif %}
 
       </div>
-      <div class="lowerform">
+      <div class="lowerform col-xs-12 col-md-12">
 
         <label for="home-field"><h3 class="animated3">Situation:</h3></label><br />
         <label for="class-field">School Class</label><br />

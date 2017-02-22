@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <div class="container-fluid">
-    <div class="leftbox">
+  <div class="row">
+    <div class="col-xs-12 col-md-3">
 
       {% if child.pic_url == "../static/images/childphotopreview.png" %}
         <img src="{{child.pic_url}}" class="images-style"><br><a href="/child/edit{{child.id}}" class="alerttext">Upload photo</a>
@@ -13,20 +13,18 @@
       {% endif %}
 
     </div>
-    <div class="info rightbox">
+    <div class="info col-xs-12 col-md-6">
+      {% if child.is_active %}<h2 class="animated1">{% else %} <h2 class="inactive"> {% endif %} {{ child.first_name}} {{ child.last_name }} - {{ child.nick_name }} </h2><a href="/child/edit{{child.id}}" style="display: inline-block;"><button type="button" class="btn btn-sm btn-danger" value="edit"><i class="fa fa-pencil fa-fw edit-icon"></i> Edit</button></a>
+    </div>
+    <div class="info col-xs-12 col-md-3">
       <!-- Basic Child information -->
-      <h2 class="animated1"> {{ child.first_name}} {{ child.last_name }} - child.nick_name </h2><a href="/child/edit{{child.id}}" style="display: inline-block;"><button type="button" class="btn btn-sm btn-danger" value="edit"><i class="fa fa-pencil fa-fw edit-icon"></i> Edit</button></a>
-      
-      {% if child.is_active %}
-        <p class="active"> Active </p> 
-      {% else %} 
-        <p class="inactive"> Inactive </p>
-      {% endif %}
 
       <p><strong>Age: </strong>{{ child.age }} years old</p>
       <p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
       <!-- End Basic Child information -->
       <!-- Guardian information -->
+      </div>
+      <div class="info col-xs-12 col-md-3">
       <p>
 
       <strong>
@@ -46,20 +44,10 @@
       </p>
       <!-- End Guardian information -->
 
-      <p><strong>Nationality:</strong> {% if child.nationality %} child.nationality{% else %} ? {% endif %} </p> 
-
-      <!-- Godparent information -->
-      {% if godparent.first_name and godparent.last_name %}
-        <strong>Godparent: </strong>
-
-        {{ godparent.first_name}} {{ godparent.last_name }} <!-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal" value="msg"><i class="fa fa-envelope"></i>  Send Mail </button> -->
-        <br>
-        <br>
-      <strong>Last message sent:</strong> 15. August 2015{% else %} {% endif %}</p>
-      <!-- End Godparent information -->
+      <p><strong>Nationality:</strong> {% if child.nationality %} {{ child.nationality }} {% else %} ? {% endif %} </p> 
     </div>
-    <div class="lowerform">
-      <h3 class="animated2"> Siblings</h3>
+    <div class="lowerform col-xs-12 col-md-12">
+      <label for="siblings-field"><h3 class="animated3"> Siblings</h3></label>
       
       {% if child.number_of_siblings %}
         <p><strong>Number of siblings: </strong> {{ child.number_of_siblings }} </p>
@@ -77,10 +65,10 @@
         </p>
       {% endif %}
       
-      <h3 class="animated3"> School</h3>
+      <label for="school-field"><h3 class="animated4"> School</h3></label>
       
       {% if child.school_class %}
-        <p><strong>School class: </strong> child.school_class </p>
+        <p><strong>School class: </strong> {{ child.school_class }}</p>
       {% else %}
         <p class="alerttext">
           <a href="/child/edit{{child.id}}">Please write information about child.first_name 's school class.</a>
@@ -89,8 +77,9 @@
 
       {% if child.school_attendance %}
         <p><strong>School attendance:</strong> {{ child.school_attendance }}</p>
-      <h3 class="animated4"> Situation</h3>
-      
+      {% endif%}
+
+      <label for="situation-field"><h3 class="animated5"> Situation</h3></label>
       {% if child.situation %}
         <p>{{ child.situation }}</p>
       {% else %}
@@ -99,42 +88,43 @@
         </p>
       {% endif %}
 
-    </div>
-    <h3 class="animated4">Home location</h3>
 
-    {% if child.latitude %}
-    {% else %}
-      <a href="/child/edit{{child.id}}" class="alerttext">Please add {{ child.first_name}}'s home location.</a>
-    {% endif %}
+      <label for="homelocation-field"><h3 class="animated6">Home location</h3></label>
 
-    <div class="mapcontainer">
-      <div id="map"></div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title center" id="myModalLabel">Send message to {{ child.godparent_fname }}</h4>
-          </div>
-          <div class="modal-body center">
-            Here you can scroll through the past messages...
-            <br>
-            Here you can scroll through the past messages...
-            <br>
-            Here you can scroll through the past messages...
-            <br>
-            Here you can scroll through the past messages...
-            <br>
-          </div>
-          <div class="modal-footer center">
-            <form role="form" method='POST' action='/sendmessage' enctype="multipart/form-data">
-              <input type="text" name="subject" placeholder="Subject title" class="form-control addchildinput">
-              <textarea rows="2" cols="20" name="message" placeholder="Type a message..." class="form-control addchildinput"></textarea>
-              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-              <button class="btn btn-primary" type="submit">Send message</button>
-            </form>
+      {% if child.latitude %}
+      {% else %}
+        <a href="/child/edit{{child.id}}" class="alerttext">Please add {{ child.first_name}}'s home location.</a>
+      {% endif %}
+
+      <div class="mapcontainer">
+        <div id="map"></div>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title center" id="myModalLabel">Send message to godparent</h4>
+            </div>
+            <div class="modal-body center">
+              Here you can scroll through the past messages...
+              <br>
+              Here you can scroll through the past messages...
+              <br>
+              Here you can scroll through the past messages...
+              <br>
+              Here you can scroll through the past messages...
+              <br>
+            </div>
+            <div class="modal-footer center">
+              <form role="form" method='POST' action='/sendmessage' enctype="multipart/form-data">
+                <input type="text" name="subject" placeholder="Subject title" class="form-control addchildinput">
+                <textarea rows="2" cols="20" name="message" placeholder="Type a message..." class="form-control addchildinput"></textarea>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="submit">Send message</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -187,4 +177,3 @@
 </div>
 
 {% endblock %}
-

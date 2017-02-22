@@ -127,7 +127,7 @@ def load_map():
     return render_template('map.html', child_profiles=all_children)
 
 
-@app.route('/child/<int:id>')
+@app.route('/child/<string:id>')
 @login_required
 def child_profile(id):
     """ Show's each child's profile with the following information: First name, last name,
@@ -140,13 +140,13 @@ def child_profile(id):
     
     return render_template('child_profile.html', child=child)
 
-@app.route('/child/edit<int:id>', methods=['GET', 'POST'])
+@app.route('/child/edit/<string:id>', methods=['GET', 'POST'])
 @login_required
 def edit_profile(id):
     """ Edit child profile """
 
     child = db.session.query(Child).filter_by(id=id).first()
-    godparent = db.session.query(Godparent).filter_by(id=child_id).first()
+    # godparent = db.session.query(Godparent).filter_by(id=child_id).first()
 
     if child is None:
         abort(404)
@@ -178,9 +178,6 @@ def edit_profile(id):
         child.guardian_type = form.data['guardian_type']
         child.guardian_fname = form.data['guardian_fname']
         child.guardian_lname = form.data['guardian_lname']
-        godparent.first_name = form.data['godparent_fname']
-        godparent.last_name = form.data['godparent_lname']
-        godparent.email = form.data['godparent_email']
         child.nationality = form.data['nationality']
         child.situation = form.data['situation']
         child.latitude = form.data['latitude']
@@ -189,7 +186,7 @@ def edit_profile(id):
 
         db.session.commit()
 
-        return redirect('/child/%d' % child.id)
+        return redirect('/child/%s' % child.id)
 
     return render_template('edit_profile.html', form=form, child=child)
 
@@ -224,11 +221,11 @@ def add_profile():
 
         child = db.session.query(Child).order_by(Child.id.desc()).first()
 
-        return redirect('/child/%d' % child.id)
+        return redirect('/child/%s' % child.id)
     else:
         return render_template('add_profile.html', form=form)
 
-@app.route('/delete-profile<int:id>', methods=['GET', 'POST'])
+@app.route('/delete-profile/<string:id>', methods=['GET', 'POST'])
 @login_required
 def delete_profile(id):
 

@@ -296,16 +296,12 @@ nav.shrink div.searchform {
 .active {
 	font-style: bold;
 	color: #888888;
-	background-image: -webkit-linear-gradient(92deg,#4f9b07,#a8ff1c);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear;
 }
 
 .inactive {
 	font-style: bold;
 	color: #888888;
-	background-image: -webkit-linear-gradient(92deg,#555654,#b6b7b5);
+	background-image: -webkit-linear-gradient(92deg,#c1c1c1,#828080);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-animation: hue 60s infinite linear;

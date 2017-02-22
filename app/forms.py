@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField
-from wtforms.validators import DataRequired, Email, Length, ValidationError, Optional
+from wtforms.validators import DataRequired, Email, Length, NumberRange, ValidationError, Optional
 from app import app
 
 def lower(data):
@@ -34,7 +34,7 @@ class ChildForm(Form):
     guardian_type = StringField('guardian_type', validators=[Length(max=15)])
     guardian_fname = StringField('guardian_fname', validators=[Length(max=25)])
     guardian_lname = StringField('guardian_lname', validators=[Length(max=25)])
-    number_of_siblings = IntegerField('number_of_siblings', validators=[Length(max=2)])
+    number_of_siblings = IntegerField('number_of_siblings', validators=[NumberRange(min=0, max=8)])
     siblings_in_project = StringField('siblings_in_school', validators=[Length(max=40)])
     school_class = StringField('school_year')
     school_attendance = StringField('school_attendance')

@@ -21,7 +21,7 @@
         <input type="text" name="birth_date" value="{{child.birth_date.strftime('%Y-%m-%d')}}" placeholder="{{child.birth_date.strftime('%Y-%m-%d')}}" class="form-control addchildinput"><br />
         <!-- End Basic Child information -->
         <!-- Guardian information -->
-        <label for="doct-field">Guardian </label> <br />
+        <label for="guardian-field">Guardian </label> <br />
 
         {% if child.guardian_type %}
           <input type="text" name="guardian_type" value="{{child.guardian_type}}" placeholder="{{child.guardian_type}}" class="form-control addchildinput"><br />
@@ -40,12 +40,11 @@
         {% else %}
           <input type="text" name="guardian_lname" placeholder="Guardian last name" class="form-control addchildinput"><br />
         {% endif %}
-
       </div>
       <!-- End Guardian information -->
 
       <div class="info rightbox">
-        <label for="doct-field">Nationality </label><br />
+        <label for="nationality-field">Nationality </label><br />
         <select class="form-control addchildinput">
           <option>Dominican</option>
           <option>Haitian</option>
@@ -65,119 +64,143 @@
         <input type="text" name="godparent_lname" placeholder="Godparent Last name" class="form-control addchildinput"><br />
         <input type="text" name="godparent_email" placeholder="Godparent Email" class="form-control addchildinput"><br />
         -->
-        <label for="doct-field">Godparent </label><br />
+        <label for="godparent-field">Godparent </label><br />
 
-        {% if child.godparent_fname %}
-          <input type="text" name="godparent_fname" value="{{child.godparent_fname}}" placeholder="{{child.godparent_fname}}" class="form-control addchildinput"><br />
-        {% else %}
-          <input type="text" name="godparent_fname" placeholder="Godparent First Name" class="form-control addchildinput"><br />
-        {% endif %}
-
-        {% if child.godparent_lname %}
-          <input type="text" name="godparent_lname" value="{{child.godparent_lname}}" placeholder="{{child.godparent_lname}}" class="form-control addchildinput"><br />
-        {% else %}
-          <input type="text" name="godparent_lname" placeholder="Godparent Last Name" class="form-control addchildinput"><br />
-        {% endif %}
-
-        {% if child.godparent_email %}
-          <input type="text" name="godparent_email" value="{{child.godparent_email}}" placeholder="{{child.godparent_email}}" class="form-control addchildinput"><br />
-        {% else %}
-          <input type="text" name="godparent_email" placeholder="Godparent email" class="form-control addchildinput"><br />
-        {% endif %}
 
       </div>
       <div class="lowerform col-xs-12 col-md-12">
 
         <label for="home-field"><h3 class="animated3">Situation:</h3></label><br />
         <label for="class-field">School Class</label><br />
-        <select class="form-control addchildinput" data-placeholder="Select a school class">
-          <option value>Chose a school class</option>
+        <select id="school_class" class="form-control addchildinput" data-placeholder="Select a school class">
+          <option> - Select school - </option>
           <option value="Maternal">Maternal</option>
-          <option value="Pre-Escolar 1">Pre-Escolar 1</option>
-          <option value="Pre-Escolar 2"> Pre-Escolar 2</option>
-          <option value="Pre-Escolar 3">Pre-Escolar 3</option>
-          <option value="Pre-Escolar 4">Pre-Escolar 4</option>
-          <option value="Sonderklasse">Sonderklasse</option>
-          <option value="Sala de Actividades">Sala de Actividades</option>
-          <option value="Proyecto Salud">Proyecto Salud</option>
+          <option value="Preschool">Preschool</option>
+          <option value="1st school year">1st school year</option>
+          <option value="2nd school year">2nd school year</option>
+          <option value="3rd school year">3rd school year</option>
+          <option value="4th school year">4th school year</option>
+          <option value="Special School">Special school</option>
         </select>
         <label for="siblings-field">Number of siblings</label><br />
-        <select name="numberSiblings" class="form-control addchildinput">
+        <select id="number_of_siblings" name="number_of_siblings" class="form-control addchildinput">
+          <option value="0"> - Select number of siblings - </option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
         </select>
-        {% if sibling %}
-          <img src="{{ sibling.image }}" class="sibling-thumbnail">
-          (% endif %)
-          <br />
-          <label for="siblings-field">Situation</label><br />
-          {% if child.situation %}
-            <textarea rows="3" cols="40" name="situation" placeholder="{{child.situation}}" class="form-control addchildinput">{{child.situation}}</textarea><br />
-          {% else %}
-            <textarea rows="3" cols="40" name="situation" placeholder="Please write about {{ child.first_name }}'s situation." class="form-control addchildinput"></textarea><br />
-          {% endif %}
+        {% if child.siblings_in_project %}
+          {{ child.siblings_in_project }}
+        {% else %}
+          None
+        {% endif %}
+        <br />
+        <label for="siblings-field">Situation</label><br />
+        {% if child.situation %}
+          <textarea rows="3" cols="40" name="situation" placeholder="{{child.situation}}" class="form-control addchildinput">{{child.situation}}
+        {% else %}
+          <textarea rows="3" cols="40" name="situation" placeholder="Please write about {{ child.first_name }}'s situation." class="form-control addchildinput">
+        {% endif %}
+        </textarea><br />
 
-          <input type="text" id="lat" name="latitude" class="hidden" value="{{child.latitude}}">
-          <input type="text" id="lng" name="longitude" class="hidden" value="{{child.longitude}}">
-          <h3 class="animated4"> Home Location </h3>
-          <div class="mapcontainer">
-            <div id="map"></div>
-          </div>
-          <button class="btn btn-sm btn-primary" type="submit">Save</button>
-          <a href="/child/{{child.id}}"><button type="button" class="btn btn-sm btn-warning" value="cancel">Cancel</button></a>
-          <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal" value="delete">Delete Profile</button>
+        <input type="text" id="lat" name="latitude" class="hidden" value="{{child.latitude}}">
+        <input type="text" id="lng" name="longitude" class="hidden" value="{{child.longitude}}">
+        <h3 class="animated4"> Home Location </h3>
+        <div class="mapcontainer">
+          <div id="map"></div>
         </div>
-      </form>
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title center" id="myModalLabel">WARNING</h4>
-            </div>
-            <div class="modal-body center">
-              Are you sure you want to delete {{ child.first_name }}'s profile?
-            </div>
-            <div class="modal-footer center">
-              <form role="form" method='POST' action='/delete-profile{{child.id}}' enctype="multipart/form-data">
-                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-                <button class="btn btn-danger" type="submit">Delete profile</button>
-              </form>
-            </div>
+        <button class="btn btn-sm btn-primary" type="submit">Save</button>
+        <a href="/child/{{child.id}}"><button type="button" class="btn btn-sm btn-warning" value="cancel">Cancel</button></a>
+        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal" value="delete">Delete Profile</button>
+      </div>
+    </form>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title center" id="myModalLabel">WARNING</h4>
+          </div>
+          <div class="modal-body center">
+            Are you sure you want to delete {{ child.first_name }}'s profile?
+          </div>
+          <div class="modal-footer center">
+            <form role="form" method='POST' action='/delete-profile/{{child.id}}' enctype="multipart/form-data">
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+              <button class="btn btn-danger" type="submit">Delete profile</button>
+            </form>
           </div>
         </div>
       </div>
-      <script>
-        $('#myModal').on('shown.bs.modal', function () {
-          $('#myInput').focus()
-        })
-      </script>
-      <script>
-        L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
-        var map = L.mapbox.map('map', 'vanesa.e4c935ef')
-      .setView([{% if child.latitude and child.longitude %}{{ child.latitude}}, {{child.longitude}}{% else %}18.542769, -69.801216{% endif %}],15);
+    </div>
+    
+    <script>
+      $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+      })
+    </script>
+
+    <script>
+      L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
+      var map = L.mapbox.map('map', 'vanesa.e4c935ef')
+      .setView([
+        {% if child.latitude and child.longitude %}
+          {{ child.latitude}}, {{child.longitude}}
+        {% else %}
+          18.542769, -69.801216
+        {% endif %}
+      ],15);
       // Disable the scroll Zoom
       map.scrollWheelZoom.disable();
       var marker;
       var clicked = false;
 
 
-    marker = L.marker(new L.LatLng({% if child.latitude and child.longitude %}{{ child.latitude}}, {{child.longitude}}{% else %}18.542769, -69.801216{% endif %}));
-  console.log({% if child.latitude and child.longitude %}{{ child.latitude}}, {{child.longitude}}{% else %}18.542769, -69.801216{% endif %});
-  marker.addTo(map);
+      marker = L.marker(new L.LatLng(
+        {% if child.latitude and child.longitude %}
+          {{ child.latitude}}, {{child.longitude}}
+        {% else %}
+          18.542769, -69.801216
+        {% endif %}
+        ));
+      console.log(
+        {% if child.latitude and child.longitude %}
+          {{ child.latitude}}, {{child.longitude}}
+        {% else %}
+          18.542769, -69.801216
+        {% endif %}
+      );
+      marker.addTo(map);
 
-  map.on('click', function(e) {
-    var child_latitude = e.latlng.lat;
-    var child_longitude = e.latlng.lng;
-    $("#lat").val(child_latitude)
-    $("#lng").val(child_longitude)
+      map.on('click', function(e) {
+        var child_latitude = e.latlng.lat;
+        var child_longitude = e.latlng.lng;
+        $("#lat").val(child_latitude)
+        $("#lng").val(child_longitude)
 
-    marker.setLatLng(new L.LatLng(child_latitude, child_longitude)).update();
-    });
-  </script>
-  <script src='../static/js/imgpreview.js'></script>
-</div>
+        marker.setLatLng(new L.LatLng(child_latitude, child_longitude)).update();
+      });
+    </script>
+
+    <script src='../static/js/imgpreview.js'></script>
+
+    <!-- Set selections to database values-->
+    <script>
+      {% if child.number_of_siblings %}
+        document.getElementById('number_of_siblings').value = '{{child.number_of_siblings}}';
+      {% else %}
+      {% endif %}
+
+      {% if child.school_class %}
+        document.getElementById('school_class').value = '{{child.school_class}}';
+      {% else %}
+      {% endif %}
+    </script>
+  </div>
 {% endblock %}

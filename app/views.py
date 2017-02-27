@@ -212,6 +212,7 @@ def add_profile():
             file.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
             # Save the image path to send to the database
             imgroot = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
+            
 
         # seed into database
         child_entry = Child(**form.data)

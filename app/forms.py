@@ -1,6 +1,6 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField
-from wtforms.validators import DataRequired, Email, Length, NumberRange, ValidationError, Optional
+from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField, FileField
+from wtforms.validators import DataRequired, Email, Length, NumberRange, ValidationError, Optional, Regexp
 from app import app
 
 def lower(data):
@@ -25,10 +25,11 @@ class SignUpForm(Form):
 
 
 class ChildForm(Form):
+    photo = FileField(u'photo', validators=[Regexp(r'\.jpg$')])
     is_active = BooleanField('is_active')
     first_name = StringField('first_name', validators=[DataRequired(), Length(max=15)])
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
-    nick_name = StringField('nick_name', validators=[DataRequired(), Length(max=15)])
+    nick_name = StringField('nick_name', validators=[Length(max=15)])
     birth_date = DateField('birth_date', validators=[DataRequired()])
     nationality = StringField('nationality')
     guardian_type = StringField('guardian_type', validators=[Length(max=15)])

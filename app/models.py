@@ -68,7 +68,7 @@ class User(db.Model):
 
 class Child(db.Model):
     id = db.Column(UUID(), primary_key=True, default=uuid4)
-    pic_url = db.Column(db.String(3000))
+    photo_url = db.Column(db.String(3000))
     is_active = db.Column(db.Boolean, default=True)
     first_name = db.Column(db.String(32), nullable=False)
     last_name = db.Column(db.String(32), nullable=False)

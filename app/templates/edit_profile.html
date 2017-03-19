@@ -11,7 +11,7 @@
           <img src="/static/images/childphotopreview.png" class="images-style">
         {% endif %}
 
-        <input type="file" name="file" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Photo" data-classIcon="glyphicon-camera" data-size="sm" value="{{child.pic_url}}">
+        <input type="file" name="photo" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Photo" data-classIcon="glyphicon-camera" data-size="sm" value="{{child.pic_url}}">
       </div>
       <div class="info col-xs-12 col-md-3">
         <!-- Basic Child information -->
@@ -192,14 +192,23 @@
 
     <!-- Set selections to database values-->
     <script>
+      
+      {% if child.nationality %}
+        document.getElementById('nationality').value = '{{child.nationality}}';
+      {% else %}
+        document.getElementById('nationality').selectedIndex = -1;
+      {% endif %}
+
       {% if child.number_of_siblings %}
         document.getElementById('number_of_siblings').value = '{{child.number_of_siblings}}';
       {% else %}
+        document.getElementById('number_of_siblings').selectedIndex = -1;
       {% endif %}
 
       {% if child.school_class %}
         document.getElementById('school_class').value = '{{child.school_class}}';
       {% else %}
+        document.getElementById('school_class').selectedIndex = -1;
       {% endif %}
     </script>
   </div>

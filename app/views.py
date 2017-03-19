@@ -200,22 +200,25 @@ def add_profile():
     app.logger.debug(form.errors)
     app.logger.debug(request.form)
     
+
     if request.method == 'POST' and form.validate(): 
+        print form
         # get all new data
         # Upload image 
         # import pdb; pdb.set_trace()
-        file = request.files['file']
-        imgroot = ''
-        if file and allowed_file(file.filename):
+        photo = request.files['photo']
+        photo_url = ''
+        if photo and allowed_file(photo.filename):
             print "This should be the file: ", file
-            filename = secure_filename(file.filename)
-            file.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
+            filename = secure_filename(photo.filename)
+            photo.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
             # Save the image path to send to the database
-            imgroot = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
-            
+            photo_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
 
         # seed into database
-        child_entry = Child(**form.data)
+        data = form.data
+        data['photo_url'] = photo_url
+        child_entry = Child(**data)
         
         db.session.add(child_entry)
         db.session.commit()

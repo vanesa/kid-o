@@ -384,7 +384,12 @@ nav.shrink div.searchform {
  .addchildinput {
  	display: inline-block;
  	margin-bottom: 5px;
+ 	margin-left: 5px;
  }
+
+label {
+	margin-right: 5px;
+}
 
 @media only screen and (max-width: 620px) {
 

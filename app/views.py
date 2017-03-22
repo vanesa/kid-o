@@ -152,41 +152,47 @@ def edit_profile(id):
         abort(404)
     form = ChildForm(request.form)
     if request.method == 'POST' and form.validate():  # update child info from edit_profile.html form
-        
-        # Set pic_url to empty string to keep original path in case no changes are made.
-        pic_url = ""
-        file = request.files['file']
-        # print "This should be the file: ", file
-        if file and allowed_file(file.filename):
+        # Set photo_url to empty string to keep original path in case no changes are made.
+        app.logger.debug(form.validate())
+        photo_url = ""
+        photo = request.files['photo']
+        if photo and allowed_file(photo.filename):
             # If no image is uploaded, this never passes.
-            filename = secure_filename(file.filename)
-            file.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
+            filename = secure_filename(photo.filename)
+            photo.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
             # Save the image path to send to the database
-            pic_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
+            photo_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
         # get all new data
-        # pic_url = request.form.get("file")
 
-        app.logger.debug("inside this code")
         # seed into database
-        if pic_url != "":
-            child.pic_url = pic_url
-        # print "This should be a pic path: ", pic_url
+        if photo_url != "":
+            child.photo_url = photo_url
+        # seed into database
+        child.is_active= form.data['is_active']
         child.first_name = form.data['first_name']
         child.last_name = form.data['last_name']
         child.nick_name = form.data['nick_name']
         child.birth_date = form.data['birth_date']
+        child.nationality = form.data['nationality']
         child.guardian_type = form.data['guardian_type']
         child.guardian_fname = form.data['guardian_fname']
         child.guardian_lname = form.data['guardian_lname']
-        child.nationality = form.data['nationality']
+        child.number_of_siblings = form.data['number_of_siblings']
+        child.siblings_in_project = form.data['siblings_in_project']
+        child.school_class = form.data['school_class']
+        child.school_attendance = form.data['school_attendance']
+        child.volunteer_task = form.data['volunteer_task']
         child.situation = form.data['situation']
+        child.godparent_status = form.data['godparent_status']
         child.latitude = form.data['latitude']
         child.longitude = form.data['longitude']
-        child.activity = form.data['activity']
 
         db.session.commit()
 
         return redirect('/child/%s' % child.id)
+
+    app.logger.debug(form.errors)
+    app.logger.debug("latitude: ", child.latitude)
 
     return render_template('edit_profile.html', form=form, child=child)
 
@@ -196,20 +202,20 @@ def add_profile():
 
     """add a child profile"""
     form = ChildForm(request.form)
-    app.logger.debug(form.validate())
-    app.logger.debug(form.errors)
-    app.logger.debug(request.form)
+    # app.logger.debug(form.validate())
+    # app.logger.debug(form.errors)
+    # app.logger.debug(request.form)
     
 
     if request.method == 'POST' and form.validate(): 
-        print form
         # get all new data
         # Upload image 
         # import pdb; pdb.set_trace()
         photo = request.files['photo']
+        print "whatever photo is: ", photo
         photo_url = ''
         if photo and allowed_file(photo.filename):
-            print "This should be the file: ", file
+            print "This should be the file: ", photo
             filename = secure_filename(photo.filename)
             photo.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
             # Save the image path to send to the database

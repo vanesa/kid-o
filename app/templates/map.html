@@ -19,7 +19,7 @@
           "coordinates": [{{ child.longitude }},{{ child.latitude }}]
           },
           "properties": {
-        "image": "/static/images/photos/" + {% if child.pic_url == "/static/images/childphotopreview.png" %}"childphotopreview.png"{% elif child.pic_url == "/static/images/photos/" + child.first_name.lower() + ".jpg" %}"{{ child.first_name }}".toLowerCase() + ".jpg" {% else %} "childphotopreview.png"{% endif %},
+        "image": "/static/images/photos/" + {% if child.photo_url == "/static/images/childphotopreview.png" %}"childphotopreview.png"{% elif child.photo_url == "/static/images/photos/" + child.first_name.lower() + ".jpg" %}"{{ child.first_name }}".toLowerCase() + ".jpg" {% else %} "childphotopreview.png"{% endif %},
         "title": "{{ child.first_name }} {{ child.last_name }}",
         "url": "/child/{{ child.id }}",
       "description": "lives here {% if child.guardian_fname and child.guardian_lname %} with {{ child.guardian_fname }} {{ child.guardian_lname }} {% else %}{% endif %} {% if child.guardian_type %}({{ child.guardian_type }}){% else %} {% endif %}",

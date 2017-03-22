@@ -25,7 +25,7 @@ class SignUpForm(Form):
 
 
 class ChildForm(Form):
-    photo = FileField(u'photo', validators=[Regexp(r'\.jpg$')])
+    photo_url = FileField(u'photo', validators=[Regexp(r'\.jpg$'), Optional()])
     is_active = BooleanField('is_active')
     first_name = StringField('first_name', validators=[DataRequired(), Length(max=15)])
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
@@ -37,7 +37,7 @@ class ChildForm(Form):
     guardian_lname = StringField('guardian_lname', validators=[Length(max=25)])
     number_of_siblings = IntegerField('number_of_siblings', validators=[NumberRange(min=0, max=8)])
     siblings_in_project = StringField('siblings_in_school', validators=[Length(max=40)])
-    school_class = StringField('school_year')
+    school_class = StringField('school_class')
     school_attendance = StringField('school_attendance')
     volunteer_task = StringField('volunteer_task')
     situation = StringField('situation')

@@ -4,10 +4,10 @@
   <div class="row">
     <div class="col-xs-12 col-md-3">
 
-      {% if child.pic_url == "../static/images/childphotopreview.png" %}
-        <img src="{{child.pic_url}}" class="images-style"><br><a href="/child/edit/{{child.id}}" class="alerttext">Upload photo</a>
-      {% elif child.pic_url %}
-        <img src="{{child.pic_url}}" class="images-style">
+      {% if child.photo_url == "../static/images/childphotopreview.png" %}
+        <img src="{{child.photo_url}}" class="images-style"><br><a href="/child/edit/{{child.id}}" class="alerttext">Upload photo</a>
+      {% elif child.photo_url %}
+        <img src="{{child.photo_url}}" class="images-style">
       {% else %}
         <img src="/static/images/childphotopreview.png" class="images-style"><br><a href="/child/edit/{{child.id}}" class="alerttext">Upload photo</a>
       {% endif %}

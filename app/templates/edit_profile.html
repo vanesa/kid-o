@@ -80,11 +80,7 @@
         </p>
         <p>
           <label for="siblings-field">Siblings in project: </label><br />
-          {% if child.siblings_in_project %}
-            {{ child.siblings_in_project }}
-          {% else %}
-            None
-          {% endif %}
+          <input type="text" name="siblings_in_project" value="{{child.siblings_in_project}}" placeholder="{{child.siblings_in_project}}" class="form-control addchildinput"><br />
         </p>
         <label for="school_field"><h3 class="animated4">School</h3></label><br />
         <p>
@@ -173,19 +169,12 @@
       var clicked = false;
 
 
+      {% if child.latitude and child.longitude %}
       marker = L.marker(new L.LatLng(
-        {% if child.latitude and child.longitude %}
           {{ child.latitude}}, {{child.longitude}}
-        {% else %}
-        {% endif %}
         ));
-      console.log(
-        {% if child.latitude and child.longitude %}
-          {{ child.latitude}}, {{child.longitude}}
-        {% else %}
-        {% endif %}
-      );
       marker.addTo(map);
+      {% endif %}
 
       map.on('click', function(e) {
         var child_latitude = e.latlng.lat;
@@ -193,23 +182,56 @@
         $("#lat").val(child_latitude)
         $("#lng").val(child_longitude)
 
-        marker.setLatLng(new L.LatLng(child_latitude, child_longitude)).update();
+        if (clicked === false) {
+          marker = L.marker(new L.LatLng(child_latitude, child_longitude), {
+            icon: L.mapbox.marker.icon({
+              'marker-color': 'ff8888'
+            }),
+            draggable: false
+          });
+          marker.bindPopup("Child's home location.");
+                 
+          marker.addTo(map);
+          clicked = true;
+        }
+        else {
+          marker.setLatLng(new L.LatLng(child_latitude, child_longitude)).update();
+        }
       });
     </script>
 
-    <script src='../static/js/imgpreview.js'></script>
+    <script src='/static/js/imgpreview.js'></script>
 
     <!-- Set selections to database values-->
     <script>
       
-      {% if child.nationality %}
-        document.getElementById('nationality').value = '{{child.nationality}}';
-      {% endif %}
+      // {% if child.nationality %}
+      //   document.getElementById('nationality').value = '{{child.nationality}}';
+      // {% endif %}
 
       {% if child.number_of_siblings %}
-        document.getElementById('number_of_siblings').value = '{{child.number_of_siblings}}';
+        active_selection('number_of_siblings', '{{ child.number_of_siblings }}')
       {% endif %}
 
+      {% if child.school_class %}
+      active_selection('school_class', '{{ child.school_class }}')
+      {% endif %}
+
+      function active_selection(selection, matcher) {
+        var select = document.getElementById(selection);
+        var option;
+        var select_length = select.length;
+        
+        for (var i=0; i < select_length; i++) {
+          option = select.options[i];
+
+          if (option.value == matcher) {
+            option.setAttribute('selected', true);
+            break;
+          } 
+        }
+
+      }
     </script>
   </div>
 {% endblock %}

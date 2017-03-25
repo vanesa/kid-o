@@ -16,27 +16,46 @@
         <h3 class="animated1"> Profile </h3>
       </div>
       <div class="info col-xs-12 col-md-3">
-        <p>Activity: <input type="checkbox" name="is_active" checked data-toggle="toggle" value="true" class="addchildinput"> </p>
-        <input type="text" name="first_name" placeholder="First name" class="form-control addchildinput"><br />
-        <input type="text" name="last_name" placeholder="Last name" class="form-control addchildinput"><br />
-        <input type="text" name="nick_name" placeholder="Nick name" class="form-control addchildinput"><br />
-        <input type="text" name="birth_date" placeholder="Birth date YYYY-MM-DD" class="form-control addchildinput"><br />
-      </div>
-      <div class="info col-xs-12 col-md-3">
-        Nationality: 
-        <select name="nationality" class="addchildinput">
+        <p>
+          <label for="activity-field">Activity: </label>
+          <input type="checkbox" name="is_active" checked data-toggle="toggle" value="true" class="addchildinput"> 
+        </p>
+        <p>
+          <input type="text" name="first_name" placeholder="First name" class="form-control addchildinput"><br />
+          <input type="text" name="last_name" placeholder="Last name" class="form-control addchildinput"><br />
+          <input type="text" name="nick_name" placeholder="Nick name" class="form-control addchildinput"><br />
+          <input type="text" name="birth_date" placeholder="Birth date YYYY-MM-DD" class="form-control addchildinput"><br />
+        </p>
+        <p>
+          <label for="nationality-field">Nationality: </label>
+          <select name="nationality" class="form-control addchildinput">
           <option>Unknown</option>
           <option value="Dominican">Dominican</option>
           <option value="Hatian">Hatian</option>
         </select>
+        </p>
+      </div>
+      <div class="info col-xs-12 col-md-3">
+      <p>
+        <label for="guardian-field">Guardian: </label>
         <input type="text" name="guardian_fname" placeholder="Guardian First name" class="form-control addchildinput"><br />
         <input type="text" name="guardian_lname" placeholder="Guardian Last name" class="form-control addchildinput"><br />
         <input type="text" name="guardian_type" placeholder="Guardian type (Mother, Aunt etc.)" class="form-control addchildinput"><br />
+      </p>
+      <p>
+        <label for="godparent-field">Godparent status:</label>
+        <select id="godparent_status" name="godparent_status" class="form-control addchildinput">
+          <option value=""> - Select godparent status - </option>
+          <option value="Searching godparent">Searching for godparent</option>
+          <option value="Has godparent">Has godparent</option>
+          <option value="No need">No need</option>
+        </select>
+      </p>
       </div>
       <div class="lowerform col-xs-12 col-md-12">
         <label for="siblings-field"><h3 class="animated3">Siblings</h3></label>
         <p><strong> Number of siblings: </strong>
-        <select name="number_of_siblings">
+        <select name="number_of_siblings" class="form-control addchildinput">
           <option value="0"> - Select number of siblings - </option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -53,7 +72,7 @@
         </p>
         <label for="school_field"><h3 class="animated4">School</h3></label>
         <p><strong>School class:</strong>
-        <select name="school_class">
+        <select name="school_class" class="form-control addchildinput">
           <option> - Select school - </option>
           <option value="Maternal">Maternal</option>
           <option value="Preschool">Preschool</option>
@@ -66,7 +85,7 @@
         </select>
         </p>
         <p><strong>School attendance: </strong>
-          <select name="school_class">
+          <select name="school_class" class="form-control addchildinput">
             <option> - Select attendance rate - </option>
             <option value="Good">Good</option>
             <option value="Intermediate">Intermediate</option>

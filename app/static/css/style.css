@@ -355,10 +355,19 @@ nav.shrink div.searchform {
     -webkit-animation: hue 60s infinite linear;
 }
 
-/* Home Address title */
+/* Volunteer task title */
 .animated6 {
 	color: #888888;
 	background-image: -webkit-linear-gradient(92deg,#853ad1, #3365a5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+}
+
+/* Home Address title */
+.animated7 {
+	color: #888888;
+	background-image: -webkit-linear-gradient(92deg,#c9205b, #853ad1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-animation: hue 60s infinite linear;

@@ -93,8 +93,17 @@
         </p>
       {% endif %}
 
+      <label for="volunteer_task-field"><h3 class="animated6"> Volunteer task</h3></label>
+      {% if child.volunteer_task %}
+        <p>{{ child.volunteer_task }}</p>
+      {% else %}
+        <p class="alerttext">
+        <a href="/child/edit/{{child.id}}">Please write information about the volunteer tasks.</a>
+        </p>
+      {% endif %}
 
-      <label for="homelocation-field"><h3 class="animated6">Home location</h3></label>
+
+      <label for="homelocation-field"><h3 class="animated7">Home location</h3></label>
 
       {% if child.latitude %}
       {% else %}

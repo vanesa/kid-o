@@ -33,7 +33,7 @@
         <input type="text" name="guardian_type" placeholder="Guardian type (Mother, Aunt etc.)" class="form-control addchildinput"><br />
       </div>
       <div class="lowerform col-xs-12 col-md-12">
-        <label for="siblings-field"><h3 class="animated3">Siblings</h3></label><br />
+        <label for="siblings-field"><h3 class="animated3">Siblings</h3></label>
         <p><strong> Number of siblings: </strong>
         <select name="number_of_siblings">
           <option value="0"> - Select number of siblings - </option>
@@ -48,9 +48,9 @@
         </select>
         </p>
         <p><strong>Siblings in project:</strong>
-        <input type="text" name="siblings_in_project" placeholder="Name of siblings in project" class="form-control addchildinput">
+          <input type="text" name="siblings_in_project" placeholder="Name of siblings in project" class="form-control addchildinput">
         </p>
-        <label for="school_field"><h3 class="animated4">School</h3></label><br />
+        <label for="school_field"><h3 class="animated4">School</h3></label>
         <p><strong>School class:</strong>
         <select name="school_class">
           <option> - Select school - </option>
@@ -70,13 +70,19 @@
             <option value="Good">Good</option>
             <option value="Intermediate">Intermediate</option>
             <option value="Bad">Bad</option>
-        </select>
+          </select>
         </p>
-        <label for="situation-field"><h3 class="animated5">Situation:</h3></label><br />
-        <textarea rows="3" cols="40" name="situation" placeholder="Situation at home and at school." class="form-control addchildinput"></textarea><br />
+        <label for="situation-field"><h3 class="animated5">Situation:</h3></label>
+        <p>
+          <textarea rows="3" cols="40" name="situation" placeholder="Situation at home and at school." class="form-control addchildinput"></textarea>
+        </p>
+        <label for="volunteer_task-field"><h3 class="animated6">Volunteer tasks:</h3></label>
+        <p>
+          <textarea rows="3" cols="40" name="volunteer_task" placeholder="Tasks for the volunteer." class="form-control addchildinput"></textarea>
+        </p>
         <input type="text" id="lat" name="latitude" class="hidden">
         <input type="text" id="lng" name="longitude" class="hidden">
-        <h3 class="animated6"> Home location </h3>
+        <h3 class="animated7"> Home location </h3>
         <div class="mapcontainer">
           <div id="map"></div>
         </div>

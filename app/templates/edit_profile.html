@@ -32,7 +32,7 @@
       <div class="info col-xs-12 col-md-3">
         <p>
           <label for="nationality-field">Nationality </label>
-          <select name="nationality" class="addchildinput">
+          <select id="nationality" name="nationality" class="addchildinput">
             <option value="Dominican">Dominican</option><br />
             <option value="Hatian">Hatian</option><br />
           </select>
@@ -63,7 +63,7 @@
       <!-- End Guardian information -->
 
       <div class="lowerform col-xs-12 col-md-12">
-        <label for="siblings-field"><h3 class="animated3">Siblings</h3></label><br />
+        <label for="siblings-field"><h3 class="animated3">Siblings</h3></label>
          <p>
         <label for="siblings-field">Number of siblings</label><br />
           <select id="number_of_siblings" name="number_of_siblings" class="form-control addchildinput">
@@ -82,7 +82,7 @@
           <label for="siblings-field">Siblings in project: </label><br />
           <input type="text" name="siblings_in_project" value="{{child.siblings_in_project}}" placeholder="{{child.siblings_in_project}}" class="form-control addchildinput"><br />
         </p>
-        <label for="school_field"><h3 class="animated4">School</h3></label><br />
+        <label for="school_field"><h3 class="animated4">School</h3></label>
         <p>
           <label for="class-field">School Class</label><br />
           <select id="school_class" name="school_class" class="form-control addchildinput" data-placeholder="Select a school class">
@@ -97,19 +97,28 @@
           </select>
         </p>
         <p><strong>School attendance: </strong>
-          <select name="school_class">
+          <select id="school_attendance" name="school_attendance">
             <option> - Select attendance rate - </option>
             <option value="Good">Good</option>
             <option value="Intermediate">Intermediate</option>
             <option value="Bad">Bad</option>
           </select>
         </p>
+        <label for="situation-field"><h3 class="animated5">Situation:</h3></label>
         <p>
-          <label for="situation-field"><h3 class="animated5">Situation:</h3></label><br />
           {% if child.situation %}
             <textarea rows="3" cols="40" name="situation" placeholder="{{child.situation}}" class="form-control addchildinput">{{child.situation}}
           {% else %}
             <textarea rows="3" cols="40" name="situation" placeholder="Please write about {{ child.first_name }}'s situation." class="form-control addchildinput">
+          {% endif %}
+          </textarea>
+        </p>
+        <label for="volunteer_task-field"><h3 class="animated6">Volunteer tasks:</h3></label>
+        <p>
+          {% if child.volunteer_task %}
+            <textarea rows="3" cols="40" name="volunteer_task" placeholder="{{child.volunteer_task}}" class="form-control addchildinput">{{child.volunteer_task}}
+          {% else %}
+            <textarea rows="3" cols="40" name="volunteer_task" placeholder="Please write about the volunteer tasks." class="form-control addchildinput">
           {% endif %}
           </textarea>
           <br />
@@ -117,7 +126,7 @@
 
         <input type="text" id="lat" name="latitude" class="hidden" value="{{ child.latitude or '' }}">
         <input type="text" id="lng" name="longitude" class="hidden" value="{{ child.longitude or '' }}">
-        <h3 class="animated6"> Home Location </h3>
+        <h3 class="animated7"> Home Location </h3>
         <div class="mapcontainer">
           <div id="map"></div>
         </div>
@@ -205,16 +214,20 @@
     <!-- Set selections to database values-->
     <script>
       
-      // {% if child.nationality %}
-      //   document.getElementById('nationality').value = '{{child.nationality}}';
-      // {% endif %}
+      {% if child.nationality %}
+        active_selection('nationality', '{{ child.nationality }}')
+      {% endif %}
 
       {% if child.number_of_siblings %}
         active_selection('number_of_siblings', '{{ child.number_of_siblings }}')
       {% endif %}
 
       {% if child.school_class %}
-      active_selection('school_class', '{{ child.school_class }}')
+        active_selection('school_class', '{{ child.school_class }}')
+      {% endif %}
+
+      {% if child.school_attendance %}
+        active_selection('school_attendance', '{{ child.school_attendance }}')
       {% endif %}
 
       function active_selection(selection, matcher) {

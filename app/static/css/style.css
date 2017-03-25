@@ -335,6 +335,7 @@ nav.shrink div.searchform {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-animation: hue 60s infinite linear;
+    padding-bottom: 1px;
 }
 
 /* School */

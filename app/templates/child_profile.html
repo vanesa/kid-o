@@ -5,18 +5,32 @@
     <div class="col-xs-12 col-md-3">
 
       {% if child.photo_url == "../static/images/childphotopreview.png" %}
-        <img src="{{child.photo_url}}" class="images-style"><br><a href="/child/edit/{{child.id}}" class="alerttext">Upload photo</a>
+        <img src="{{ child.photo_url }}" class="images-style"><br><a href="/child/edit/{{ child.id }}" class="alerttext">Upload photo</a>
       {% elif child.photo_url %}
-        <img src="{{child.photo_url}}" class="images-style">
+        <img src="{{ child.photo_url }}" class="images-style">
       {% else %}
-        <img src="/static/images/childphotopreview.png" class="images-style"><br><a href="/child/edit/{{child.id}}" class="alerttext">Upload photo</a>
+        <img src="/static/images/childphotopreview.png" class="images-style"><br><a href="/child/edit/{{ child.id }}" class="alerttext">Upload photo</a>
       {% endif %}
 
     </div>
     <div class="info col-xs-12 col-md-6">
-      {% if child.is_active %}<h2 class="animated1">{% else %} <h2 class="inactive"> {% endif %} {{ child.first_name}} {{ child.last_name }} {% if child.nick_name %}- {{ child.nick_name }}{% else %}{% endif %} </h2>
+      
+      {% if child.is_active %}
+        <h2 class="animated1">
+      {% else %} 
+        <h2 class="inactive"> 
+      {% endif %}
+
+      {{ child.first_name}} {{ child.last_name }} 
+
+      {% if child.nick_name %}
+        - {{ child.nick_name }}
+      {% else %}
+      {% endif %}
+
+      </h2>
       <br>
-      <a href="/child/edit/{{child.id}}" style="display: inline-block;">
+      <a href="/child/edit/{{ child.id }}" style="display: inline-block;">
         <button type="button" class="btn btn-sm btn-danger" value="edit"><i class="fa fa-pencil fa-fw edit-icon"></i> Edit</button>
       </a>
     </div>
@@ -24,17 +38,30 @@
     <div class="info col-xs-12 col-md-3">
       <!-- Basic Child information -->
 
-      <p><strong>Age: </strong>{{ child.age }} years old</p>
-      <p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
+      <p>
+        <strong>Age: </strong>{{ child.age }} years old
+      </p>
+      <p>
+        <strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}
+      </p>
+      <p>
+        <strong>Nationality:</strong> 
+        
+        {% if child.nationality %} 
+          {{ child.nationality }} 
+        {% else %} <a href="/child/edit/{{ child.id }}" class="alerttext">Please write {{ child.first_name }}'s nationality.</a>
+        {% endif %}
+
+      </p> 
       <!-- End Basic Child information -->
       <!-- Guardian information -->
-      </div>
-      <div class="info col-xs-12 col-md-3">
+    </div>
+    <div class="info col-xs-12 col-md-3">
       <p>
 
       <strong>
         {% if child.guardian_type %}
-          {{ child.guardian_type}}
+          {{ child.guardian_type }}
         {% else %}
           Guardian
         {% endif %}:
@@ -43,13 +70,20 @@
       {% if child.guardian_fname and child.guardian_lname %}
         {{ child.guardian_fname}} {{ child.guardian_lname }}
       {% else %}
-        <a href="/child/edit/{{child.id}}" class="alerttext">Please add {{ child.first_name }}'s guardian's name.</a>
+        <a href="/child/edit/{{ child.id }}" class="alerttext">Please add {{ child.first_name }}'s guardian's name.</a>
       {% endif %}
 
       </p>
-      <!-- End Guardian information -->
+      <p>
+        
+        {% if child.godparent_status %}
+          <strong>Godparent status:</strong> {{ child.godparent_status}}
+        {% else %}
+          <strong>Godparent status:</strong> <a href="/child/edit/{{ child.id }}" class="alerttext">Please add {{ child.first_name }}'s godparent status.</a>
+        {% endif %}
 
-      <p><strong>Nationality:</strong> {% if child.nationality %} {{ child.nationality }} {% else %} ? {% endif %} </p> 
+      </p>
+      <!-- End Guardian information -->
     </div>
     <div class="lowerform col-xs-12 col-md-12">
       <label for="siblings-field"><h3 class="animated3"> Siblings</h3></label>
@@ -58,15 +92,16 @@
         <p><strong>Number of siblings: </strong> {{ child.number_of_siblings }} </p>
       {% else %}
         <p class="alerttext">
-          <a href="/child/edit/{{child.id}}">Please write information about {{ child.first_name }}'s number of siblings.</a>
+          <a href="/child/edit/{{ child.id }}">Please write information about {{ child.first_name }}'s number of siblings.</a>
         </p>
       {% endif %}
 
       {% if child.siblings_in_project %}
         <p><strong>Siblings in school: </strong> {{ child.siblings_in_project }} </p>
       {% else %}
+        <strong>Siblings in school: </strong> 
         <p class="alerttext">
-          <a href="/child/edit/{{child.id}}">Please write information about {{ child.first_name }}'s siblings that are also in the project.</a>
+          <a href="/child/edit/{{ child.id }}">Please write information about {{ child.first_name }}'s siblings that are also in the project.</a>
         </p>
       {% endif %}
       
@@ -76,7 +111,7 @@
         <p><strong>School class: </strong> {{ child.school_class }}</p>
       {% else %}
         <p class="alerttext">
-          <a href="/child/edit/{{child.id}}">Please write information about child.first_name 's school class.</a>
+          <a href="/child/edit/{{ child.id }}">Please write information about child.first_name 's school class.</a>
         </p>
       {% endif %}
 
@@ -85,29 +120,30 @@
       {% endif%}
 
       <label for="situation-field"><h3 class="animated5"> Situation</h3></label>
+      
       {% if child.situation %}
         <p>{{ child.situation }}</p>
       {% else %}
         <p class="alerttext">
-        <a href="/child/edit/{{child.id}}">Please write information about {{ child.first_name }}'s situation.</a>
+        <a href="/child/edit/{{ child.id }}">Please write information about {{ child.first_name }}'s situation.</a>
         </p>
       {% endif %}
 
       <label for="volunteer_task-field"><h3 class="animated6"> Volunteer task</h3></label>
+      
       {% if child.volunteer_task %}
         <p>{{ child.volunteer_task }}</p>
       {% else %}
         <p class="alerttext">
-        <a href="/child/edit/{{child.id}}">Please write information about the volunteer tasks.</a>
+        <a href="/child/edit/{{ child.id }}">Please write information about the volunteer tasks.</a>
         </p>
       {% endif %}
-
 
       <label for="homelocation-field"><h3 class="animated7">Home location</h3></label>
 
       {% if child.latitude %}
       {% else %}
-        <a href="/child/edit/{{child.id}}" class="alerttext">Please add {{ child.first_name}}'s home location.</a>
+        <a href="/child/edit/{{ child.id }}" class="alerttext">Please add {{ child.first_name}}'s home location.</a>
       {% endif %}
 
       <div class="mapcontainer">
@@ -153,7 +189,7 @@
       var map = L.mapbox.map('map', 'vanesa.e4c935ef')
     .setView([
       {% if child.latitude and child.longitude %}
-        {{ child.latitude}}, {{child.longitude}}
+        {{ child.latitude}}, {{ child.longitude }}
       {% else %}
         18.542769, -69.801216
       {% endif %}
@@ -179,7 +215,7 @@
       properties: {
       title: '{{ child.first_name}} {{ child.last_name }}',
       {% if child.latitude == 18.542769 %}
-        description: 'lives in this area. <a href="http://6254c5ab.ngrok.io/child/edit/{{child.id}}" class="alerttext">Please edit the profile and add the correct location.</a>',
+        description: 'lives in this area. <a href="http://6254c5ab.ngrok.io/child/edit/{{ child.id }}" class="alerttext">Please edit the profile and add the correct location.</a>',
       {% else %}
         description: 'lives here with {{ child.guardian_fname}} {{ child.guardian_lname }} ({{ child.guardian_type }}).',
       {% endif %}

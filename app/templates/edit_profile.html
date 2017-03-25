@@ -1,64 +1,77 @@
 {% extends 'base.html' %}
 {% block content %}
   <div class="row">
-    <form action="/child/edit/{{child.id}}" class="form-signin" method="POST" enctype="multipart/form-data">
+    <form action="/child/edit/{{ child.id }}" class="form-signin" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
       <div class="col-xs-12 col-md-3">
 
         {% if child.photo_url %}
-          <img src="{{child.photo_url}}" id="imgpreview" class="imgpreview" alt="{{child.first_name}}'s photo.">
+          <img src="{{ child.photo_url }}" id="imgpreview" class="imgpreview" alt="{{ child.first_name }}'s photo.">
         {% else %}
           <img src="/static/images/childphotopreview.png" class="images-style">
         {% endif %}
 
-        <input type="file" name="photo" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Photo" data-classIcon="glyphicon-camera" data-size="sm" value="{{child.photo_url}}">
+        <input type="file" name="photo" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Photo" data-classIcon="glyphicon-camera" data-size="sm" value="{{ child.photo_url }}">
       </div>
       <div class="info col-xs-12 col-md-6">
         <h3 class="animated1"> Profile </h3>
       </div>
+      <!-- Basic Child information -->
       <div class="info col-xs-12 col-md-3">
-        <!-- Basic Child information -->
+        
         {% if child.is_active %}
           <p><label for="activity-field">Activity: </label><input type="checkbox" name="is_active" checked data-toggle="toggle" value="true" class="addchildinput"> </p>
         {% else %}
           <p>Activity: <input type="checkbox" name="is_active" checked data-toggle="toggle" value="false" class="addchildinput"> </p>
         {% endif %}
-        <input type="text" name="first_name" value="{{child.first_name}}" placeholder="{{child.first_name}}" class="form-control addchildinput"><br />
-        <input type="text" name="last_name" value="{{child.last_name}}" placeholder="{{child.last_name}}" class="form-control addchildinput"><br />
-        <input type="text" name="birth_date" value="{{child.birth_date.strftime('%Y-%m-%d')}}" placeholder="{{child.birth_date.strftime('%Y-%m-%d')}}" class="form-control addchildinput"><br />
+        <p>
+          <input type="text" name="first_name" value="{{ child.first_name }}" placeholder="{{ child.first_name }}" class="form-control addchildinput"><br />
+          <input type="text" name="last_name" value="{{ child.last_name }}" placeholder="{{ child.last_name }}" class="form-control addchildinput"><br />
+          <input type="text" name="birth_date" value="{{ child.birth_date.strftime('%Y-%m-%d') }}" placeholder="{{ child.birth_date.strftime('%Y-%m-%d') }}" class="form-control addchildinput"><br />
+        </p>
+        <p>
+          <label for="nationality-field">Nationality </label>
+          <select id="nationality" name="nationality" class="addchildinput">
+            <option value="">Unknown</option>
+            <option value="Dominican">Dominican</option><br />
+            <option value="Hatian">Hatian</option><br />
+          </select>
+        </p>
       </div>
         <!-- End Basic Child information -->
         <!-- Guardian information -->
       <div class="info col-xs-12 col-md-3">
         <p>
-          <label for="nationality-field">Nationality </label>
-          <select id="nationality" name="nationality" class="addchildinput">
-            <option value="Dominican">Dominican</option><br />
-            <option value="Hatian">Hatian</option><br />
-          </select>
-        </p>
-        <p>
           <label for="guardian-field">Guardian </label> <br />
 
           {% if child.guardian_type %}
-            <input type="text" name="guardian_type" value="{{child.guardian_type}}" placeholder="{{child.guardian_type}}" class="form-control addchildinput"><br />
+            <input type="text" name="guardian_type" value="{{ child.guardian_type }}" placeholder="{{ child.guardian_type }}" class="form-control addchildinput"><br />
           {% else %}
             <input type="text" name="guardian_type" placeholder="Guardian type" class="form-control addchildinput"><br />
           {% endif %}
 
           {% if child.guardian_fname %}
-            <input type="text" name="guardian_fname" value="{{child.guardian_fname}}" placeholder="{{child.guardian_fname}}" class="form-control addchildinput"><br />
+            <input type="text" name="guardian_fname" value="{{ child.guardian_fname }}" placeholder="{{ child.guardian_fname }}" class="form-control addchildinput"><br />
           {% else %}
             <input type="text" name="guardian_fname" placeholder="Guardian first name" class="form-control addchildinput"><br />
           {% endif %}
 
           {% if child.guardian_lname %}
-            <input type="text" name="guardian_lname" value="{{child.guardian_lname}}" placeholder="{{child.guardian_lname}}" class="form-control addchildinput"><br />
+            <input type="text" name="guardian_lname" value="{{ child.guardian_lname }}" placeholder="{{ child.guardian_lname }}" class="form-control addchildinput"><br />
           {% else %}
             <input type="text" name="guardian_lname" placeholder="Guardian last name" class="form-control addchildinput"><br />
           {% endif %}
+
         </p>
-        <label for="godparent-field">Godparent </label><br />
+        <p>
+        <label for="godparent-field">Godparent status:</label>
+          <select id="godparent_status" name="godparent_status" class="form-control addchildinput">
+            <option value=""> - Select godparent status - </option>
+            <option value="Searching godparent">Searching for godparent</option>
+            <option value="Has godparent">Has godparent</option>
+            <option value="No need">No need</option>
+          </select>
+        </p>
       </div>
       <!-- End Guardian information -->
 
@@ -80,7 +93,7 @@
         </p>
         <p>
           <label for="siblings-field">Siblings in project: </label><br />
-          <input type="text" name="siblings_in_project" value="{{child.siblings_in_project}}" placeholder="{{child.siblings_in_project}}" class="form-control addchildinput"><br />
+          <input type="text" name="siblings_in_project" value="{{ child.siblings_in_project }}" placeholder="{{ child.siblings_in_project }}" class="form-control addchildinput"><br />
         </p>
         <label for="school_field"><h3 class="animated4">School</h3></label>
         <p>
@@ -106,22 +119,23 @@
         </p>
         <label for="situation-field"><h3 class="animated5">Situation:</h3></label>
         <p>
+
           {% if child.situation %}
-            <textarea rows="3" cols="40" name="situation" placeholder="{{child.situation}}" class="form-control addchildinput">{{child.situation}}
+            <textarea rows="3" cols="40" name="situation" placeholder="{{ child.situation }}" class="form-control">{{ child.situation }}</textarea>
           {% else %}
-            <textarea rows="3" cols="40" name="situation" placeholder="Please write about {{ child.first_name }}'s situation." class="form-control addchildinput">
+            <textarea rows="3" cols="40" name="situation" placeholder="Please write about {{ child.first_name }}'s situation." class="form-control"></textarea>
           {% endif %}
-          </textarea>
+
         </p>
         <label for="volunteer_task-field"><h3 class="animated6">Volunteer tasks:</h3></label>
         <p>
+
           {% if child.volunteer_task %}
-            <textarea rows="3" cols="40" name="volunteer_task" placeholder="{{child.volunteer_task}}" class="form-control addchildinput">{{child.volunteer_task}}
+            <textarea rows="3" cols="40" name="volunteer_task" placeholder="{{ child.volunteer_task }}" class="form-control">{{ child.volunteer_task }}</textarea>
           {% else %}
-            <textarea rows="3" cols="40" name="volunteer_task" placeholder="Please write about the volunteer tasks." class="form-control addchildinput">
+            <textarea rows="3" cols="40" name="volunteer_task" placeholder="Please write about the volunteer tasks." class="form-control"></textarea>
           {% endif %}
-          </textarea>
-          <br />
+
         </p>
 
         <input type="text" id="lat" name="latitude" class="hidden" value="{{ child.latitude or '' }}">
@@ -131,7 +145,7 @@
           <div id="map"></div>
         </div>
         <button class="btn btn-sm btn-primary" type="submit">Save</button>
-        <a href="/child/{{child.id}}"><button type="button" class="btn btn-sm btn-warning" value="cancel">Cancel</button></a>
+        <a href="/child/{{ child.id }}"><button type="button" class="btn btn-sm btn-warning" value="cancel">Cancel</button></a>
         <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal" value="delete">Delete Profile</button>
       </div>
     </form>
@@ -147,7 +161,7 @@
             Are you sure you want to delete {{ child.first_name }}'s profile?
           </div>
           <div class="modal-footer center">
-            <form role="form" method='POST' action='/delete-profile/{{child.id}}' enctype="multipart/form-data">
+            <form role="form" method='POST' action='/delete-profile/{{ child.id }}' enctype="multipart/form-data">
               <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
               <button class="btn btn-danger" type="submit">Delete profile</button>
             </form>
@@ -167,7 +181,7 @@
       var map = L.mapbox.map('map', 'vanesa.e4c935ef')
       .setView([
         {% if child.latitude and child.longitude %}
-          {{ child.latitude}}, {{child.longitude}}
+          {{ child.latitude}}, {{ child.longitude }}
         {% else %}
           18.542769, -69.801216
         {% endif %}
@@ -180,7 +194,7 @@
 
       {% if child.latitude and child.longitude %}
       marker = L.marker(new L.LatLng(
-          {{ child.latitude}}, {{child.longitude}}
+          {{ child.latitude}}, {{ child.longitude }}
         ));
       marker.addTo(map);
       {% endif %}
@@ -216,6 +230,10 @@
       
       {% if child.nationality %}
         active_selection('nationality', '{{ child.nationality }}')
+      {% endif %}
+
+      {% if child.godparent_status %}
+        active_selection('godparent_status', '{{ child.godparent_status }}')
       {% endif %}
 
       {% if child.number_of_siblings %}

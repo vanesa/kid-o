@@ -6,8 +6,10 @@
 
       {% if child.photo_url == "../static/images/childphotopreview.png" %}
         <img src="{{ child.photo_url }}" class="images-style"><br><a href="/child/edit/{{ child.id }}" class="alerttext">Upload photo</a>
-      {% elif child.photo_url %}
+      {% elif child.photo_url and child.is_active %}
         <img src="{{ child.photo_url }}" class="images-style">
+      {% elif child.photo_url and not child.is_active %}
+        <img src="{{ child.photo_url }}" class="imgpreview">
       {% else %}
         <img src="/static/images/childphotopreview.png" class="images-style"><br><a href="/child/edit/{{ child.id }}" class="alerttext">Upload photo</a>
       {% endif %}
@@ -86,8 +88,13 @@
       <!-- End Guardian information -->
     </div>
     <div class="lowerform col-xs-12 col-md-12">
-      <h3 class="animated3"> Siblings</h3>
-      
+
+      {% if child.is_active %}
+        <h3 class="animated3"> 
+      {% else %}
+        <h3 class="inactive"> 
+      {% endif %}
+      Siblings</h3>
       {% if child.number_of_siblings %}
         <p><strong>Number of siblings: </strong> {{ child.number_of_siblings }} </p>
       {% else %}
@@ -104,9 +111,14 @@
           <a href="/child/edit/{{ child.id }}">Please write information about {{ child.first_name }}'s siblings that are also in the project.</a>
         </p>
       {% endif %}
-      
-      <h3 class="animated4"> School</h3>
-      
+
+      {% if child.is_active %}
+        <h3 class="animated4"> 
+      {% else %}
+        <h3 class="inactive"> 
+      {% endif %}
+      School</h3>
+
       {% if child.school_class %}
         <p><strong>School class: </strong> {{ child.school_class }}</p>
       {% else %}
@@ -119,8 +131,12 @@
         <p><strong>School attendance:</strong> {{ child.school_attendance }}</p>
       {% endif%}
 
-      <h3 class="animated5"> Situation</h3>
-      
+      {% if child.is_active %}
+      <h3 class="animated5"> 
+      {% else %}
+      <h3 class="inactive">
+      {% endif %}
+      Situation</h3>
       {% if child.situation %}
         <p>{{ child.situation }}</p>
       {% else %}
@@ -128,9 +144,14 @@
         <a href="/child/edit/{{ child.id }}">Please write information about {{ child.first_name }}'s situation.</a>
         </p>
       {% endif %}
-
-      <h3 class="animated6"> Volunteer task</h3>
       
+      {% if child.is_active %}
+        <h3 class="animated6"> 
+      {% else %}
+        <h3 class="inactive">
+      {% endif %}
+      Volunteer task</h3>
+
       {% if child.volunteer_task %}
         <p>{{ child.volunteer_task }}</p>
       {% else %}
@@ -139,7 +160,12 @@
         </p>
       {% endif %}
 
-      <h3 class="animated7">Home location</h3>
+      {% if child.is_active %}
+        <h3 class="animated7">
+      {% else %}
+        <h3 class="inactive">
+      {% endif %}
+      Home location</h3>
 
       {% if child.latitude %}
       {% else %}

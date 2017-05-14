@@ -171,8 +171,12 @@
 .imgpreview {
 	opacity: 0.6;
 	display: block;
-	margin-left: 25%;
+	padding: 5px;
+	margin: 0 auto 0 auto;
 	/*margin-bottom: 20px;*/
+	background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 	max-height: 250px;
 }
 

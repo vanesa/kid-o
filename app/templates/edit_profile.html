@@ -14,18 +14,23 @@
         <input type="file" name="photo" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Photo" data-classIcon="glyphicon-camera" data-size="sm" value="{{ child.photo_url }}">
       </div>
       <div class="info col-xs-12 col-md-6">
-        <h3 class="animated1"> Profile </h3>
+      {% if child.is_active %}
+        <h3 class="animated1"> 
+      {% else %}
+        <h3 class="inactive">
+      {% endif %}
+        Profile </h3>
       </div>
       <!-- Basic Child information -->
       <div class="info col-xs-12 col-md-3">
         
         {% if child.is_active %}
           <p>
-            <label for="activity-field">Activity: </label><input type="checkbox" name="is_active" checked data-toggle="toggle" value="true" class="addchildinput">
+            <label for="activity-field">Activity: </label><input id="activity" type="checkbox" name="is_active" checked data-toggle="toggle" value="true" class="addchildinput">
           </p>
         {% else %}
           <p>
-            Activity: <input type="checkbox" name="is_active" checked data-toggle="toggle" value="false" class="addchildinput"> 
+            Activity: <input id="activity" type="checkbox" name="is_active" checked data-toggle="toggle" class="addchildinput"> 
           </p>
         {% endif %}
 
@@ -38,7 +43,7 @@
           {% else %}
             <input type="text" name="nick_name" placeholder="Nick name" class="form-control addchildinput"><br />
           {% endif %}
-          
+
           <input type="text" name="birth_date" value="{{ child.birth_date.strftime('%Y-%m-%d') }}" placeholder="{{ child.birth_date.strftime('%Y-%m-%d') }}" class="form-control addchildinput"><br />
         </p>
         <p>
@@ -88,7 +93,13 @@
       <!-- End Guardian information -->
 
       <div class="lowerform col-xs-12 col-md-12">
-        <label for="siblings-field"><h3 class="animated3">Siblings</h3></label>
+        <label for="siblings-field">
+        {% if child.is_active %}
+        <h3 class="animated3"> 
+      {% else %}
+        <h3 class="inactive">
+      {% endif %}
+        Siblings</h3></label>
          <p>
           <label for="siblings-field">Number of siblings</label>
           <select id="number_of_siblings" name="number_of_siblings" class="form-control addchildinput">
@@ -107,7 +118,13 @@
           <label for="siblings-field">Siblings in project: </label><br />
           <input type="text" name="siblings_in_project" value="{{ child.siblings_in_project }}" placeholder="{{ child.siblings_in_project }}" class="form-control addchildinput"><br />
         </p>
-        <label for="school_field"><h3 class="animated4">School</h3></label>
+        <label for="school_field">
+        {% if child.is_active %}
+          <h3 class="animated4"> 
+        {% else %}
+          <h3 class="inactive">
+        {% endif %}
+          School</h3></label>
         <p>
           <label for="class-field">School Class</label><br />
           <select id="school_class" name="school_class" class="form-control addchildinput" data-placeholder="Select a school class">
@@ -129,7 +146,13 @@
             <option value="Bad">Bad</option>
           </select>
         </p>
-        <label for="situation-field"><h3 class="animated5">Situation:</h3></label>
+        <label for="situation-field">
+        {% if child.is_active %}
+          <h3 class="animated5"> 
+        {% else %}
+          <h3 class="inactive">
+        {% endif %}
+          Situation:</h3></label>
         <p>
 
           {% if child.situation %}
@@ -139,7 +162,13 @@
           {% endif %}
 
         </p>
-        <label for="volunteer_task-field"><h3 class="animated6">Volunteer tasks:</h3></label>
+        <label for="volunteer_task-field">
+        {% if child.is_active %}
+          <h3 class="animated6"> 
+        {% else %}
+          <h3 class="inactive">
+        {% endif %}
+          Volunteer tasks:</h3></label>
         <p>
 
           {% if child.volunteer_task %}
@@ -152,7 +181,13 @@
 
         <input type="text" id="lat" name="latitude" class="hidden" value="{{ child.latitude or '' }}">
         <input type="text" id="lng" name="longitude" class="hidden" value="{{ child.longitude or '' }}">
-        <h3 class="animated7"> Home Location </h3>
+        {% if child.is_active %}
+          <h3 class="animated7"> 
+        {% else %}
+          <h3 class="inactive">
+        {% endif %}
+          Home Location </h3>
+        <a id="delete_address">Delete Address</a><br>
         <div class="mapcontainer">
           <div id="map"></div>
         </div>
@@ -233,13 +268,32 @@
           marker.setLatLng(new L.LatLng(child_latitude, child_longitude)).update();
         }
       });
+      
+      $('#delete_address').on('click', function(marker) {
+        map.removeLayer(marker);
+      });
+
     </script>
 
     <script src='/static/js/imgpreview.js'></script>
 
+    <!-- Set activity to database value -->
+
+    <script>
+      $(document).ready(function() {
+        {% if child.is_active %}
+        {% else %}
+          $('#activity').bootstrapToggle('off');
+
+        console.log('{{child.is_active}}');
+        {% endif %}
+      });
+
+    </script>
+
     <!-- Set selections to database values-->
     <script>
-      
+
       {% if child.nationality %}
         active_selection('nationality', '{{ child.nationality }}')
       {% endif %}

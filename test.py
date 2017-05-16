@@ -3,7 +3,7 @@ import unittest
 import tempfile
 import json
 
-from app import app
+from app import app, csrf
 from app.models import db, Child, User
 from datetime import datetime
 
@@ -16,7 +16,9 @@ class ChildViewTestCase(unittest.TestCase):
 
         test_child_view = Child(first_name=first_name, last_name=last_name, birth_date=birth_date)
 
-        self.assertEqual(test_child_view.age, 7)
+        currenttime = datetime.now()
+        expected_age = (currenttime - birth_date).days / 365
+        self.assertEqual(test_child_view.age, expected_age)
 
 class AuthTestCase(unittest.TestCase):
 
@@ -70,8 +72,9 @@ class AuthTestCase(unittest.TestCase):
 if __name__ == "__main__":
     app.config['TESTING'] = True
     app.testing = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/travis_ci_test'
-    app.config['WTF_CSRF_ENABLED'] = False
-    db.init_app(app)
-    db.create_all()
+    csrf._csrf_disable = True
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/travis_ci_test'
+    # app.config['WTF_CSRF_ENABLED'] = False
+    # db.init_app(app)
+    # db.create_all()
     unittest.main()

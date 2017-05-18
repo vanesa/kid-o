@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/vanesa/kid-o.svg?branch=master)](https://travis-ci.org/vanesa/kid-o)
 
-<img src="app/static/images/kid-ologo.png" width="50%"" alt="Kid-O">
+[logo]: https://github.com/vanesa/kid-o/app/static/images/kid-ologo.png "Kid-O"
 
 Kid-O helps Non-Profit children’s aid orgs keep an overview of their children.  
 

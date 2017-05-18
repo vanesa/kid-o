@@ -10,6 +10,8 @@
         panel-danger
       {% elif child.situation is none %}
         panel-danger
+      {% elif child.is_active == false %}
+        panel-default
       {% else %}
         panel-success
       {% endif %}">
@@ -20,7 +22,7 @@
           {% if child.photo_url %}
             <div class="leftbox">
               <a href="../child/{{child.id}}">
-                <img src="{{child.photo_url}}" class="images-style">
+                <img src="{{child.photo_url}}" class="{% if child.is_active == true %}images-style{% else %}imgpreview{% endif %}">
               </a>
             </div>
           {% else %}

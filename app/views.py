@@ -109,10 +109,7 @@ def show_overview():
         child_search = request.form.get('child_searchform')
         class_search = request.form.get('class_searchform')
         #  split string and if statement len 1, 2, 3 query.
-        print "child_search: ", child_search, type(child_search)
-        print "class_search: ", class_search, type(class_search)
         if child_search and not class_search:
-            print 'this ran'
             found_children = Child.query.filter(Child.fullname.ilike("%"+child_search+"%")).all()
         elif class_search and not child_search:
             found_children = Child.query.filter(Child.school_class == class_search).all()
@@ -124,6 +121,12 @@ def show_overview():
 
         if found_children == []:
             flash('We could not find any child that matches your search. ')
+            return render_template('overview.html', child_profiles=found_children)
+        if len(found_children) > 1:
+            flash('We found ' + str(len(found_children)) + ' profiles.')
+        elif len(found_children) == 1:
+            flash('We found 1 profile.')
+            
         return render_template('overview.html', child_profiles=found_children)
 
     else:

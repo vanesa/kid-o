@@ -128,7 +128,7 @@
         <p>
           <label for="class-field">School Class</label><br />
           <select id="school_class" name="school_class" class="form-control addchildinput" data-placeholder="Select a school class">
-            <option> - Select school - </option>
+            <option value=""> - Select school class - </option>
             <option value="Maternal">Maternal</option>
             <option value="Preschool">Preschool</option>
             <option value="1st school year">1st school year</option>
@@ -140,7 +140,7 @@
         </p>
         <p><strong>School attendance: </strong>
           <select id="school_attendance" name="school_attendance" class="form-control addchildinput">
-            <option> - Select attendance rate - </option>
+            <option value=""> - Select attendance rate - </option>
             <option value="Good">Good</option>
             <option value="Intermediate">Intermediate</option>
             <option value="Bad">Bad</option>
@@ -191,10 +191,12 @@
         <div class="mapcontainer">
           <div id="map"></div>
         </div>
-        <button class="btn btn-sm btn-primary" type="submit">Save</button>
-        <a href="/child/{{ child.id }}"><button type="button" class="btn btn-sm btn-warning" value="cancel">Cancel</button></a>
-        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal" value="delete">Delete Profile</button>
       </div>
+    <div class="edit_buttons">
+      <button class="btn btn-sm btn-primary" type="submit">Save</button>
+      <a href="/child/{{ child.id }}"><button type="button" class="btn btn-sm btn-warning" value="cancel">Cancel</button></a>
+      <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal" value="delete">Delete Profile</button>
+    </div>
     </form>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -209,6 +211,7 @@
           </div>
           <div class="modal-footer center">
             <form role="form" method='POST' action='/delete-profile/{{ child.id }}' enctype="multipart/form-data">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
               <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
               <button class="btn btn-danger" type="submit">Delete profile</button>
             </form>

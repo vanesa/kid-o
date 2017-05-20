@@ -441,6 +441,18 @@ label {
 	text-align: center;
 }
 
+.edit_buttons {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 55px;
+    z-index: 1030;
+    background-color: #edf9ff;
+    padding: 7px;
+    border-top: 1px solid #d6f1ff;
+}
+
 /*.full {
 	width:100%;
 }*/

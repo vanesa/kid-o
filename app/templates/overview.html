@@ -1,62 +1,65 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <div class="container">
-    {% for child in child_profiles %}
-      <div class="panel 
-      {% if child.photo_url is none %}
-        panel-danger
-      {% elif child.home_visit is none %}
-        panel-danger
-      {% elif child.situation is none %}
-        panel-danger
-      {% elif child.is_active == false %}
-        panel-default
-      {% else %}
-        panel-success
-      {% endif %}">
-        <div class="panel-heading">
-          <h4>{{ child.first_name}} {{ child.last_name }}</h4>
-        </div>
-        <div class="panel-body">
-          {% if child.photo_url %}
-            <div class="leftbox">
-              <a href="../child/{{child.id}}">
-                <img src="{{child.photo_url}}" class="{% if child.is_active == true %}images-style{% else %}imgpreview{% endif %}">
-              </a>
-            </div>
-          {% else %}
-            <div class="leftbox"><a href="../child/{{child.id}}"><img src="/static/images/childphotopreview.png" class="images-style"></a></div>
-          {% endif %}
-          <div class="info rightbox ov-rightbox">
-            <p><strong>Age: </strong>{{ child.age }} years old</p>
-            <p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
-          {% if child.situation %}
-            <p><strong>Situation:</strong> {{ child.situation }}</p>
-          {% else %} 
-          {% endif %}
+  {% for child in child_profiles %}
+    <div class="panel 
+    {% if child.is_active == false %}
+      panel-default
+    {% elif child.photo_url is none %}
+      panel-danger
+    {% elif child.situation is none or child.situation == '' %}
+      panel-danger
+    {% else %}
+      panel-success
+    {% endif %}">
+      <div class="panel-heading">
+        <h4>{{ child.first_name}} {{ child.last_name }}</h4>
+      </div>
+      <div class="panel-body">
+        {% if child.photo_url %}
+          <div class="leftbox">
             <a href="../child/{{child.id}}">
-              <button type="button" class="btn btn-warning btn-sm">
-                <span class="fa fa-child" aria-hidden="true"></span> View profile
-              </button>
+              <img src="{{child.photo_url}}" class="{% if child.is_active == true %}images-style{% else %}imgpreview{% endif %}">
             </a>
           </div>
-        </div>
-        <div class="panel-footer">
-          {% if child.photo_url == "../static/images/childphotopreview.png" or child.photo_url == "/static/images/photos/childphotopreview.png"%} 
-            <i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload {{child.first_name}}'s photo!"></i>
-          {% elif child.photo_url %}
-            <i class="fa fa-camera-retro fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Photo available."></i>
-          {% else %}
-            <i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload photo!"></i> 
+        {% else %}
+          <div class="leftbox">
+            <a href="../child/{{child.id}}">
+              <img src="/static/images/childphotopreview.png" class="{% if child.is_active == true %}images-style{% else %}imgpreview{% endif %}">
+            </a>
+          </div>
+        {% endif %}
+        <div class="rightbox ov-rightbox">
+          <p><strong>Age: </strong>{{ child.age }} years old</p>
+          <p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
+          {% if child.school_class %}
+            <p><strong>School class:</strong> {{ child.school_class }}</p>
           {% endif %}
-          {% if child.situation %}
-            <i class="fa fa-list fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Situation info available."></i>
-          {% else %}
-            <i class="fa fa-list fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please add missing info about {{child.first_name}}'s situation!"></i> 
-          {% endif %}
+        {% if child.situation %}
+          <p><strong>Situation:</strong> {{ child.situation }}</p>
+        {% else %} 
+        {% endif %}
+          <a href="../child/{{child.id}}">
+            <button type="button" class="btn btn-warning btn-sm">
+              <span class="fa fa-child" aria-hidden="true"></span> View profile
+            </button>
+          </a>
         </div>
       </div>
-    {% endfor %}
-  </div>
+      <div class="panel-footer">
+        {% if child.photo_url == "../static/images/childphotopreview.png" or child.photo_url == "/static/images/photos/childphotopreview.png"%} 
+          <i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload {{child.first_name}}'s photo!"></i>
+        {% elif child.photo_url %}
+          <i class="fa fa-camera-retro fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Photo available."></i>
+        {% else %}
+          <i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload photo!"></i> 
+        {% endif %}
+        {% if child.situation %}
+          <i class="fa fa-list fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Situation info available."></i>
+        {% else %}
+          <i class="fa fa-list fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please add missing info about {{child.first_name}}'s situation!"></i> 
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
 {% endblock %}

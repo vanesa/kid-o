@@ -31,17 +31,24 @@ class ChildForm(Form):
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
     nick_name = StringField('nick_name', validators=[Length(max=15)])
     birth_date = DateField('birth_date', validators=[DataRequired()])
-    nationality = StringField('nationality')
+    nationality = SelectField('nationality', validators=[Optional()], choices=[(x, x) for x in ['Haiti', 'Dominican']])
     guardian_type = StringField('guardian_type', validators=[Length(max=15)])
     guardian_fname = StringField('guardian_fname', validators=[Length(max=25)])
     guardian_lname = StringField('guardian_lname', validators=[Length(max=25)])
-    number_of_siblings = IntegerField('number_of_siblings', validators=[NumberRange(min=0, max=8)])
+    max_number_of_siblings = 8
+    number_of_siblings = IntegerField('number_of_siblings', validators=[NumberRange(min=0, max=max_number_of_siblings)])
     siblings_in_project = StringField('siblings_in_school', validators=[Length(max=40)])
-    school_class = StringField('school_class')
-    school_attendance = StringField('school_attendance')
+    school_class = SelectField('school_class', validators=[Optional()], choices=[(x, x) for x in [
+        'Maternal', 'Preschool', '1st school year', '2nd school year', '3rd school year', '4th school year', 'Special School'
+    ]])
+    school_attendance = SelectField('school_attendance', validators=[Optional()], choices=[(x, x) for x in [
+        'Good', 'Intermediate', 'Bad'
+    ]])
     volunteer_task = StringField('volunteer_task')
     situation = StringField('situation')
-    godparent_status = StringField('godparent_status')
+    godparent_status = SelectField('godparent_status', validators=[Optional()], choices=[(x, x) for x in [
+        'Searching godparent', 'Has godparent', 'No need'
+    ]])
     latitude = FloatField('latitude', validators=[Optional()])
     longitude = FloatField('longitude', validators=[Optional()])
 

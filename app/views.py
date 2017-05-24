@@ -163,7 +163,7 @@ def edit_profile(id):
 
     if child is None:
         abort(404)
-    form = ChildForm(request.form)
+    form = ChildForm(request.form, obj=child)
     if request.method == 'POST' and form.validate():  # update child info from edit_profile.html form
         # Set photo_url to empty string to keep original path in case no changes are made.
         app.logger.debug(form.validate())

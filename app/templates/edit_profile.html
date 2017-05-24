@@ -50,8 +50,9 @@
           <label for="nationality-field">Nationality: </label>
           <select id="nationality" name="nationality" class="form-control addchildinput">
             <option value="">Unknown</option>
-            <option value="Dominican">Dominican</option><br />
-            <option value="Hatian">Hatian</option><br />
+            {% for _, option in form.nationality.choices %}
+              <option value="{{ option }}" {% if option == form.data.nationality %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
           </select>
         </p>
       </div>
@@ -84,9 +85,9 @@
         <label for="godparent-field">Godparent status:</label>
         <select id="godparent_status" name="godparent_status" class="form-control addchildinput">
           <option value=""> - Select godparent status - </option>
-          <option value="Searching godparent">Searching for godparent</option>
-          <option value="Has godparent">Has godparent</option>
-          <option value="No need">No need</option>
+            {% for _, option in form.godparent_status.choices %}
+              <option value="{{ option }}" {% if option == form.data.godparent_status %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
         </select>
         </p>
       </div>
@@ -104,14 +105,9 @@
           <label for="siblings-field">Number of siblings</label>
           <select id="number_of_siblings" name="number_of_siblings" class="form-control addchildinput">
             <option value="0"> - Select number of siblings - </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
+            {% for num in range(1, form.max_number_of_siblings) %}
+              <option value="{{ num }}" {% if num == form.data.number_of_siblings %}selected{% endif %}>{{ num }}</option>
+            {% endfor %}
           </select>
         </p>
         <p>
@@ -129,21 +125,17 @@
           <label for="class-field">School Class</label><br />
           <select id="school_class" name="school_class" class="form-control addchildinput" data-placeholder="Select a school class">
             <option value=""> - Select school class - </option>
-            <option value="Maternal">Maternal</option>
-            <option value="Preschool">Preschool</option>
-            <option value="1st school year">1st school year</option>
-            <option value="2nd school year">2nd school year</option>
-            <option value="3rd school year">3rd school year</option>
-            <option value="4th school year">4th school year</option>
-            <option value="Special School">Special school</option>
+            {% for _, option in form.school_class.choices %}
+              <option value="{{ option }}" {% if option == form.data.school_class %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
           </select>
         </p>
         <p><strong>School attendance: </strong>
           <select id="school_attendance" name="school_attendance" class="form-control addchildinput">
             <option value=""> - Select attendance rate - </option>
-            <option value="Good">Good</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Bad">Bad</option>
+            {% for _, option in form.school_attendance.choices %}
+              <option value="{{ option }}" {% if option == form.data.school_attendance %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
           </select>
         </p>
         <label for="situation-field">
@@ -292,46 +284,6 @@
         {% endif %}
       });
 
-    </script>
-
-    <!-- Set selections to database values-->
-    <script>
-
-      {% if child.nationality %}
-        active_selection('nationality', '{{ child.nationality }}')
-      {% endif %}
-
-      {% if child.godparent_status %}
-        active_selection('godparent_status', '{{ child.godparent_status }}')
-      {% endif %}
-
-      {% if child.number_of_siblings %}
-        active_selection('number_of_siblings', '{{ child.number_of_siblings }}')
-      {% endif %}
-
-      {% if child.school_class %}
-        active_selection('school_class', '{{ child.school_class }}')
-      {% endif %}
-
-      {% if child.school_attendance %}
-        active_selection('school_attendance', '{{ child.school_attendance }}')
-      {% endif %}
-
-      function active_selection(selection, matcher) {
-        var select = document.getElementById(selection);
-        var option;
-        var select_length = select.length;
-        
-        for (var i=0; i < select_length; i++) {
-          option = select.options[i];
-
-          if (option.value == matcher) {
-            option.setAttribute('selected', true);
-            break;
-          } 
-        }
-
-      }
     </script>
   </div>
 {% endblock %}

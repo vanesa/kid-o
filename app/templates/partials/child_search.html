@@ -1,13 +1,13 @@
 
       <form action="/overview" method="POST">
         <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-        <div class="col-lg-12 searchform">
-          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div class="col-lg-12">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 searchfield">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <input type="text" class="form-control" name="name" placeholder="Type child's name..." value="{% if form.data.name is defined %}{{form.data.name or ''}}{% else %}{% endif %}" />
             </div>
           </div>
-          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 searchfield">
             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
               <select id="class_str" name="class_str" class="form-control addchildinput" data-placeholder="Select a school class">
                 <option value=""> - Search by school class - </option>

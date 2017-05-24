@@ -2,8 +2,13 @@
 /* CSS Document */
 
 .toppad {
-	padding-top: 160px;
-	padding-bottom: 80px;
+	padding-top: 150px;
+	padding-bottom: 40px;
+}
+
+.toppad_child {
+	padding-top: 100px;
+	padding-bottom: 40px;
 }
 
 .info {
@@ -184,8 +189,8 @@ div.bootstrap-filestyle.input-group {
 	max-width: 250px;
 }
 
-.searchform {
-	margin: 10px 0 10px 0;
+.searchfield {
+	margin: 5px 0 10px 0;
 }
 
 .logo {
@@ -251,15 +256,7 @@ nav.shrink a.logolink {
 	z-index: 10;
 }
 
-nav.shrink form {
-	margin-left: 95px;
-}
 
-nav.shrink div.searchform {
-	float: none;
-	width: 91.66666667%;
-	margin-top: 12px;
-}
 
 /* Color scheme buttons */
 
@@ -398,7 +395,6 @@ nav.shrink div.searchform {
  .addchildinput {
  	display: inline-block;
  	margin-bottom: 5px;
- 	margin-left: 5px;
  }
 
 label {

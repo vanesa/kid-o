@@ -19,7 +19,7 @@
 		</style>
   </head>
 
-  <body class="toppad">
+  <body>
     <nav class="navbar navbar-default navbar-fixed-top row">
       <a href="/overview" class="logolink">
         <img src="/static/images/kid-ologo.png" class="logo">
@@ -36,15 +36,6 @@
 
     </nav>
     <div class="container">
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-info" role="alert">
-             {{ message }}
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
 
     	{%block content %} here goes the content {% endblock %}
 

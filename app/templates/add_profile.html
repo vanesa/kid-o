@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <div class="row">
+  <div class="row toppad_child">
     <form action="/child/add" class="form-signin" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
       <div class="col-xs-12 col-md-3">

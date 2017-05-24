@@ -4,7 +4,16 @@
 {% endblock %}
 
 {% block content %}
-
+  <div class="toppad"></div>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+        {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
   {% for child in children %}
     <div class="panel 
     {% if child.is_active == false %}

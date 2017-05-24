@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
+{% block extra_nav_content %} 
+  {% include '/partials/child_search.html' %}
+{% endblock %}
+
 {% block content %}
 
-  {% for child in child_profiles %}
+  {% for child in children %}
     <div class="panel 
     {% if child.is_active == false %}
       panel-default

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm as Form
-from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField, FileField
+from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField, FileField, SelectField
 from wtforms.validators import DataRequired, Email, Length, NumberRange, ValidationError, Optional, Regexp
 from app import app
 
@@ -44,3 +44,9 @@ class ChildForm(Form):
     godparent_status = StringField('godparent_status')
     latitude = FloatField('latitude', validators=[Optional()])
     longitude = FloatField('longitude', validators=[Optional()])
+
+class SearchForm(Form):
+    name = StringField('name', validators=[Optional(), Length(max=15)])
+    class_str = SelectField('class_str', validators=[Optional()], choices=[(x, x) for x in [
+        'Maternal', 'Preschool', '1st school year', '2nd school year', '3rd school year', '4th school year', 'Special School'
+    ]])

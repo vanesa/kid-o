@@ -2,10 +2,6 @@
 <html>
 	<head>
 		<title>Kid-O - Children's overview app for children's aid projects</title>
-		<!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css"/> -->
-    <!-- <link href="//api.mapbox.com/mapbox.js/v2.2.1/mapbox.css" rel="stylesheet" /> -->
-    <!-- // <script src="//api.mapbox.com/mapbox.js/v2.2.1/mapbox.js"></script> -->
-    <!-- // <script src="//code.jquery.com/jquery-1.11.3.min.js"></script> -->
     <link rel="stylesheet" href="/static/css/bootstrap.css"/>
     <link rel="stylesheet" href="/static/css//bootstrap-toggle.min.css" />
     <link href="/static/css/mapbox.css" rel="stylesheet" />
@@ -22,10 +18,11 @@
 			#map { position:absolute; top:0; bottom:0; width:100%; }
 		</style>
   </head>
+
   <body class="toppad">
     <nav class="navbar navbar-default navbar-fixed-top row">
       <a href="/overview" class="logolink">
-  		  <img src="/static/images/kid-ologo.png" class="logo">
+        <img src="/static/images/kid-ologo.png" class="logo">
       </a>
       {% if current_user.is_authenticated() %} 
       <div class="addchildicon">
@@ -34,54 +31,20 @@
         </a>
       </div>
       {% endif %}
-      <div class="col-lg-12">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <form action="/overview" method="POST" id="child_searchform">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            <div class="col-lg-12 searchform">
-              <div class="input-group">
-                <input type="text" class="form-control" name="child_searchform" placeholder="Type child's name...">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit">Go!</button>
-                </span>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <form action="/overview" method="POST" id="class_searchform">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            <div class="col-lg-12 searchform">
-              <div class="input-group">
-                <select id="school_class" name="class_searchform" class="form-control addchildinput" data-placeholder="Select a school class">
-                  <option value> - Search by school class - </option>
-                  <option value="Maternal">Maternal</option>
-                  <option value="Preschool">Preschool</option>
-                  <option value="1st school year">1st school year</option>
-                  <option value="2nd school year">2nd school year</option>
-                  <option value="3rd school year">3rd school year</option>
-                  <option value="4th school year">4th school year</option>
-                  <option value="Special School">Special school</option>
-                </select>
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit">Go!</button>
-                </span>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+
+      {% block extra_nav_content %}{% endblock %}
+
     </nav>
     <div class="container">
-    	{% with messages = get_flashed_messages() %}
-    		{% if messages %}
-    			{% for message in messages %}
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
             <div class="alert alert-info" role="alert">
-    			   {{ message }}
+             {{ message }}
             </div>
-    			{% endfor %}
-    		{% endif %}
-    	{% endwith %}
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
 
     	{%block content %} here goes the content {% endblock %}
 

@@ -63,7 +63,7 @@ class User(db.Model):
     def check_password(self, password):
         """ Returns True if the password is correct for the user.
         """
-        return bcrypt.check_password_hash(self.password, password)
+        return bcrypt.check_password_hash(unicode(self.password), unicode(password.decode("utf8")))
     
 
 class Child(db.Model):

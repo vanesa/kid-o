@@ -1,4 +1,4 @@
-alembic==0.9.1
+alembic==0.9.2
 blinker==1.4
 click==6.7
 fancycompleter==0.7
@@ -27,8 +27,8 @@ python-gnupg==0.4.0
 pytz==2017.2
 PyYAML==3.12
 six==1.10.0
-SQLAlchemy==1.1.9
-twilio==6.1.2
+SQLAlchemy==1.1.10
+twilio==6.2.0
 Werkzeug==0.12.2
 wmctrl==0.3
 WTForms==2.1

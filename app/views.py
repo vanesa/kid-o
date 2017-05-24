@@ -30,7 +30,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from app.models import User, Child, db
 from app import auth 
 from app import settings
-from app.forms import LoginForm, SignUpForm, ChildForm
+from app.forms import LoginForm, SignUpForm, ChildForm, SearchForm
 
 
 """" Starting page with login.
@@ -104,41 +104,44 @@ def signup_form():
 @login_required
 def show_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
+    query = Child.query
+    form = SearchForm(request.form)
+    app.logger.debug(form.data)
+    
+    if request.method == 'POST' and form.validate():
 
-    if request.method == 'POST':  # Search function
-        child_search = request.form.get('child_searchform')
-        class_search = request.form.get('class_searchform')
-        #  split string and if statement len 1, 2, 3 query.
-        if child_search and not class_search:
-            found_children = Child.query.filter(Child.fullname.ilike("%"+child_search+"%")).all()
-        elif class_search and not child_search:
-            found_children = Child.query.filter(Child.school_class == class_search).all()
-        else:
-            found_children = Child.query.order_by(Child.last_name.asc()).all()
+        name = form.data.get('name')
+        class_str = form.data.get('class_str')
+
+        if name:
+            query = query.filter(Child.fullname.ilike("%"+name+"%"))
+        if class_str:
+            query = query.filter(Child.school_class == class_str)
+
+        app.logger.debug(query)
 
         if request.headers.get('Accept') == 'json':
-            return jsonify(profiles=[x.to_dict() for x in found_children])
+            return jsonify(profiles=[x.to_dict() for x in children])
 
-        if found_children == []:
-            flash('We could not find any child that matches your search. ')
-            return render_template('overview.html', child_profiles=found_children)
-        if len(found_children) > 1:
-            flash('We found ' + str(len(found_children)) + ' profiles.')
-        elif len(found_children) == 1:
-            flash('We found 1 profile.')
-            
-        return render_template('overview.html', child_profiles=found_children)
+        # if len(children) == 0:
+        #     flash('We could not find any child that matches your search. ')
+        #     return render_template('overview.html', child_profiles=children)
+        # if len(children) > 1:
+        #     flash('We found ' + str(len(found_children)) + ' profiles.')
+        # elif len(children) == 1:
+        #     flash('We found 1 profile.')
 
-    else:
-        all_children = Child.query.order_by(Child.last_name.asc()).all()
-
-        return render_template('overview.html', child_profiles=all_children)
+    app.logger.debug(form.errors)
+    children = query.order_by(Child.last_name.asc()).all()
+    
+    return render_template('overview.html', children=children, form=form)
 
 @app.route('/map')
 @login_required
 def load_map():
+    form = SearchForm()
     all_children = Child.query.order_by(Child.last_name.asc()).all()
-    return render_template('map.html', child_profiles=all_children)
+    return render_template('map.html', child_profiles=all_children, form=form)
 
 
 @app.route('/child/<string:id>')

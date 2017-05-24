@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+
+{% block extra_nav_content %} 
+  {% include '/partials/child_search.html' %}
+{% endblock %}
+
 {% block content %}
 
   <div class="container">

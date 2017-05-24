@@ -106,7 +106,6 @@ def show_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
     query = Child.query
     form = SearchForm(request.form)
-    app.logger.debug(form.data)
     
     if request.method == 'POST' and form.validate():
 
@@ -118,21 +117,18 @@ def show_overview():
         if class_str:
             query = query.filter(Child.school_class == class_str)
 
-        app.logger.debug(query)
-
         if request.headers.get('Accept') == 'json':
             return jsonify(profiles=[x.to_dict() for x in children])
 
-        # if len(children) == 0:
-        #     flash('We could not find any child that matches your search. ')
-        #     return render_template('overview.html', child_profiles=children)
-        # if len(children) > 1:
-        #     flash('We found ' + str(len(found_children)) + ' profiles.')
-        # elif len(children) == 1:
-        #     flash('We found 1 profile.')
-
-    app.logger.debug(form.errors)
     children = query.order_by(Child.last_name.asc()).all()
+
+    if request.method == 'POST':
+        if len(children) == 0:
+            flash('We could not find any child that matches your search. ')
+        if len(children) > 1:
+            flash('We found ' + str(len(children)) + ' profiles.')
+        elif len(children) == 1:
+            flash('We found 1 profile.')
     
     return render_template('overview.html', children=children, form=form)
 

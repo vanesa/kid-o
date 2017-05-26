@@ -8,7 +8,7 @@
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 searchfield">
-            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+            <div class="col-lg-6 col-md-6 col-sm-7 col-xs-7">
               <select id="class_str" name="class_str" class="form-control addchildinput" data-placeholder="Select a school class">
                 <option value=""> - Search by school class - </option>
                 {% for _, option in form.class_str.choices %}
@@ -16,10 +16,13 @@
                 {% endfor %}
               </select>
             </div>
-            <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
               <span class="input-btn">
                 <button class="btn btn-default" type="submit">Go!</button>
               </span>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-4 col-xs-4">
+              Show hidden profiles: <input id="show_hidden_profiles" type="checkbox" name="show_hidden_profiles" checked data-toggle="toggle" value="false">
             </div>
           </div>
         </div>

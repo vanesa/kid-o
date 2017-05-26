@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="toppad"></div>
+<div class="toppad">
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       {% for message in messages %}
@@ -75,4 +75,5 @@
       </div>
     </div>
   {% endfor %}
+</div>
 {% endblock %}

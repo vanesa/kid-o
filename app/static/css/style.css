@@ -2,13 +2,13 @@
 /* CSS Document */
 
 .toppad {
-	padding-top: 150px;
-	padding-bottom: 40px;
+	padding-top: 190px;
+	padding-bottom: 50px;
 }
 
 .toppad_child {
 	padding-top: 100px;
-	padding-bottom: 40px;
+	padding-bottom: 100px;
 }
 
 .info {
@@ -183,6 +183,10 @@
     border: 1px solid #ddd;
     border-radius: 4px;
 	max-height: 250px;
+}
+
+#imgInput {
+	margin: 0 auto;
 }
 
 div.bootstrap-filestyle.input-group {

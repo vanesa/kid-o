@@ -29,7 +29,7 @@
         <p>
           <label for="nationality-field">Nationality: </label>
           <select name="nationality" class="form-control addchildinput">
-          <option>Unknown</option>
+          <option value="">Unknown</option>
             {% for _, option in form.nationality.choices %}
               <option value="{{ option }}">{{ option }}</option>
             {% endfor %}

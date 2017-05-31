@@ -27,6 +27,8 @@ from flask import (
 )
 from flask_login import login_required, login_user, logout_user, current_user
 
+from PIL import Image
+
 from app.models import User, Child, db
 from app import auth 
 from app import settings
@@ -77,7 +79,7 @@ def logout():
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup_form():
@@ -230,10 +232,20 @@ def add_profile():
         photo_url = ''
 
         if photo and allowed_file(photo.filename):
+
             print "This should be the file: ", photo
             filename = secure_filename(photo.filename)
 
-            photo.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
+            im = Image.open(photo.stream)
+            print im.format, im.size, im.mode
+
+            path = os.path.abspath(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
+            print path
+            size = (194, 250)
+            im.thumbnail(size)
+            im.save(path)
+
+            # photo.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
             # Save the image path to send to the database
             photo_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
 

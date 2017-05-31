@@ -22,7 +22,7 @@
               </span>
             </div>
             <div class="col-lg-5 col-md-5 col-sm-4 col-xs-4">
-              Show hidden profiles: <input id="show_hidden_profiles" type="checkbox" name="show_hidden_profiles" checked data-toggle="toggle" value="false">
+              Show hidden profiles: <input id="show_hidden_profiles" type="checkbox" name="show_hidden_profiles" {% if form.data.show_hidden_profiles %}checked{% endif %} data-toggle="toggle" value="true">
             </div>
           </div>
         </div>

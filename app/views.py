@@ -106,6 +106,8 @@ def show_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
     query = Child.query
     form = SearchForm(request.form)
+    show_hidden_profiles = False
+    flash_number_results = False
     
     if request.method == 'POST' and form.validate():
 
@@ -114,15 +116,21 @@ def show_overview():
 
         if name:
             query = query.filter(Child.fullname.ilike("%"+name+"%"))
+            flash_number_results = True
         if class_str:
             query = query.filter(Child.school_class == class_str)
+            flash_number_results = True
+        if form.data.get('show_hidden_profiles'):
+            show_hidden_profiles = True
 
-        if request.headers.get('Accept') == 'json':
-            return jsonify(profiles=[x.to_dict() for x in children])
+        # if request.headers.get('Accept') == 'json':
+        #     return jsonify(profiles=[x.to_dict() for x in children])
 
+    if not show_hidden_profiles:
+        query = query.filter(Child.is_active==True)
     children = query.order_by(Child.last_name.asc()).all()
 
-    if request.method == 'POST':
+    if flash_number_results and request.method == 'POST':
         if len(children) == 0:
             flash('We could not find any child that matches your search. ')
         if len(children) > 1:

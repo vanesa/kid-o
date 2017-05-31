@@ -57,3 +57,4 @@ class SearchForm(Form):
     class_str = SelectField('class_str', validators=[Optional()], choices=[(x, x) for x in [
         'Maternal', 'Preschool', '1st school year', '2nd school year', '3rd school year', '4th school year', 'Special School'
     ]])
+    show_hidden_profiles = BooleanField('show_hidden_profiles')

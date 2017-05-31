@@ -223,21 +223,16 @@ def add_profile():
 
     """add a child profile"""
     form = ChildForm(request.form)
-    # app.logger.debug(form.validate())
-    # app.logger.debug(form.errors)
-    # app.logger.debug(request.form)
-    
 
     if request.method == 'POST' and form.validate(): 
-        # get all new data
         # Upload image 
-        # import pdb; pdb.set_trace()
         photo = request.files['photo']
-        print "whatever photo is: ", photo
         photo_url = ''
+
         if photo and allowed_file(photo.filename):
             print "This should be the file: ", photo
             filename = secure_filename(photo.filename)
+
             photo.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
             # Save the image path to send to the database
             photo_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
@@ -245,16 +240,14 @@ def add_profile():
         # seed into database
         data = form.data
         data['photo_url'] = photo_url
-        child_entry = Child(**data)
+        child = Child(**data)
         
-        db.session.add(child_entry)
+        db.session.add(child)
         db.session.commit()
-
-        child = db.session.query(Child).order_by(Child.id.desc()).first()
-
         return redirect('/child/%s' % child.id)
-    else:
-        return render_template('add_profile.html', form=form)
+    
+    app.logger.debug(form.errors)
+    return render_template('add_profile.html', form=form)
 
 @app.route('/delete-profile/<string:id>', methods=['GET', 'POST'])
 @login_required

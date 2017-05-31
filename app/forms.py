@@ -31,7 +31,7 @@ class ChildForm(Form):
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
     nick_name = StringField('nick_name', validators=[Length(max=15)])
     birth_date = DateField('birth_date', validators=[DataRequired()])
-    nationality = SelectField('nationality', validators=[Optional()], choices=[(x, x) for x in ['Haiti', 'Dominican']])
+    nationality = SelectField('nationality', validators=[Optional()], choices=[(x, x) for x in ['Haitian', 'Dominican']])
     guardian_type = StringField('guardian_type', validators=[Length(max=15)])
     guardian_fname = StringField('guardian_fname', validators=[Length(max=25)])
     guardian_lname = StringField('guardian_lname', validators=[Length(max=25)])

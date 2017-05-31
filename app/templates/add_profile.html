@@ -30,8 +30,9 @@
           <label for="nationality-field">Nationality: </label>
           <select name="nationality" class="form-control addchildinput">
           <option>Unknown</option>
-          <option value="Dominican">Dominican</option>
-          <option value="Hatian">Hatian</option>
+            {% for _, option in form.nationality.choices %}
+              <option value="{{ option }}">{{ option }}</option>
+            {% endfor %}
         </select>
         </p>
       </div>
@@ -46,9 +47,9 @@
         <label for="godparent-field">Godparent status:</label>
         <select id="godparent_status" name="godparent_status" class="form-control addchildinput">
           <option value=""> - Select godparent status - </option>
-          <option value="Searching godparent">Searching for godparent</option>
-          <option value="Has godparent">Has godparent</option>
-          <option value="No need">No need</option>
+            {% for _, option in form.godparent_status.choices %}
+              <option value="{{ option }}">{{ option }}</option>
+            {% endfor %}
         </select>
         <br>
         <small>Godparent can be added once the child profile is created.</small>
@@ -58,14 +59,9 @@
         <p><strong> Number of siblings: </strong>
         <select name="number_of_siblings" class="form-control addchildinput">
           <option value="0"> - Select number of siblings - </option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
+            {% for num in range(1, form.max_number_of_siblings + 1) %}
+              <option value="{{ num }}">{{ num }}</option>
+            {% endfor %}
         </select>
         </p>
         <p><strong>Siblings in project:</strong>
@@ -75,22 +71,17 @@
         <p><strong>School class:</strong>
         <select name="school_class" class="form-control addchildinput">
           <option value=""> - Select school class - </option>
-          <option value="Maternal">Maternal</option>
-          <option value="Preschool">Preschool</option>
-          <option value="1st school year">1st school year</option>
-          <option value="2nd school year">2nd school year</option>
-          <option value="3rd school year">3rd school year</option>
-          <option value="4th school year">4th school year</option>
-          <option value="Special School">Special school</option>
-          <option value="Sala de Actividades">Sala de Actividades</option>
+            {% for _, option in form.school_class.choices %}
+              <option value="{{ option }}">{{ option }}</option>
+            {% endfor %}
         </select>
         </p>
         <p><strong>School attendance: </strong>
           <select name="school_class" class="form-control addchildinput">
             <option value=""> - Select attendance rate - </option>
-            <option value="Good">Good</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Bad">Bad</option>
+            {% for _, option in form.school_attendance.choices %}
+              <option value="{{ option }}">{{ option }}</option>
+            {% endfor %}
           </select>
         </p>
         <label for="situation-field"><h3 class="animated5">Situation:</h3></label>

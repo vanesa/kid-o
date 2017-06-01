@@ -455,7 +455,7 @@ label {
 	text-align: center;
 }
 
-.edit_buttons {
+.bottom_bar_buttons {
     position: fixed;
     right: 0;
     bottom: 0;
@@ -466,7 +466,3 @@ label {
     padding: 7px;
     border-top: 1px solid #d6f1ff;
 }
-
-/*.full {
-	width:100%;
-}*/

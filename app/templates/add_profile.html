@@ -98,16 +98,17 @@
         <div class="mapcontainer">
           <div id="map"></div>
         </div>
+      </div>
+      <div class="bottom_bar_buttons">
         <button class="btn btn-sm btn-primary" type="submit">Save</button>
         <a href="/overview"><button type="button" class="btn btn-sm btn-danger" value="edit">Cancel</button></a>
-      </form>
-
-      <br style="clear: both" />
-      <script>
-        $(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera", size: "sm"});
-      </script>
-      <script src='../static/js/mapadd.js'></script>
-      <script src='../static/js/imgpreview.js'></script>
-    </div>
+      </div>
+    </form>
+    <br style="clear: both" />
+    <script>
+      $(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera", size: "sm"});
+    </script>
+    <script src='../static/js/mapadd.js'></script>
+    <script src='../static/js/imgpreview.js'></script>
   </div>
 {% endblock %}

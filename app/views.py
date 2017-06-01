@@ -185,8 +185,14 @@ def edit_profile(id):
             photo_format = photo.filename.split('.')[1].lower()
             filename = secure_filename(child_name + '.' + photo_format)
             
-            size = (194, 250)
-            im = Image.open(photo.stream).resize(size, resample=Image.LANCZOS)
+            # resize proportional to baseheight            
+            baseheight = 250
+            im = Image.open(photo.stream)
+            hpercent = (baseheight/float(im.size[1]))
+            wsize = int((float(im.size[0])*float(hpercent)))
+            im = im.resize((wsize, baseheight), resample=Image.LANCZOS)
+            path = os.path.abspath(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
+            im.save(path)
 
             # Save the image path to send to the database
             photo_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
@@ -243,11 +249,14 @@ def add_profile():
             photo_format = photo.filename.split('.')[1].lower()
             filename = secure_filename(child_name + '.' + photo_format)
 
-            size = (194, 250)
-            im = Image.open(photo.stream).resize(size, resample=Image.LANCZOS)
+            # resize proportional to baseheight 
+            baseheight = 250
+            im = Image.open(photo.stream)
+            hpercent = (baseheight/float(im.size[1]))
+            wsize = int((float(im.size[0])*float(hpercent)))
+            im = im.resize((wsize, baseheight), resample=Image.LANCZOS)
 
             path = os.path.abspath(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
-            # im.thumbnail(size,resample=2)
             im.save(path)
 
             # Save the image path to send to the database

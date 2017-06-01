@@ -181,8 +181,13 @@ def edit_profile(id):
         photo = request.files['photo']
         if photo and allowed_file(photo.filename):
             # If no image is uploaded, this never passes.
-            filename = secure_filename(photo.filename)
-            photo.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
+            child_name = form.data['first_name'].lower() + form.data['last_name'].lower()
+            photo_format = photo.filename.split('.')[1].lower()
+            filename = secure_filename(child_name + '.' + photo_format)
+            
+            size = (194, 250)
+            im = Image.open(photo.stream).resize(size, resample=Image.LANCZOS)
+
             # Save the image path to send to the database
             photo_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
         # get all new data
@@ -234,18 +239,17 @@ def add_profile():
         if photo and allowed_file(photo.filename):
 
             print "This should be the file: ", photo
-            filename = secure_filename(photo.filename)
+            child_name = (form.data['first_name'] + form.data['last_name']).lower()
+            photo_format = photo.filename.split('.')[1].lower()
+            filename = secure_filename(child_name + '.' + photo_format)
 
-            im = Image.open(photo.stream)
-            print im.format, im.size, im.mode
+            size = (194, 250)
+            im = Image.open(photo.stream).resize(size, resample=Image.LANCZOS)
 
             path = os.path.abspath(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
-            print path
-            size = (194, 250)
-            im.thumbnail(size)
+            # im.thumbnail(size,resample=2)
             im.save(path)
 
-            # photo.save(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
             # Save the image path to send to the database
             photo_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
 
@@ -267,6 +271,11 @@ def delete_profile(id):
 
     child = db.session.query(Child).filter_by(id=id).first()
     child_name = child.first_name + " " + child.last_name
+    filename = child.first_name + child.last_name + ".jpg"
+    try:
+        os.remove(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
+    except:
+        pass
     db.session.delete(child)
     db.session.commit()
     flash('You have deleted ' + child_name + "'s profile.")

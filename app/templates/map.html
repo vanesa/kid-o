@@ -27,7 +27,7 @@
     "image": "/static/images/photos/" + {% if child.photo_url == "/static/images/childphotopreview.png" %}"childphotopreview.png"{% elif child.photo_url == "/static/images/photos/" + child.first_name.lower() + ".jpg" %}"{{ child.first_name }}".toLowerCase() + ".jpg" {% else %} "childphotopreview.png"{% endif %},
     "title": "{{ child.first_name }} {{ child.last_name }}",
     "url": "/child/{{ child.id }}",
-  "description": "lives here {% if child.guardian_fname and child.guardian_lname %} with {{ child.guardian_fname }} {{ child.guardian_lname }} {% else %}{% endif %} {% if child.guardian_type %}({{ child.guardian_type }}){% else %} {% endif %}",
+  "description": "lives here {% if child.guardian_fname and child.guardian_lname or child.siblings_in_project %} with {{ child.guardian_fname }} {{ child.guardian_lname }} {% if child.guardian_type %}({{ child.guardian_type }}){% else %} {% endif %} {{ child.siblings_in_project}} {% else %}{% endif %}",
   "marker-color": "#fc4353",
   "marker-size": "large",
   "marker-symbol": "building"

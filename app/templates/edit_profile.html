@@ -187,7 +187,9 @@
     <div class="bottom_bar_buttons">
       <button class="btn btn-sm btn-primary" type="submit">Save</button>
       <a href="/child/{{ child.id }}"><button type="button" class="btn btn-sm btn-warning" value="cancel">Cancel</button></a>
-      <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal" value="delete">Delete Profile</button>
+      {% if not child.is_active %}
+        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal" value="delete">Delete Profile</button>
+      {% endif %}
     </div>
     </form>
     <!-- Modal -->

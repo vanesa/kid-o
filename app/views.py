@@ -291,43 +291,43 @@ def delete_profile(id):
     return redirect('/overview')
 
 
-@app.route('/twilio', methods=['GET', 'POST'])
-def registerbysms():
-    callers = secrets.callers
-    from_number = request.values.get('From', None)
-    body = request.values.get('Body', None)
-    nummedia = request.values.get('NumMedia', None)
-    mediaurl = request.values.get('MediaUrl0', None)
-    message = "Hi! Please type in: REGISTER (First name of child) (Last name of Child) (Birth date (mm-dd-YYYY))"
-    if from_number in callers:
+# @app.route('/twilio', methods=['GET', 'POST'])
+# def registerbysms():
+#     callers = secrets.callers
+#     from_number = request.values.get('From', None)
+#     body = request.values.get('Body', None)
+#     nummedia = request.values.get('NumMedia', None)
+#     mediaurl = request.values.get('MediaUrl0', None)
+#     message = "Hi! Please type in: REGISTER (First name of child) (Last name of Child) (Birth date (mm-dd-YYYY))"
+#     if from_number in callers:
 
-        if body is not None:
-            if body.find('REGISTER') != -1:
-                child_info = body.split(" ")
-                child_first_name = child_info[1]
-                child_last_name = child_info[2]
-                child_birth_date = child_info[3]
-                date_check = re.match("([0-9]{2}-[0-9]{2}-[0-9]{4})", child_birth_date)
-                if date_check is None:
-                    message = "Hi " + callers[from_number] + "! " + "Can you please format the date correctly to: (mm)month-(dd)day-(YYYY)year?"
-                else:
-                    imgurl = '../static/images/childphotopreview.png'
-                    if nummedia and mediaurl is not None:
-                        imgurl = mediaurl
+#         if body is not None:
+#             if body.find('REGISTER') != -1:
+#                 child_info = body.split(" ")
+#                 child_first_name = child_info[1]
+#                 child_last_name = child_info[2]
+#                 child_birth_date = child_info[3]
+#                 date_check = re.match("([0-9]{2}-[0-9]{2}-[0-9]{4})", child_birth_date)
+#                 if date_check is None:
+#                     message = "Hi " + callers[from_number] + "! " + "Can you please format the date correctly to: (mm)month-(dd)day-(YYYY)year?"
+#                 else:
+#                     imgurl = '../static/images/childphotopreview.png'
+#                     if nummedia and mediaurl is not None:
+#                         imgurl = mediaurl
 
-                    child_entry = Child(pic_url=imgurl, first_name=child_first_name, last_name=child_last_name, birth_date=child_birth_date, latitude=18.542769, longitude=-69.801216)
+#                     child_entry = Child(pic_url=imgurl, first_name=child_first_name, last_name=child_last_name, birth_date=child_birth_date, latitude=18.542769, longitude=-69.801216)
 
-                    db.session.add(child_entry)
-                    db.session.commit()
-                    message = "Hi " + callers[from_number] + "! " + "Thank you for registering " + child_first_name + "! Please complete " + child_first_name + "'s profile on the Kid-O website."
-            else:
-                message = "Hi " + callers[from_number] + "! Please type in: REGISTER (First name of child) (Last name of child) (Birth date (mm-dd-YYYY))"
-    else:
-        message = "Hello friend! If you want to use Kid-O please register on our website!"
+#                     db.session.add(child_entry)
+#                     db.session.commit()
+#                     message = "Hi " + callers[from_number] + "! " + "Thank you for registering " + child_first_name + "! Please complete " + child_first_name + "'s profile on the Kid-O website."
+#             else:
+#                 message = "Hi " + callers[from_number] + "! Please type in: REGISTER (First name of child) (Last name of child) (Birth date (mm-dd-YYYY))"
+#     else:
+#         message = "Hello friend! If you want to use Kid-O please register on our website!"
 
-    resp = twiml.Response()
-    resp.message(message)
-    return str(resp)
+#     resp = twiml.Response()
+#     resp.message(message)
+#     return str(resp)
 
 @app.route('/favicon.ico')
 def favicon():

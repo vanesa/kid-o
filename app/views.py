@@ -29,10 +29,10 @@ from flask_login import login_required, login_user, logout_user, current_user
 
 from PIL import Image
 
-from app.models import User, Child, db
+from app.models import User, Child, Godparent, db
 from app import auth 
 from app import settings
-from app.forms import LoginForm, SignUpForm, ChildForm, SearchForm
+from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm
 
 
 """" Starting page with login.
@@ -289,6 +289,28 @@ def delete_profile(id):
     db.session.commit()
     flash('You have deleted ' + child_name + "'s profile.")
     return redirect('/overview')
+
+@app.route('/add-godparent/<string:child_id>', methods=['POST'])
+@login_required
+def add_godparent(child_id):
+    """add a godparent profile"""
+    
+    child = Child.query.filter_by(id=child_id).first()
+    if not child:
+        abort(404)
+
+    form = GodparentForm(obj=request.get_json())
+    if form.validate():
+
+        # seed into database
+        godparent = Godparent(**form.data)
+        db.session.add(godparent)
+        child.godparents.append(godparent)
+        db.session.commit()
+        return '{"success": true}'
+    
+    app.logger.debug(form.errors)
+    return '{"error": true}', 400
 
 
 # @app.route('/twilio', methods=['GET', 'POST'])

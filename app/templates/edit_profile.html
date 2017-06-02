@@ -23,17 +23,9 @@
       </div>
       <!-- Basic Child information -->
       <div class="info col-xs-12 col-md-3">
-        
-        {% if child.is_active %}
-          <p>
-            <label for="activity-field">Activity: </label><input id="activity" type="checkbox" name="is_active" checked data-toggle="toggle" value="true" class="addchildinput">
-          </p>
-        {% else %}
-          <p>
-            Activity: <input id="activity" type="checkbox" name="is_active" checked data-toggle="toggle" class="addchildinput"> 
-          </p>
-        {% endif %}
-
+        <p>
+          <label for="activity-field">Activity: </label><input type="checkbox" name="is_active" {% if child.is_active %} checked{% else %} {% endif %} data-toggle="toggle" class="addchildinput">
+        </p>
         <p>
           <input type="text" name="first_name" value="{{ child.first_name }}" placeholder="{{ child.first_name }}" class="form-control addchildinput"><br />
           <input type="text" name="last_name" value="{{ child.last_name }}" placeholder="{{ child.last_name }}" class="form-control addchildinput"><br />
@@ -90,6 +82,12 @@
             {% endfor %}
         </select>
         </p>
+
+        {% if child.godparent_status == 'Has godparent' %}
+          <p>
+          <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button>
+          </p>
+        {% endif %}
       </div>
       <!-- End Guardian information -->
 
@@ -188,24 +186,50 @@
       <button class="btn btn-sm btn-primary" type="submit">Save</button>
       <a href="/child/{{ child.id }}"><button type="button" class="btn btn-sm btn-warning" value="cancel">Cancel</button></a>
       {% if not child.is_active %}
-        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal" value="delete">Delete Profile</button>
+        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" value="delete">Delete Profile</button>
       {% endif %}
     </div>
     </form>
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <!-- add godparent modal -->
+    <div class="modal fade" id="godparentModal" tabindex="-1" role="dialog" aria-labelledby="godparentModalLabel">
       <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title center" id="myModalLabel">WARNING</h4>
+            <h4 class="modal-title center" id="godparentModalLabel">Add {{ child.first_name }}'s godparent: </h4>
+          </div>
+          <form id="addGodparentForm" role="form" method='POST' enctype="multipart/form-data">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <div id="godparentModalBody" class="modal-body center">
+              <input type="text" name="first_name" placeholder="Godparent's first name" class="form-control addchildinput" /><br />
+              <input type="text" name="last_name" placeholder="Godparent's last name" class="form-control addchildinput" /><br />
+              <input type="text" name="email" placeholder="Godparent's email" class="form-control addchildinput" /><br />
+            </div>
+            <div class="modal-footer center">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+              <button id="addGodparentButton" class="btn btn-default" type="submit" />Add Godparent</button>
+              <button type="button" class="btn btn-warning" data-dismiss="modal" />Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- delete profile modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title center" id="deleteModalLabel">WARNING</h4>
           </div>
           <div class="modal-body center">
             Are you sure you want to delete {{ child.first_name }}'s profile?
           </div>
           <div class="modal-footer center">
             <form role="form" method='POST' action='/delete-profile/{{ child.id }}' enctype="multipart/form-data">
-              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
               <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
               <button class="btn btn-danger" type="submit">Delete profile</button>
             </form>
@@ -215,11 +239,66 @@
     </div>
     
     <script>
-      $('#myModal').on('shown.bs.modal', function () {
+      $('#deleteModal').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+      })
+
+      $('#godparentModal').on('shown.bs.modal', function () {
         $('#myInput').focus()
       })
     </script>
 
+    <!-- Ajax add godparent -->
+    <script>
+      $(function() {
+        $('#addGodparentForm').on('submit', function(e) {
+          e && e.preventDefault();
+
+          var data = {
+            _csrf_token: $('#addGodparentForm input[name="_csrf_token"]').val(),
+            first_name: $('#addGodparentForm input[name="first_name"]').val(),
+            last_name: $('#addGodparentForm input[name="last_name"]').val(),
+            email: $('#addGodparentForm input[name="email"]').val(),
+          };
+
+          $.ajax({
+            type: 'POST',
+            url: '/add-godparent/{{ child.id }}',
+            contentType: 'application/json',
+            headers: {
+              'X-CSRFToken': data._csrf_token,
+            },
+            data: JSON.stringify(data),
+            success: function(response) {
+              $("#godparentModalBody").html( "<p>Success!</p>" );
+            },
+            error: function(error) {
+                console.log(error);
+            }
+          });
+              
+        });
+      });
+
+      // $(function() {
+      //   $('#addGodparentForm').on('submit', function(e) {
+      //     var data
+
+      //     var xhttp = new XMLHttpRequest();
+      //     var $form = $(e.target.form);
+      //     xhttp.onreadystatechange = function() {
+      //       if (this.readyState == 4 && this.status == 200) {
+      //         $("#godparentModalBody").html(this.responseText);
+      //       }
+      //     };
+      //     xhttp.open("POST", "/add-godparent/{{ child.id }}", true);
+      //     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      //     xhttp.send($form);
+      //   });
+      // });
+    </script>
+
+    <!-- Map -->
     <script>
       L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
       var map = L.mapbox.map('map', 'vanesa.e4c935ef')
@@ -274,16 +353,5 @@
 
     <script src='/static/js/imgpreview.js'></script>
 
-    <!-- Set activity to database value -->
-
-    <script>
-      $(document).ready(function() {
-        {% if child.is_active %}
-        {% else %}
-          $('#activity').bootstrapToggle('off');
-        {% endif %}
-      });
-
-    </script>
   </div>
 {% endblock %}

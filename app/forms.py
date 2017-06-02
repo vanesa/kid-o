@@ -52,6 +52,11 @@ class ChildForm(Form):
     latitude = FloatField('latitude', validators=[Optional()])
     longitude = FloatField('longitude', validators=[Optional()])
 
+class GodparentForm(Form):
+    first_name = StringField('first_name', validators=[DataRequired(), Length(max=15)])
+    last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
+    email = StringField('email', validators=[DataRequired(), Email()], filters=[lower])
+
 class SearchForm(Form):
     name = StringField('name', validators=[Optional(), Length(max=15)])
     class_str = SelectField('class_str', validators=[Optional()], choices=[(x, x) for x in [

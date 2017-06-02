@@ -85,6 +85,9 @@
         {% endif %}
 
       </p>
+        {% for godparent in child.godparents %}
+          {{ godparent.first_name}}
+        {% endfor %}
       <!-- End Guardian information -->
     </div>
     <div class="lowerform col-xs-12 col-md-12">

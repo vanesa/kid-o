@@ -208,8 +208,8 @@
             </div>
             <div class="modal-footer center">
               <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
-              <button id="addGodparentButton" class="btn btn-default" type="submit" />Add Godparent</button>
               <button type="button" class="btn btn-warning" data-dismiss="modal" />Cancel</button>
+              <button id="addGodparentButton" class="btn btn-default" type="submit" />Add Godparent</button>
             </div>
           </form>
         </div>
@@ -237,121 +237,28 @@
         </div>
       </div>
     </div>
-    
-    <script>
-      $('#deleteModal').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-      })
-
-      $('#godparentModal').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-      })
-    </script>
-
-    <!-- Ajax add godparent -->
-    <script>
-      $(function() {
-        $('#addGodparentForm').on('submit', function(e) {
-          e && e.preventDefault();
-
-          var data = {
-            _csrf_token: $('#addGodparentForm input[name="_csrf_token"]').val(),
-            first_name: $('#addGodparentForm input[name="first_name"]').val(),
-            last_name: $('#addGodparentForm input[name="last_name"]').val(),
-            email: $('#addGodparentForm input[name="email"]').val(),
-          };
-
-          $.ajax({
-            type: 'POST',
-            url: '/add-godparent/{{ child.id }}',
-            contentType: 'application/json',
-            headers: {
-              'X-CSRFToken': data._csrf_token,
-            },
-            data: JSON.stringify(data),
-            success: function(response) {
-              $("#godparentModalBody").html( "<p>Success!</p>" );
-            },
-            error: function(error) {
-                console.log(error);
-            }
-          });
-              
-        });
-      });
-
-      // $(function() {
-      //   $('#addGodparentForm').on('submit', function(e) {
-      //     var data
-
-      //     var xhttp = new XMLHttpRequest();
-      //     var $form = $(e.target.form);
-      //     xhttp.onreadystatechange = function() {
-      //       if (this.readyState == 4 && this.status == 200) {
-      //         $("#godparentModalBody").html(this.responseText);
-      //       }
-      //     };
-      //     xhttp.open("POST", "/add-godparent/{{ child.id }}", true);
-      //     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      //     xhttp.send($form);
-      //   });
-      // });
-    </script>
-
-    <!-- Map -->
-    <script>
-      L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
-      var map = L.mapbox.map('map', 'vanesa.e4c935ef')
-      .setView([
-        {% if child.latitude and child.longitude %}
-          {{ child.latitude}}, {{ child.longitude }}
-        {% else %}
-          18.542769, -69.801216
-        {% endif %}
-      ],15);
-      // Disable the scroll Zoom
-      map.scrollWheelZoom.disable();
-      var marker;
-      var clicked = false;
-
-
-      {% if child.latitude and child.longitude %}
-      marker = L.marker(new L.LatLng(
-          {{ child.latitude}}, {{ child.longitude }}
-        ));
-      marker.addTo(map);
-      {% endif %}
-
-      map.on('click', function(e) {
-        var child_latitude = e.latlng.lat;
-        var child_longitude = e.latlng.lng;
-        $("#lat").val(child_latitude)
-        $("#lng").val(child_longitude)
-
-        if (clicked === false) {
-          marker = L.marker(new L.LatLng(child_latitude, child_longitude), {
-            icon: L.mapbox.marker.icon({
-              'marker-color': 'ff8888'
-            }),
-            draggable: false
-          });
-          marker.bindPopup("Child's home location.");
-                 
-          marker.addTo(map);
-          clicked = true;
-        }
-        else {
-          marker.setLatLng(new L.LatLng(child_latitude, child_longitude)).update();
-        }
-      });
-      
-      $('#delete_address').on('click', function(marker) {
-        map.removeLayer(marker);
-      });
-
-    </script>
-
-    <script src='/static/js/imgpreview.js'></script>
-
   </div>
+  <!-- Image preview -->
+  <script src='/static/js/imgpreview.js'></script>
+
+  <!-- delete modal -->
+  <script src='/static/js/deletemodal.js'></script>
+
+  <!-- Ajax add godparent -->
+  <script>
+  let child_id = '{{ child.id }}';
+  </script>
+  <script src='/static/js/addgodparent.js'></script>
+
+  <!-- Map -->
+  <script>
+    {% if child.latitude and child.longitude %}
+      let latitude = {{ child.latitude}};
+      let longitude = {{ child.longitude }};
+    {% else %}
+      let latitude = 18.542769;
+      let longitude = -69.801216;
+    {% endif %}
+  </script>
+  <script src='/static/js/editmap.js'></script>
 {% endblock %}

@@ -12,52 +12,26 @@
 </div>
 
 <script>
-  L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
-  var geojson = [
-  // Loop through each child and create marker and tooltip containing the information available
-  {% for child in child_profiles %}
-    {% if child.latitude and child.longitude %}
-      {
-      "type": "Feature",
-      "geometry": {
-      "type": "Point",
-      "coordinates": [{{ child.longitude }},{{ child.latitude }}]
-      },
-      "properties": {
-    "image": "/static/images/photos/" + {% if child.photo_url == "/static/images/childphotopreview.png" %}"childphotopreview.png"{% elif child.photo_url == "/static/images/photos/" + child.first_name.lower() + ".jpg" %}"{{ child.first_name }}".toLowerCase() + ".jpg" {% else %} "childphotopreview.png"{% endif %},
-    "title": "{{ child.first_name }} {{ child.last_name }}",
-    "url": "/child/{{ child.id }}",
-  "description": "lives here {% if child.guardian_fname and child.guardian_lname or child.siblings_in_project %} with {{ child.guardian_fname }} {{ child.guardian_lname }} {% if child.guardian_type %}({{ child.guardian_type }}){% else %} {% endif %} {{ child.siblings_in_project}} {% else %}{% endif %}",
-  "marker-color": "#fc4353",
-  "marker-size": "large",
-  "marker-symbol": "building"
-  }
-},{% endif %}{% endfor %}
-];
-
-var map = L.mapbox.map('map', 'vanesa.e4c935ef', {
-  scrollWheelZoom: false
-})
-.setView([18.542769, -69.801216], 15)
-.featureLayer;
-// Add custom feature to the tooltip
-map.on('layeradd', function(e) {
-  var marker = e.layer,
-  feature = marker.feature;
-
-  // Create custom popup content
-  var popupContent =  '<div class="popupleft"><a href="' + feature.properties.url + '">' +
-      '<img class="popupimage" src="' + feature.properties.image + '" />' + '</div>' + '<div class="popupright">' +
-      '<a href="' + feature.properties.url + '">' + feature.properties.title +
-        '</a> ' + feature.properties.description + '</div>';
-
-    // http://leafletjs.com/reference.html#popup
-    marker.bindPopup(popupContent,{
-      closeButton: false,
-      minWidth: 180
-      });
-      });
-
-      map.setGeoJSON(geojson);
-    </script>
+  window.children = [
+  {% for child in child_profiles %}  
+    {% raw %} { {% endraw %}
+      'id':'{{ child.id }}',
+      'first_name':'{{ child.first_name }}',
+      'last_name':'{{ child.last_name }}',
+      'photo_url':'{{ child.photo_url }}',
+      'guardian_fname':'{{ child.guardian_fname }}',
+      'guardian_lname':'{{ child.guardian_lname }}',
+      'siblings_in_project':'{{ child.siblings_in_project }}',
+      {% if child.longitude and child.latitude %}
+      'longitude':{{ child.longitude }},
+      'latitude':{{ child.latitude }}
+      {% else %}
+      'longitude':18.542769,
+      'latitude':-69.801216
+      {% endif %}
+    {% raw %} } {% endraw %},
+  {% endfor %}
+  ];
+</script>
+<script src='/static/js/map.js'></script>
 {% endblock %}

@@ -91,7 +91,7 @@ class Child(db.Model):
     messages = db.relationship('Message', backref='child', lazy='dynamic')
 
     def __repr__(self):
-        return "<Child id=%s first_name=%s last_name=%s>" % (self.id, self.first_name, self.last_name)
+        return "<Child id=%s first_name=%s last_name=%s pic_url=%s>" % (self.id, self.first_name, self.last_name, self.photo_url)
 
     @hybrid_property
     def fullname(self):
@@ -107,16 +107,16 @@ class Child(db.Model):
     def to_dict(self):
         return dict(
             id = self.id,
-            pic_url = self.pic_url,
+            photo_url = self.photo_url,
             is_active = self.is_active,
             first_name = self.first_name,
             last_name = self.last_name,
             nick_name = self.nick_name,
             birth_date = self.birth_date,
             nationality = self.nationality,
+            guardian_type = self.guardian_type,
             guardian_fname = self.guardian_fname,
             guardian_lname = self.guardian_lname,
-            guardian_type = self.guardian_type,
             number_of_siblings = self.number_of_siblings,
             siblings_in_project = self.siblings_in_project,
             school_class = self.school_class,

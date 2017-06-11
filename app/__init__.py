@@ -23,3 +23,4 @@ app.jinja_env.undefined = StrictUndefined
 
 from . import auth
 from . import views
+from . import api

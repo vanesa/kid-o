@@ -18,14 +18,17 @@ $(function() {
 	  	}
 
 	  	var description = 'lives here '
+	  	
 	  	if (child.guardian_fname || child.siblings_in_project) {
 	  		description += 'with ';
 	  	}
-	  	else if (child.guardian_fname) {
-				description.append(child.guardian_fname + ' ' + child.guardian_lname + ' ');
+	  	
+	  	if (child.guardian_fname) {
+				description += child.guardian_fname + ' ' + child.guardian_lname + ' ';
 	  	}
-	  	else if (child.siblings_in_project) {
-				description.append(child.siblings_in_project);
+	  	
+	  	if (child.siblings_in_project) {
+				description += child.siblings_in_project;
 	  	}
 
 	  	if (!child.longitude) {

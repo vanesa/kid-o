@@ -3,19 +3,10 @@ from app import app
 from datetime import datetime, timedelta
 import re
 import os
-try:
-    import secrets
-except ImportError:
-    pass
 from sqlalchemy import or_, and_
-import urllib
-from werkzeug import secure_filename
 
 from flask import (
     request,
-    session, 
-    url_for, 
-    send_from_directory, 
     jsonify, 
 )
 from flask_login import login_required, login_user, logout_user, current_user

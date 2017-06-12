@@ -10,28 +10,5 @@
 <div class="mainmapcontainer">
   <div id='map'></div>
 </div>
-
-<script>
-  window.children = [
-  {% for child in child_profiles %}  
-    {% raw %} { {% endraw %}
-      'id':'{{ child.id }}',
-      'first_name':'{{ child.first_name }}',
-      'last_name':'{{ child.last_name }}',
-      'photo_url':'{{ child.photo_url }}',
-      'guardian_fname':'{{ child.guardian_fname }}',
-      'guardian_lname':'{{ child.guardian_lname }}',
-      'siblings_in_project':'{{ child.siblings_in_project }}',
-      {% if child.longitude and child.latitude %}
-      'longitude':{{ child.longitude }},
-      'latitude':{{ child.latitude }}
-      {% else %}
-      'longitude':18.542769,
-      'latitude':-69.801216
-      {% endif %}
-    {% raw %} } {% endraw %},
-  {% endfor %}
-  ];
-</script>
 <script src='/static/js/map.js'></script>
 {% endblock %}

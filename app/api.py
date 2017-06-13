@@ -25,3 +25,14 @@ def getChildrenProfiles():
     children = query.order_by(Child.last_name.asc()).all()
 
     return jsonify(profiles=[x.to_dict() for x in children])
+
+@app.route('/api/child_profile/<string:id>', methods=['GET'])
+def getChildProfile(id):
+
+    """ Gets all of the children profiles in the project. """
+    child = db.session.query(Child).filter_by(id=id).first()
+
+    if child is None:
+        abort(404)
+
+    return jsonify(profile=[child.to_dict()])

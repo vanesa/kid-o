@@ -214,27 +214,7 @@
       })
     </script>
   <script>
-    {% if child.latitude and child.longitude %}
-      window.latitude = {{ child.latitude}};
-      window.longitude = {{ child.longitude }};
-    {% else %}
-      window.latitude = 18.542769;
-      window.longitude = -69.801216;
-    {% endif %}
-      window.child_name = '{{ child.first_name}}' + ' ' + '{{ child.last_name }}'; 
-
-    {% if child.latitude == 18.542769 %}
-      window.description = 'lives in this area. <a href="/child/edit/{{ child.id }}" class="alerttext">Please edit the profile and add the correct location.</a>';
-    {% elif child.guardian_fname or child.siblings_in_project %}
-      window.description = 'lives here with {{ child.guardian_type }} {{ child.guardian_fname}} {{ child.guardian_lname }} {{ child.siblings_in_project}}';
-    {% endif %}
-
-    {% if child.latitude == 18.542769 %}
-      window.marker_symbol = 'marker-stroked';
-    {% else %}
-      window.marker_symbol = 'building';
-    {% endif %}
-
+    window.id = '{{ child.id }}'
   </script>
 
   <script src='/static/js/profilemap.js'></script>

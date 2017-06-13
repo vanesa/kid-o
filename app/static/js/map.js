@@ -1,5 +1,5 @@
 $(function() {
-	$.getJSON("/api/children_profiles",function (data) {
+	$.getJSON("/api/children_location",function (data) {
 	  L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
 	  
 	  var geojson = [];
@@ -18,7 +18,6 @@ $(function() {
 	  	}
 
 	  	var description = 'lives here '
-	  	
 	  	if (child.guardian_fname || child.siblings_in_project) {
 	  		description += 'with ';
 	  	}
@@ -31,9 +30,13 @@ $(function() {
 				description += child.siblings_in_project;
 	  	}
 
-	  	if (!child.longitude) {
-	  		child.longitude = 18.542769;
-      	child.latitude = -69.801216;
+	  	var marker_color;
+	  	if (child.is_active) {
+	  		marker_color = '#fc4353';
+	  	}
+	  	else {
+	  		marker_color = '#808080';
+	  		description += '(inactive)'
 	  	}
 
 			var child_geo = {
@@ -47,7 +50,7 @@ $(function() {
 			  	'title': child.first_name + ' ' + child.last_name,
 			  	'url': '/child/' + child.id,
 					'description': description,
-					'marker-color': '#fc4353',
+					'marker-color': marker_color,
 					'marker-size': 'large',
 					'marker-symbol': 'building'
 				}

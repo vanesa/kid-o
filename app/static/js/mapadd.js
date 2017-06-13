@@ -2,7 +2,7 @@ $(function() {
 
   L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
   var map = L.mapbox.map('map', 'vanesa.e4c935ef')
-      .setView([18.542769, -69.801216],16);
+      .setView([18.542769, -69.801216],15);
   // Disable the scroll Zoom
       map.scrollWheelZoom.disable();
   var marker;

@@ -26,6 +26,7 @@ def getChildrenProfiles():
 
     return jsonify(profiles=[x.to_dict() for x in children])
 
+
 @app.route('/api/child_profile/<string:id>', methods=['GET'])
 def getChildProfile(id):
 
@@ -36,3 +37,15 @@ def getChildProfile(id):
         abort(404)
 
     return jsonify(profile=[child.to_dict()])
+
+
+@app.route('/api/children_location', methods=['GET'])
+def getChildrenHomeLocation():
+
+    """ Gets all of the children profiles in the project. """
+    query = Child.query
+    query = query.filter(Child.latitude != None)
+    
+    children_with_location = query.order_by(Child.last_name.asc()).all()
+
+    return jsonify(profiles=[x.to_dict() for x in children_with_location])

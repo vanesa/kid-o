@@ -252,13 +252,7 @@
 
   <!-- Map -->
   <script>
-    {% if child.latitude and child.longitude %}
-      let latitude = {{ child.latitude}};
-      let longitude = {{ child.longitude }};
-    {% else %}
-      let latitude = 18.542769;
-      let longitude = -69.801216;
-    {% endif %}
+    window.id = '{{ child.id }}'
   </script>
   <script src='/static/js/editmap.js'></script>
 {% endblock %}

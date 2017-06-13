@@ -26,7 +26,7 @@ $(function() {
 	  	if (child.guardian_fname) {
 				description += child.guardian_fname + ' ' + child.guardian_lname + ' ';
 	  	}
-	  	
+
 	  	if (child.siblings_in_project) {
 				description += child.siblings_in_project;
 	  	}
@@ -39,22 +39,21 @@ $(function() {
 			var child_geo = {
 		    'type': 'Feature',
 		    'geometry': {
-		    'type': 'Point',
-		    'coordinates': [child.longitude, child.latitude]
+			    'type': 'Point',
+			    'coordinates': [child.longitude, child.latitude]
 		    },
 		    'properties': {
-		  	'image': child_photo,
-		  	'title': child.first_name + ' ' + child.last_name,
-		  	'url': '/child/' + child.id,
-				'description': description,
-				'marker-color': '#fc4353',
-				'marker-size': 'large',
-				'marker-symbol': 'building'
+			  	'image': child_photo,
+			  	'title': child.first_name + ' ' + child.last_name,
+			  	'url': '/child/' + child.id,
+					'description': description,
+					'marker-color': '#fc4353',
+					'marker-size': 'large',
+					'marker-symbol': 'building'
 				}
 			};
 
-		geojson.push(child_geo);
-
+			geojson.push(child_geo);
 	  }
 
 		var map = L.mapbox.map('map', 'vanesa.e4c935ef', {

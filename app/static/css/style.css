@@ -403,6 +403,9 @@ nav.shrink a.logolink {
     -webkit-animation: hue 60s infinite linear;
 }
 
+a#delete_address  {
+	cursor: pointer;
+}
 
 /* Bottom Navigation */
 

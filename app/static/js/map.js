@@ -1,4 +1,5 @@
 $(function() {
+	$(".hidden-profiles").css("display", "none");
 	$.getJSON("/api/children_location",function (data) {
 	  L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
 	  

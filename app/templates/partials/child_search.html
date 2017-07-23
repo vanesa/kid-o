@@ -21,7 +21,7 @@
                 <button class="btn btn-default" type="submit">Go!</button>
               </span>
             </div>
-            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 hidden-profiles">
              <img src="/static/images/{% if form.data.show_hidden_profiles %}show{% else %}hide{% endif %}hiddenchildrenicon.png" class="hiddenchildrenicon"/><input id="show_hidden_profiles" type="checkbox" name="show_hidden_profiles" {% if form.data.show_hidden_profiles %}checked{% endif %} data-toggle="toggle" value="true">
             </div>
           </div>

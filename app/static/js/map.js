@@ -1,5 +1,7 @@
 $(function() {
 	$(".hidden-profiles").css("display", "none");
+	$(".school-class").removeClass("col-lg-6 col-md-6 col-sm-6 col-xs-6").addClass("col-lg-8 col-md-8 col-sm-8 col-xs-8");
+	$(".go-button").removeClass("col-lg-1 col-md-1 col-sm-1 col-xs-1").addClass("col-lg-3 col-md-3 col-sm-3 col-xs-3");
 	$.getJSON("/api/children_location",function (data) {
 	  L.mapbox.accessToken = 'pk.eyJ1IjoidmFuZXNhIiwiYSI6ImYxOTAxOGI1NTBlOGJkMTdjZTRmNGVmNTg0NTUxMjFjIn0._G3yYtIvkPX1EC9QEkNB6Q';
 	  

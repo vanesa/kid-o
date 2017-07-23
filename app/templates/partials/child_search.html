@@ -8,7 +8,7 @@
             </div>
           </div>
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 searchfield">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 school-class">
               <select id="class_str" name="class_str" class="form-control addchildinput" data-placeholder="Select a school class">
                 <option value=""> - Search by school class - </option>
                 {% for _, option in form.class_str.choices %}
@@ -16,7 +16,7 @@
                 {% endfor %}
               </select>
             </div>
-            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 go-button">
               <span class="input-btn">
                 <button class="btn btn-default" type="submit">Go!</button>
               </span>

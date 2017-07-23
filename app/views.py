@@ -35,12 +35,6 @@ from app import settings
 from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm
 
 
-"""" Starting page with login.
-For Log in: take email, password from user and check if credentials exist in the database
-by checking if email is in the users table. If email in table, redirect to the children overview.
-If not: redirect to sign up page.
-"""
-
 @app.route('/', methods=['GET', 'POST'])
 def login():
     """ Starting page with login.

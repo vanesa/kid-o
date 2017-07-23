@@ -30,7 +30,7 @@ def getChildrenProfiles():
 @app.route('/api/child_profile/<string:id>', methods=['GET'])
 def getChildProfile(id):
 
-    """ Gets all of the children profiles in the project. """
+    """ Gets a Child's profile in the project. """
     child = db.session.query(Child).filter_by(id=id).first()
 
     if child is None:
@@ -42,7 +42,7 @@ def getChildProfile(id):
 @app.route('/api/children_location', methods=['GET'])
 def getChildrenHomeLocation():
 
-    """ Gets all of the children profiles in the project. """
+    """ Gets all of the children home locations in the project. """
     query = Child.query
     query = query.filter(Child.latitude != None)
     

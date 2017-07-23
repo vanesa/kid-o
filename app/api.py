@@ -42,9 +42,10 @@ def getChildProfile(id):
 @app.route('/api/children_location', methods=['GET'])
 def getChildrenHomeLocation():
 
-    """ Gets all of the children home locations in the project. """
+    """ Gets all of the active children home locations in the project. """
     query = Child.query
     query = query.filter(Child.latitude != None)
+    query = query.filter(Child.is_active)
     
     children_with_location = query.order_by(Child.last_name.asc()).all()
 

@@ -100,6 +100,7 @@ def signup_form():
 @login_required
 def show_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
+
     query = Child.query
     form = SearchForm(request.form)
     show_hidden_profiles = False
@@ -147,9 +148,7 @@ def load_map():
 @app.route('/child/<string:id>')
 @login_required
 def child_profile(id):
-    """ Show's each child's profile with the following information: First name, last name,
-    age, birth date, guardian, siblings, medical condition, next doctor's appointment, sitution at
-    home and school and when the next home visit is due. """
+    """ Show's each child's profile """
 
     child = db.session.query(Child).filter_by(id=id).first()
     if child is None:
@@ -228,7 +227,7 @@ def edit_profile(id):
 @login_required
 def add_profile():
 
-    """add a child profile"""
+    """ Add a child profile """
     form = ChildForm(request.form)
 
     if request.method == 'POST' and form.validate(): 

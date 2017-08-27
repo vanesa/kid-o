@@ -305,6 +305,16 @@ def add_godparent(child_id):
     app.logger.debug(form.errors)
     return '{"error": true}', 400
 
+@app.route('/delete-godparent/<string:id>', methods=['GET', 'POST'])
+@login_required
+def delete_godparent(id):
+
+    godparent = db.session.query(Godparent).filter_by(id=id).first()
+    godparent_name = godparent.first_name + " " + godparent.last_name
+    db.session.delete(godparent)
+    db.session.commit()
+    flash('You have deleted ' + godparent_name + ".")
+    return '{"success": true}'
 
 @app.route('/twilio', methods=['GET', 'POST'])
 def registerbysms():

@@ -23,6 +23,11 @@ $(function() {
       data: JSON.stringify(data),
       success: function(response) {
         $("#godparentModalBody").html( "<p>Success!</p>" );
+        $("#addGodparentCancelButton").html("Close");
+        $("#addGodparentButton").remove();
+        $('#godparentModal').on('hide.bs.modal', function () {
+          location.reload();
+        });
       },
       error: function(error) {
           console.log(error);

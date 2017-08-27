@@ -87,6 +87,11 @@
           <p>
           <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button>
           </p>
+          <p>
+          {% for godparent in child.godparents %}
+            {{ godparent.first_name}} {{ godparent.last_name}} <br>
+          {% endfor %}
+          </p>
         {% endif %}
       </div>
       <!-- End Guardian information -->

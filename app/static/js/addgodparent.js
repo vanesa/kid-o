@@ -30,6 +30,7 @@ $(function() {
         });
       },
       error: function(error) {
+          $("#godparentModalBody").append('<div class="alert alert-danger" role="alert"> Please check if all fields are valid. </div>');
           console.log(error);
       }
     });

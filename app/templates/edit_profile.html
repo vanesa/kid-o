@@ -49,7 +49,7 @@
         </p>
       </div>
         <!-- End Basic Child information -->
-        <!-- Guardian information -->
+        <!-- Guardian and Godparent information -->
       <div class="info col-xs-12 col-md-3">
         <p>
           <label for="guardian-field">Guardian </label> <br />
@@ -89,12 +89,12 @@
           </p>
           <p>
           {% for godparent in child.godparents %}
-            {{ godparent.first_name}} {{ godparent.last_name}} <br>
+            <i id="{{ godparent.id}}" class="fa fa-minus-circle icon-warning" aria-hidden="true"></i> {{ godparent.first_name}} {{ godparent.last_name}} <br>
           {% endfor %}
           </p>
         {% endif %}
       </div>
-      <!-- End Guardian information -->
+      <!-- End Guardian and Godparent information -->
 
       <div class="lowerform col-xs-12 col-md-12">
         <label for="siblings-field">

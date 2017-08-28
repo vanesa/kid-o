@@ -7,7 +7,7 @@ Flask-Login==0.4.0
 Flask-PJAX==0.0.1
 Flask-SeaSurf==0.2.2
 Flask-SQLAlchemy==2.2
-Flask-Static-Compress==1.0.0
+Flask-Static-Compress==1.0.1
 Flask-WTF==0.14.2
 Jinja2==2.9.6
 psycopg2==2.7.3.1

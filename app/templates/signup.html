@@ -3,10 +3,6 @@
     <title>Kid-O - Children's overview app for children's aid projects</title>
     <link rel="stylesheet" href="/static/css/bootstrap.css"/>
     <link href='/static/css/mapbox.css' rel='stylesheet' />
-    <script src='/static/js/mapbox.js'></script>
-    <script src="/static/js/jquery-1.11.3.min.js"></script>
-    <script src='/static/js/bootstrap.js'></script>
-    <script type="text/javascript" src="/static/js/bootstrap-filestyle.min.js"> </script>
     <link rel="stylesheet" href="/static/css/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/animate.css"/>
     <link rel="stylesheet" href="/static/css/style.css"/>
@@ -55,5 +51,14 @@
         </div>
       </div>
     </div>
+
+    {% compress 'js' %}
+      <script src='/static/js/mapbox.js'></script>
+      <script src="/static/js/jquery-1.11.3.min.js"></script>
+      <script src='/static/js/bootstrap.js'></script>
+      <script type="text/javascript" src="/static/js/bootstrap-filestyle.min.js"> </script>
+    {% endcompress %}
+
+
   </body>
 </html>

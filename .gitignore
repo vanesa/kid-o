@@ -9,3 +9,4 @@ old
 venv
 app/static/images/photos/*
 .wakatime-project
+sdist

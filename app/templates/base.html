@@ -1,28 +1,20 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Kid-O - Children's overview app for children's aid projects</title>
-    <!--JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- Boostrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap-filestyle.min.js"> </script>
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <!-- Font awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- mapbox -->
-    <script type="text/javascript" src='//api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
-    <link rel="stylesheet" href="//api.mapbox.com/mapbox.js/v2.2.1/mapbox.css" rel='stylesheet' />
-<!--     <link href="/static/css/mapbox.css" rel="stylesheet" />
-    <script src="/static/js/mapbox.js"></script> -->
-    <link rel="stylesheet" href="/static/css/animate.css"/>
-    <link rel="stylesheet" href="/static/css/style.css"/>
-		<style>
-			body { margin:0; padding:0; }
-			#map { position:absolute; top:0; bottom:0; width:100%; }
-		</style>
+  <head>
+    <title>Kid-O - Children's overview app for children's aid projects</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" type="text/css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    <link href="https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css" type="text/css" rel="stylesheet" />
+    {% compress 'css' %}
+      <link href="/static/css/animate.css" type="text/css" rel="stylesheet" />
+      <link href="/static/css/style.css" type="text/css" rel="stylesheet" />
+      <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+      </style>
+    {% endcompress %}
   </head>
 
   <body>
@@ -30,7 +22,7 @@
       <a href="/overview" class="logolink">
         <img src="/static/images/kid-ologo.png" class="logo">
       </a>
-      {% if current_user.is_authenticated() %} 
+      {% if current_user.is_authenticated() %}
       <div class="addchildicon">
         <a href="/child/add">
           <img src="/static/images/addchildicon.png" class="addchildicon">
@@ -43,7 +35,7 @@
     </nav>
     <div class="container">
 
-    	{%block content %} here goes the content {% endblock %}
+      {%block content %} here goes the content {% endblock %}
 
       <nav class="nav nav-tabs navbar-fixed-bottom bottomnav">
         <li role="presentation">
@@ -69,11 +61,14 @@
         </li>
       </nav>
     </div>
-    <script src="/static/js/base.js"></script>
-    <script>
-      $(document).ready (function () {
-        $('[data-toggle="tooltip"]').tooltip()
-      });
-    </script>
+
+    {% compress 'js' %}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="/static/js/bootstrap-filestyle.min.js"> </script>
+      <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+      <script type="text/javascript" src='//api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
+      <script src="/static/js/base.js"></script>
+    {% endcompress %}
   </body>
 </html>

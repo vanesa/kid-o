@@ -4,12 +4,16 @@ from jinja2 import StrictUndefined
 from flask import Flask
 from flask_login import LoginManager
 from flask_seasurf import SeaSurf
+from flask_static_compress import FlaskStaticCompress
 
 
 app = Flask(__name__)
-app.config.from_object('app.settings')
+app.config.from_object('app.settings.common')
 
 csrf = SeaSurf(app)
+
+compress = FlaskStaticCompress(app)
+
 
 from .models import db
 

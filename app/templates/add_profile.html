@@ -18,7 +18,7 @@
       <div class="info col-xs-12 col-md-3">
         <p>
           <label for="activity-field">Activity: </label>
-          <input type="checkbox" name="is_active" checked data-toggle="toggle" value="true" class="addchildinput"> 
+          <input type="checkbox" name="is_active" checked data-toggle="toggle" value="true" class="addchildinput">
         </p>
         <p>
           <input type="text" name="first_name" placeholder="First name" class="form-control addchildinput" value="Celia"><br />
@@ -105,10 +105,14 @@
       </div>
     </form>
     <br style="clear: both" />
-    <script>
-      $(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera", size: "sm"});
-    </script>
-    <script src='../static/js/mapadd.js'></script>
-    <script src='../static/js/imgpreview.js'></script>
+
+    {% compress 'js' %}
+      <script>
+        $(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera", size: "sm"});
+      </script>
+      <script src='/static/js/mapadd.js'></script>
+      <script src='/static/js/imgpreview.js'></script>
+    {% endcompress %}
+
   </div>
 {% endblock %}

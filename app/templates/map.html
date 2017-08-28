@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
-{% block extra_nav_content %} 
+{% block extra_nav_content %}
   {% include '/partials/child_search.html' %}
 {% endblock %}
 
 {% block content %}
 
-<div class="toppad"></div>
-<div class="mainmapcontainer">
-  <div id='map'></div>
-</div>
-<script src='/static/js/map.js'></script>
+  <div class="toppad"></div>
+  <div class="mainmapcontainer">
+    <div id='map'></div>
+  </div>
+
+  {% compress 'js' %}
+    <script src='/static/js/map.js'></script>
+  {% endcompress %}
+
 {% endblock %}

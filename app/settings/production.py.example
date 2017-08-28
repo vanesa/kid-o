@@ -1,0 +1,4 @@
+DB_HOST = 'localhost'
+DB_USERNAME = 'some secret username'
+DB_PASSWORD = '1234, just kidding'
+COMPRESSOR_DEBUG = False

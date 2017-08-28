@@ -9,3 +9,6 @@ old
 venv
 app/static/images/photos/*
 .wakatime-project
+sdist
+settings/production.py
+settings/development.py

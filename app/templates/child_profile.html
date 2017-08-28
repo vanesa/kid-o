@@ -16,14 +16,14 @@
 
     </div>
     <div class="info col-xs-12 col-md-6">
-      
+
       {% if child.is_active %}
         <h2 class="animated1">
-      {% else %} 
-        <h2 class="inactive"> 
+      {% else %}
+        <h2 class="inactive">
       {% endif %}
 
-      {{ child.first_name}} {{ child.last_name }} 
+      {{ child.first_name}} {{ child.last_name }}
 
       {% if child.nick_name %}
         - {{ child.nick_name }}
@@ -47,14 +47,14 @@
         <strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}
       </p>
       <p>
-        <strong>Nationality:</strong> 
-        
-        {% if child.nationality %} 
-          {{ child.nationality }} 
+        <strong>Nationality:</strong>
+
+        {% if child.nationality %}
+          {{ child.nationality }}
         {% else %} <a href="/child/edit/{{ child.id }}" class="alerttext">Please write {{ child.first_name }}'s nationality.</a>
         {% endif %}
 
-      </p> 
+      </p>
       <!-- End Basic Child information -->
       <!-- Guardian and Godparent information -->
     </div>
@@ -77,7 +77,7 @@
 
       </p>
       <p>
-        
+
         {% if child.godparent_status %}
           <strong>Godparent status:</strong> {{ child.godparent_status}}
         {% else %}
@@ -93,9 +93,9 @@
     <div class="lowerform col-xs-12 col-md-12">
 
       {% if child.is_active %}
-        <h3 class="animated3"> 
+        <h3 class="animated3">
       {% else %}
-        <h3 class="inactive"> 
+        <h3 class="inactive">
       {% endif %}
       Siblings</h3>
       {% if child.number_of_siblings %}
@@ -109,16 +109,16 @@
       {% if child.siblings_in_project %}
         <p><strong>Siblings in school: </strong> {{ child.siblings_in_project }} </p>
       {% else %}
-        <strong>Siblings in school: </strong> 
+        <strong>Siblings in school: </strong>
         <p class="alerttext">
           <a href="/child/edit/{{ child.id }}">Please write information about {{ child.first_name }}'s siblings that are also in the project.</a>
         </p>
       {% endif %}
 
       {% if child.is_active %}
-        <h3 class="animated4"> 
+        <h3 class="animated4">
       {% else %}
-        <h3 class="inactive"> 
+        <h3 class="inactive">
       {% endif %}
       School</h3>
 
@@ -135,7 +135,7 @@
       {% endif%}
 
       {% if child.is_active %}
-      <h3 class="animated5"> 
+      <h3 class="animated5">
       {% else %}
       <h3 class="inactive">
       {% endif %}
@@ -147,9 +147,9 @@
         <a href="/child/edit/{{ child.id }}">Please write information about {{ child.first_name }}'s situation.</a>
         </p>
       {% endif %}
-      
+
       {% if child.is_active %}
-        <h3 class="animated6"> 
+        <h3 class="animated6">
       {% else %}
         <h3 class="inactive">
       {% endif %}
@@ -208,16 +208,18 @@
         </div>
       </div>
     </div>
-    <script>
-      $('#myModal').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-      })
-    </script>
-  <script>
-    window.id = '{{ child.id }}'
-  </script>
 
-  <script src='/static/js/profilemap.js'></script>
+    {% compress 'js' %}
+      <script>
+        $('#myModal').on('shown.bs.modal', function () {
+          $('#myInput').focus()
+        })
+      </script>
+      <script>
+        window.id = '{{ child.id }}'
+      </script>
+      <script src='/static/js/profilemap.js'></script>
+    {% endcompress %}
 
 </div>
 

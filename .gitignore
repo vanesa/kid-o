@@ -1,0 +1,11 @@
+*.docx
+*.pdf
+env
+*.pyc
+hidden
+ngrok*
+secrets.py
+old
+venv
+app/static/images/photos/*
+.wakatime-project

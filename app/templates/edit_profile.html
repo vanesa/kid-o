@@ -85,9 +85,10 @@
 
         {% if child.godparent_status == 'Has godparent' %}
           <p>
-          <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button>
+          <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button>
           </p>
-          <p id='godparents_list'>
+          <label for="godparent-list">Godparents:</label>
+          <p id='godparents_list'> 
           {% for godparent in child.godparents %}
             <i data-id="{{ godparent.id }}" class="fa fa-minus-circle icon-warning" data-toggle="modal" data-target="#deleteGPModal" aria-hidden="true"></i> {{ godparent.first_name}} {{ godparent.last_name}} <br>
           {% endfor %}

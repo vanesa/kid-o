@@ -12,7 +12,6 @@ Flask-WTF==0.14.2
 Jinja2==2.9.6
 Pillow==4.2.1
 psycopg2==2.7.3.1
-pur==4.0.2
 python-bcrypt==0.3.2
 pytz==2017.2
 SQLAlchemy==1.1.13

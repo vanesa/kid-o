@@ -5,9 +5,9 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 WTF_CSRF_ENABLED = False
 IS_TRAVIS = os.environ.get('IS_TRAVIS') == 'true'
 DB_HOST = 'localhost'
-DB_NAME = 'kido' if not IS_TRAVIS else 'travis_ci_test'
-DB_USERNAME = 'kido'
-DB_PASSWORD = 'kido'
+DB_NAME = 'kido'
+DB_USERNAME = None
+DB_PASSWORD = None
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 COMPRESSOR_DEBUG = True
 
@@ -28,9 +28,11 @@ except ImportError:
     pass
 
 
-SQLALCHEMY_DATABASE_URI = 'postgresql://{user}:{password}@{host}/{database}'.format(
+auth = ''
+if DB_USERNAME and DB_PASSWORD:
+	auth = '{user}:{password}@'.format(user=username, password=password)
+SQLALCHEMY_DATABASE_URI = 'postgresql://{auth}{host}/{database}'.format(
+	auth=auth,
     host=DB_HOST,
     database=DB_NAME,
-    user=DB_USERNAME,
-    password=DB_PASSWORD,
 )

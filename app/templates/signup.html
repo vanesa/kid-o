@@ -1,16 +1,16 @@
 <html>
   <head>
     <title>Kid-O - Children's overview app for children's aid projects</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.css"/>
-    <link href='/static/css/mapbox.css' rel='stylesheet' />
-    <link rel="stylesheet" href="/static/css/font-awesome/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/css/animate.css"/>
-    <link rel="stylesheet" href="/static/css/style.css"/>
-    <link rel="stylesheet" href="/static/css/login.css"/>
-    <style>
-      body { margin:0; padding:0; }
-      #map { position:absolute; top:0; bottom:0; width:100%; }
-    </style>
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    {% compress 'css' %}
+      <link href="/static/css/animate.css" type="text/css" rel="stylesheet" />
+      <link href="/static/css/style.css" type="text/css" rel="stylesheet" />
+      <link href="/static/css/login.css" type="text/css" rel="stylesheet" />
+      <style>
+        body { margin:0; padding:0; }
+      </style>
+    {% endcompress %}
   </head>
   <body>
     <div class="container">
@@ -53,12 +53,9 @@
     </div>
 
     {% compress 'js' %}
-      <script src='/static/js/mapbox.js'></script>
-      <script src="/static/js/jquery-1.11.3.min.js"></script>
-      <script src='/static/js/bootstrap.js'></script>
-      <script type="text/javascript" src="/static/js/bootstrap-filestyle.min.js"> </script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% endcompress %}
-
 
   </body>
 </html>

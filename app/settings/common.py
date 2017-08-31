@@ -28,6 +28,14 @@ except ImportError:
     pass
 
 
+# Overwrite above settings with test data
+# If we aren't on a test machine, the file shouldn't exist
+try:
+    from settings.test import *
+except ImportError:
+    pass
+
+
 auth = ''
 if DB_USERNAME and DB_PASSWORD:
 	auth = '{user}:{password}@'.format(user=username, password=password)
@@ -36,3 +44,4 @@ SQLALCHEMY_DATABASE_URI = 'postgresql://{auth}{host}/{database}'.format(
     host=DB_HOST,
     database=DB_NAME,
 )
+

@@ -10,6 +10,7 @@ env:
 before_script:
   - psql -c 'create database kido;' -U postgres
   - python -c 'from app.models import db; db.create_all()'
+  - cp settings/test.py.example settings/test.py
 script: python test.py
 # use new travis-ci container-based infrastructure 
 sudo: false

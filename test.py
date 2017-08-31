@@ -70,11 +70,8 @@ class AuthTestCase(unittest.TestCase):
         db.session.commit()
 
 if __name__ == "__main__":
-    app.config['TESTING'] = True
     app.testing = True
     csrf._csrf_disable = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/travis_ci_test'
-    app.config['WTF_CSRF_ENABLED'] = False
     db.init_app(app)
     db.create_all()
     unittest.main()

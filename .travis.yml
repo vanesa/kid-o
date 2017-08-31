@@ -3,7 +3,7 @@ python:
     - "2.7"
 # command to install dependencies
 install:
-    - travis_retry pip install --index-url -r requirements-frozen.txt
+    - travis_retry pip install -r requirements-frozen.txt
 # command to run tests
 env:
   - IS_TRAVIS=true

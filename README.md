@@ -8,7 +8,6 @@ Kid-O helps Non-Profit children’s aid orgs keep an overview of their children.
 
 ##### Winner of C-Base Hack 'N Tell HACK OF THE MONTH PRIZE
 
-Check out my [LinkedIn](https://www.linkedin.com/in/vanesaortiz) profile for more information on my experience, education, and projects.
 
 ### Contents
 
@@ -29,8 +28,9 @@ Kid-O solves these common problems for aid workers:
 * keeping accurate and up-to-date information about each child in a central sharable CMS
 * managing child profiles without internet access (via SMS)
 * structures a child's information in an easily editable format
-* organizes information such as name, age, home situation, etc.
+* organizes information such as name, age, home situation, school year etc.
 * makes it easy to visualize a child's home location on a map even when no address is available
+* makes it easy to add the orresponding godparent to the child profile, if available 
 
 Kid-O will be tested by the children's aid project [Dominiño](http://www.dominino.de) in the Dominican Republic.
 
@@ -42,12 +42,12 @@ Technologies and stack
 #### Backend
 Python, Flask, SQLAlchemy, PostgreSQL
 
-Flask extensions: Flask-Login, Flask-Bcrypt, Flask-WTForms, Flask-SQLAlchemy.
+Flask extensions: Flask-Login, Flask-Bcrypt, Flask-WTForms, Flask-SQLAlchemy, Flask-Seasurf.
 
 Testing: unittest.
 
 #### Frontend:
-JavaScript, jQuery, Jinja2.
+JavaScript, jQuery, AJAX, Jinja2.
 HTML5, CSS3, Twitter Bootstrap (html/css/js framework), RWD (responsive web design).
 
 #### APIs:
@@ -58,13 +58,13 @@ Features
 
 - [x] Shows children's profiles
 
-- [x] Previews and uploads images
+- [x] Previews, compresses and uploads images
 
-- [x] Saves new or updated home location data from the map into the database and show it on the map.
+- [x] Saves new or updated home location data from the map into the database and shows it on the map.
 
 - [x] Flask app routes requests to the database and manages form validation via Flask-WTForms.
 
-- [x] Enables search by first-, last-, both names or part of the name.
+- [x] Enables search by first-, last-, both names, part of the name or school year.
 
 
 ##### Security with Bcrypt and Flask-Login
@@ -75,6 +75,7 @@ Features
 
 ##### APIs
 - [x] Twilio API integration allows users to create new child profiles through a text message, including the photo of the child(through MMS). No internet is required.
+- [x] Mapbox.js allows users to save home location by clicking the location on the map rather than having to type in an address.
 
 
 ##### Data visualization and interaction
@@ -121,8 +122,6 @@ Features
 
 Future plans
 -----------------------
-##### Adding more children
-I limited the number of children in the app for development purposes, but in order to fully test the app in the Dominican Republic, I will seed the current 140 children who are being served to the database. By October, more children will have joined the project. The Dominiño aid workers can then create these new profiles, either through text message, or through the web app.
 
 ##### Verify existence of child when creating a new profile
 Currently, the existence of the child been added to Kid-O is not verified. I plan to warn the user with a popup suggesting a possible child if the new child's name is similar to an existing child in the system.
@@ -134,8 +133,7 @@ For demo purposes, I save the photos of the children on my hard disk. I plan to 
 In order to limit the use of data, I want to include a Lazy Load to only preview a certain amount of children's profiles at a time.
 
 ##### Alerts for upcoming appointments/due updates
-I plan to use the Twilio API to send a text message to the aid workers when a doctors appointment for a child is coming up or a home visit is due.
-I also want the aid workers to receive an email when a child's profile has not been updated for a specific amount of months.
+I plan to use the Twilio API to send a text message/email to the aid workers when a child's profile has not been updated for a specific amount of months.
 
 ##### Additional security
 To prevent brute-force hacking attempts, I will add an increasing time delay after multiple failed login attempts. 
@@ -145,6 +143,9 @@ Allow users to see their stats on their user profile pages, e.g. how many update
 
 ##### Real time updates
 Currently, the page must be refreshed to show updated children's profiles. This should be updated to happen in real-time with server-sent events.
+
+##### Add messaging system
+Many children's aid projects have godparents who sponsor children. I want to add a messaging system that makes it easier for the volunteers to send up-to-date information about the children to their godparents.
 
 
 
@@ -168,7 +169,7 @@ My app will be deployed for the Non-Profit  Dominiño in the Dominican Republic.
 ##### Custom CSS
 Using CSS3, I customized the checkboxes and select dropdowns.  I didn't like their default appearances, and wanted to change their colors and styles to better match that of the website. 
 
-I used Bootstrap for certain things, like button shapes and the navbar, but found its responsive elements restrictive.  Because of this, I custom coded all the responsive design seen on the site (with the exception of the navbar).
+I used Bootstrap for certain things, like button shapes and the navbar.
 
 ##### JQuery
 I used JQuery to dynamically shrink the navbar header on scroll by adding a CSS class to the nav element. I also used JQuery to allow the user to drop a pin on the home location of the child in the map.
@@ -177,8 +178,6 @@ I used JQuery to dynamically shrink the navbar header on scroll by adding a CSS 
 
 All my routes are in one file, views.py, and my database models are in a separate models.py file. I dabbled with child base views in child.py.
 The Twilio API-related route is at the bottom of views.py.
-
-For JavaScript, I separated the map JS, but had to include the code for editing the map into the html, in order to use Jinja2 for the coordinates. I separated the JS for the overview page in overview.js as it doesn't interact with the other JS.
 
 On the overview page, I used Jinja to show alerting icons depending on what information is missing in the children's profile. 
 The users are also asked to fill out missing information in the child's profile page.
@@ -228,6 +227,13 @@ Forking?
 -----------------------
 You'll need your own API keys for Twilio!
 
-	pip install -r requirements.txt
-
-	python run.py
+	* Install Postgres
+	* After cloning the kid-o repo, run these terminal commands:
+	* cd kid-o
+	* virtualenv venv -p `which python2` --no-site-packages
+	* source ./venv/bin/activate
+	* pip install -r requirements-frozen.txt
+	* ./run.sh
+	* Create a Postgres user kido with password kido.
+	* Create a Postgres database kido with owner kido.
+	* Go to http://localhost:5000 in your browser to use the app.

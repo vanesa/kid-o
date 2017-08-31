@@ -3,14 +3,14 @@ python:
     - "2.7"
 # command to install dependencies
 install:
-    - travis_retry pip install --use-mirrors -r requirements-frozen.txt
+    - travis_retry pip install --index-url -r requirements-frozen.txt
 # command to run tests
 env:
   - IS_TRAVIS=true
 before_script:
   - psql -c 'create database kido;' -U postgres
   - python -c 'from app.models import db; db.create_all()'
-  - cp settings/test.py.example settings/test.py
+  - cp app/settings/test.py.example app/settings/test.py
 script: python test.py
 # use new travis-ci container-based infrastructure 
 sudo: false

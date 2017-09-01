@@ -197,18 +197,36 @@ Screenshots
 ![Child profile](screenshots/childprofile.jpg "Child profile")
 
 
-
 ###### Add child profile
 ![Add child profile](screenshots/addchildprofile.jpg "Add child profile")
-
 
 
 ###### Edit child profile
 ![Edit child profile](screenshots/editchildprofile.jpg "Edit child profile")
 
 
+###### Deactivate child profile
+![Deactivate child profile](screenshots/deactivateprofile.jpg "Deactivate child profile")
+
+
+###### Show hidden child profiles in overview
+![Hidden child profile](screenshots/showhiddenprofiles.jpg "Show hidden child profiles in overview")
+
+
+###### Delete child profile
+![Delete child profile](screenshots/deleteprofile.jpg "Delete child profile")
+
+
+###### Add and delete godparents to child profile
+![Add Delete godparents](screenshots/adddeletegodparents.jpg "Add and delete godparents to child profile")
+
+
 ###### Search function
-![Search](screenshots/search.jpg "Search child profile")
+Search by name:
+![Search by name](screenshots/searchname.jpg "Search child profile by name")
+
+Search by school class:
+![Search by class](screenshots/searchclass.jpg "Search child profile by school class")
 
 
 ###### Map

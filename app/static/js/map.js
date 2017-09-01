@@ -26,15 +26,15 @@ $(function() {
 		}
 
 		if (child.guardian_fname && child.siblings_in_project) {
-			description += child.guardian_fname + ' ' + child.guardian_lname + ', ' + child.siblings_in_project;
+			description += child.guardian_type.toLowerCase() + ': ' + child.guardian_fname + ' ' + child.guardian_lname + ', sibling(s): ' + child.siblings_in_project;
 		}
 
 		if (child.guardian_fname && !child.siblings_in_project) {
-				description += child.guardian_fname + ' ' + child.guardian_lname + ' ';
+				description += child.guardian_type.toLowerCase() + ': ' +child.guardian_fname + ' ' + child.guardian_lname + ' ';
 		}
 
 		if (child.siblings_in_project && !child.guardian_fname) {
-				description += child.siblings_in_project;
+				description += ', sibling(s): ' + child.siblings_in_project;
 		}
 
 		var marker_color;

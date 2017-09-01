@@ -208,7 +208,10 @@
         </div>
       </div>
     </div>
+</div>
+{% endblock %}
 
+{% block js %}
     {% compress 'js' %}
       <script>
         $('#myModal').on('shown.bs.modal', function () {
@@ -220,7 +223,4 @@
       </script>
       <script src='/static/js/profilemap.js'></script>
     {% endcompress %}
-
-</div>
-
 {% endblock %}

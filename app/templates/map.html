@@ -10,7 +10,9 @@
   <div class="mainmapcontainer">
     <div id='map'></div>
   </div>
+{% endblock %}
 
+{% block js %}
   {% compress 'js' %}
     <script src='/static/js/map.js'></script>
   {% endcompress %}

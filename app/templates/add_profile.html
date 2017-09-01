@@ -105,7 +105,10 @@
       </div>
     </form>
     <br style="clear: both" />
+  </div>
+{% endblock %}
 
+{% block js %}
     {% compress 'js' %}
       <script>
         $(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera", size: "sm"});
@@ -114,5 +117,4 @@
       <script src='/static/js/imgpreview.js'></script>
     {% endcompress %}
 
-  </div>
 {% endblock %}

@@ -8,50 +8,54 @@ $(function() {
 	  var geojson = [];
 
 	  for (child in data.profiles) {
-	  	child = data.profiles[child];
+		child = data.profiles[child];
 
-	  	if (child.photo_url == '/static/images/childphotopreview.png') {
-	  		var child_photo = '/static/images/photos/childphotopreview.png';
-	  	}
-	  	else if (child.photo_url.indexOf(child.first_name.toLowerCase()) !== -1) {
-	  		var child_photo = child.photo_url;
-	  	}
-	  	else {
-	  		var child_photo = '/static/images/photos/childphotopreview.png';
-	  	}
+		if (child.photo_url == '/static/images/childphotopreview.png') {
+			var child_photo = '/static/images/photos/childphotopreview.png';
+		}
+		else if (child.photo_url.indexOf(child.first_name.toLowerCase()) !== -1) {
+			var child_photo = child.photo_url;
+		}
+		else {
+			var child_photo = '/static/images/photos/childphotopreview.png';
+		}
 
-	  	var description = 'lives here '
-	  	if (child.guardian_fname || child.siblings_in_project) {
-	  		description += 'with ';
-	  	}
-	  	
-	  	if (child.guardian_fname) {
+		var description = 'lives here '
+		if (child.guardian_fname || child.siblings_in_project) {
+			description += 'with ';
+		}
+
+		if (child.guardian_fname && child.siblings_in_project) {
+			description += child.guardian_fname + ' ' + child.guardian_lname + ', ' + child.siblings_in_project;
+		}
+
+		if (child.guardian_fname && !child.siblings_in_project) {
 				description += child.guardian_fname + ' ' + child.guardian_lname + ' ';
-	  	}
+		}
 
-	  	if (child.siblings_in_project) {
+		if (child.siblings_in_project && !child.guardian_fname) {
 				description += child.siblings_in_project;
-	  	}
+		}
 
-	  	var marker_color;
-	  	if (child.is_active) {
-	  		marker_color = '#fc4353';
-	  	}
-	  	else {
-	  		marker_color = '#808080';
-	  		description += '(inactive)'
-	  	}
+		var marker_color;
+		if (child.is_active) {
+			marker_color = '#fc4353';
+		}
+		else {
+			marker_color = '#808080';
+			description += '(inactive)'
+		}
 
 			var child_geo = {
-		    'type': 'Feature',
-		    'geometry': {
-			    'type': 'Point',
-			    'coordinates': [child.longitude, child.latitude]
-		    },
-		    'properties': {
-			  	'image': child_photo,
-			  	'title': child.first_name + ' ' + child.last_name,
-			  	'url': '/child/' + child.id,
+			'type': 'Feature',
+			'geometry': {
+				'type': 'Point',
+				'coordinates': [child.longitude, child.latitude]
+			},
+			'properties': {
+				'image': child_photo,
+				'title': child.first_name + ' ' + child.last_name,
+				'url': '/child/' + child.id,
 					'description': description,
 					'marker-color': marker_color,
 					'marker-size': 'large',
@@ -74,20 +78,20 @@ $(function() {
 
 		  // Create custom popup content
 		  var popupContent =  '<div class="popupleft"><a href="' + feature.properties.url + '">' +
-		      '<img class="popupimage" src="' + feature.properties.image + '" />' + '</div>' + '<div class="popupright">' +
-		      '<a href="' + feature.properties.url + '">' + feature.properties.title +
-		      '</a> ' + feature.properties.description + '</div>';
+			  '<img class="popupimage" src="' + feature.properties.image + '" />' + '</div>' + '<div class="popupright">' +
+			  '<a href="' + feature.properties.url + '">' + feature.properties.title +
+			  '</a> ' + feature.properties.description + '</div>';
 
 		  // http://leafletjs.com/reference.html#popup
 		  marker.bindPopup(popupContent,{
-		    closeButton: false,
-		    minWidth: 180
+			closeButton: false,
+			minWidth: 180
 		  });
 		});
 
 		map.setGeoJSON(geojson);
 	})
   .fail(function() {
-    $("#map").html("Error retrieving the children's profiles!").addClass("maperror animated1");
+	$("#map").html("Error retrieving the children's profiles!").addClass("maperror animated1");
   });
 });

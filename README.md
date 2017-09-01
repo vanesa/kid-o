@@ -218,7 +218,7 @@ Screenshots
 
 
 ###### Add and delete godparents to child profile
-![Add Delete godparents](screenshots/adddeletegodparents.jpg "Add and delete godparents to child profile")
+![Add Delete godparents](screenshots/adddeletegodparent.jpg "Add and delete godparents to child profile")
 
 
 ###### Search function

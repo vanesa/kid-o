@@ -3,9 +3,12 @@ $(function() {
     $('#myInput').focus()
   });
 
+// Retrieve godparent id from clicking list point
   $('#godparents_list i').on('click', function(e) {
     godparent_id = $(e.target).attr('data-id');
   });
+  
+// Delete godparent when confirming delete godparent warning modal
   $('#deleteGodparentForm').on('submit', function(e) {
     e && e.preventDefault();
 
@@ -36,4 +39,18 @@ $(function() {
       }
     });
   });
+
+// Show 'godparent will convert to project sponsor' warning modal when clicking on child activity Off toggle
+  $('#is_active').change(function()  {
+    
+    if (!$('#is_active').prop('checked')) {
+      $('#hideModal').modal('show');
+    }
+  });
+
+// If clicking 'Cancel' on godparent conversion warning modal, switch activity toggle back to On
+  $('#cancelHide').on('click', function() {
+    $('#is_active').bootstrapToggle('on');
+  })
+
 });

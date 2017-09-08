@@ -9,293 +9,298 @@
         </div>
         {% endfor %}
       {% endif %}
-  {% endwith %}
-  <form action="/child/edit/{{ child.id }}" class="form-signin" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-    <div class="col-xs-12 col-md-3">
+    {% endwith %}
+    <form action="/child/edit/{{ child.id }}" class="form-signin" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+      <div class="col-xs-12 col-md-3">
 
-      {% if child.photo_url %}
-        <img src="{{ child.photo_url }}" id="imgpreview" class="imgpreview" alt="{{ child.first_name }}'s photo.">
+        {% if child.photo_url %}
+          <img src="{{ child.photo_url }}" id="imgpreview" class="imgpreview" alt="{{ child.first_name }}'s photo.">
+        {% else %}
+          <img src="/static/images/childphotopreview.png" class="images-style">
+        {% endif %}
+
+        <input type="file" name="photo" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Photo" data-classIcon="glyphicon-camera" data-size="sm" value="{{ child.photo_url }}">
+      </div>
+      <div class="info col-xs-12 col-md-6">
+      {% if child.is_active %}
+        <h3 class="animated1">
       {% else %}
-        <img src="/static/images/childphotopreview.png" class="images-style">
+        <h3 class="inactive">
       {% endif %}
-
-      <input type="file" name="photo" id ="imgInput" class="filestyle" data-classButton="btn btn-primary" data-input="true" data-buttonText="Photo" data-classIcon="glyphicon-camera" data-size="sm" value="{{ child.photo_url }}">
-    </div>
-    <div class="info col-xs-12 col-md-6">
-    {% if child.is_active %}
-      <h3 class="animated1">
-    {% else %}
-      <h3 class="inactive">
-    {% endif %}
-      Profile </h3>
-    </div>
-    <!-- Basic Child information -->
-    <div class="info col-xs-12 col-md-3">
-      <p>
-        <label for="activity-field">Activity: </label><input id="is_active" type="checkbox" name="is_active" {% if child.is_active %} checked{% else %} {% endif %} data-toggle="toggle" class="addchildinput">
-      </p>
-      <p>
-        <input type="text" name="first_name" value="{{ child.first_name }}" placeholder="{{ child.first_name }}" class="form-control addchildinput"><br />
-        <input type="text" name="last_name" value="{{ child.last_name }}" placeholder="{{ child.last_name }}" class="form-control addchildinput"><br />
-
-        {% if child.nick_name %}
-          <input type="text" name="nick_name" value="{{ child.nick_name }}" placeholder="{{ child.nick_name }}" class="form-control addchildinput"><br />
-        {% else %}
-          <input type="text" name="nick_name" placeholder="Nick name" class="form-control addchildinput"><br />
-        {% endif %}
-
-        <input type="text" name="birth_date" value="{{ child.birth_date.strftime('%Y-%m-%d') }}" placeholder="{{ child.birth_date.strftime('%Y-%m-%d') }}" class="form-control addchildinput"><br />
-      </p>
-      <p>
-        <label for="nationality-field">Nationality: </label>
-        <select id="nationality" name="nationality" class="form-control addchildinput">
-          <option value="">Unknown</option>
-          {% for _, option in form.nationality.choices %}
-            <option value="{{ option }}" {% if option == form.data.nationality %}selected{% endif %}>{{ option }}</option>
-          {% endfor %}
-        </select>
-      </p>
-    </div>
-      <!-- End Basic Child information -->
-      <!-- Guardian and Godparent information -->
-    <div class="info col-xs-12 col-md-3">
-      <p>
-        <label for="guardian-field">Guardian </label> <br />
-
-        {% if child.guardian_type %}
-          <input type="text" name="guardian_type" value="{{ child.guardian_type }}" placeholder="{{ child.guardian_type }}" class="form-control addchildinput"><br />
-        {% else %}
-          <input type="text" name="guardian_type" placeholder="Guardian type" class="form-control addchildinput"><br />
-        {% endif %}
-
-        {% if child.guardian_fname %}
-          <input type="text" name="guardian_fname" value="{{ child.guardian_fname }}" placeholder="{{ child.guardian_fname }}" class="form-control addchildinput"><br />
-        {% else %}
-          <input type="text" name="guardian_fname" placeholder="Guardian first name" class="form-control addchildinput"><br />
-        {% endif %}
-
-        {% if child.guardian_lname %}
-          <input type="text" name="guardian_lname" value="{{ child.guardian_lname }}" placeholder="{{ child.guardian_lname }}" class="form-control addchildinput"><br />
-        {% else %}
-          <input type="text" name="guardian_lname" placeholder="Guardian last name" class="form-control addchildinput"><br />
-        {% endif %}
-
-      </p>
-      <p>
-      <label for="godparent-field">Godparent status:</label>
-      <select id="godparent_status" name="godparent_status" class="form-control addchildinput">
-        <option value=""> - Select godparent status - </option>
-          {% for _, option in form.godparent_status.choices %}
-            <option value="{{ option }}" {% if option == form.data.godparent_status %}selected{% endif %}>{{ option }}</option>
-          {% endfor %}
-      </select>
-      </p>
-
-      {% if child.godparent_status == 'Has godparent' %}
+        Profile </h3>
+      </div>
+      <!-- Basic Child information -->
+      <div class="info col-xs-12 col-md-3">
         <p>
-        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button>
+          <label for="activity-field">Activity: </label><input id="is_active" type="checkbox" name="is_active" {% if child.is_active %} checked{% else %} {% endif %} data-toggle="toggle" class="addchildinput">
         </p>
-        <label for="godparent-list">Godparents:</label>
-        <p id='godparents_list'>
-        {% for godparent in child.godparents %}
-          <i data-id="{{ godparent.id }}" class="fa fa-minus-circle icon-warning" data-toggle="modal" data-target="#deleteGPModal" aria-hidden="true"></i> {{ godparent.first_name}} {{ godparent.last_name}} <br>
-        {% endfor %}
+        <p>
+          <input type="text" name="first_name" value="{{ child.first_name }}" placeholder="{{ child.first_name }}" class="form-control addchildinput"><br />
+          <input type="text" name="last_name" value="{{ child.last_name }}" placeholder="{{ child.last_name }}" class="form-control addchildinput"><br />
+
+          {% if child.nick_name %}
+            <input type="text" name="nick_name" value="{{ child.nick_name }}" placeholder="{{ child.nick_name }}" class="form-control addchildinput"><br />
+          {% else %}
+            <input type="text" name="nick_name" placeholder="Nick name" class="form-control addchildinput"><br />
+          {% endif %}
+
+          <input type="text" name="birth_date" value="{{ child.birth_date.strftime('%Y-%m-%d') }}" placeholder="{{ child.birth_date.strftime('%Y-%m-%d') }}" class="form-control addchildinput"><br />
         </p>
-      {% endif %}
-    </div>
-    <!-- End Guardian and Godparent information -->
+        <p>
+          <label for="nationality-field">Nationality: </label>
+          <select id="nationality" name="nationality" class="form-control addchildinput">
+            <option value="">Unknown</option>
+            {% for _, option in form.nationality.choices %}
+              <option value="{{ option }}" {% if option == form.data.nationality %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+          </select>
+        </p>
+      </div>
+        <!-- End Basic Child information -->
+        <!-- Guardian and Godparent information -->
+      <div class="info col-xs-12 col-md-3">
+        <p>
+          <label for="guardian-field">Guardian </label> <br />
 
-    <div class="lowerform col-xs-12 col-md-12">
-      <label for="siblings-field">
-      {% if child.is_active %}
-      <h3 class="animated3">
-    {% else %}
-      <h3 class="inactive">
-    {% endif %}
-      Siblings</h3></label>
-       <p>
-        <label for="siblings-field">Number of siblings</label>
-        <select id="number_of_siblings" name="number_of_siblings" class="form-control addchildinput">
-          <option value="0"> - Select number of siblings - </option>
-          {% for num in range(1, form.max_number_of_siblings + 1) %}
-            <option value="{{ num }}" {% if num == form.data.number_of_siblings %}selected{% endif %}>{{ num }}</option>
-          {% endfor %}
-        </select>
-      </p>
-      <p>
-        <label for="siblings-field">Siblings in project: </label><br />
-        <input type="text" name="siblings_in_project" value="{{ child.siblings_in_project }}" placeholder="{{ child.siblings_in_project }}" class="form-control addchildinput"><br />
-      </p>
-      <label for="school_field">
-      {% if child.is_active %}
-        <h3 class="animated4">
-      {% else %}
-        <h3 class="inactive">
-      {% endif %}
-        School</h3></label>
-      <p>
-        <label for="class-field">School Class</label><br />
-        <select id="school_class" name="school_class" class="form-control addchildinput" data-placeholder="Select a school class">
-          <option value=""> - Select school class - </option>
-          {% for _, option in form.school_class.choices %}
-            <option value="{{ option }}" {% if option == form.data.school_class %}selected{% endif %}>{{ option }}</option>
-          {% endfor %}
-        </select>
-      </p>
-      <p><strong>School attendance: </strong>
-        <select id="school_attendance" name="school_attendance" class="form-control addchildinput">
-          <option value=""> - Select attendance rate - </option>
-          {% for _, option in form.school_attendance.choices %}
-            <option value="{{ option }}" {% if option == form.data.school_attendance %}selected{% endif %}>{{ option }}</option>
-          {% endfor %}
-        </select>
-      </p>
-      <label for="situation-field">
-      {% if child.is_active %}
-        <h3 class="animated5"> 
-      {% else %}
-        <h3 class="inactive">
-      {% endif %}
-        Situation:</h3></label>
-      <p>
+          {% if child.guardian_type %}
+            <input type="text" name="guardian_type" value="{{ child.guardian_type }}" placeholder="{{ child.guardian_type }}" class="form-control addchildinput"><br />
+          {% else %}
+            <input type="text" name="guardian_type" placeholder="Guardian type" class="form-control addchildinput"><br />
+          {% endif %}
 
-        {% if child.situation %}
-          <textarea rows="3" cols="40" name="situation" placeholder="{{ child.situation }}" class="form-control">{{ child.situation }}</textarea>
-        {% else %}
-          <textarea rows="3" cols="40" name="situation" placeholder="Please write about {{ child.first_name }}'s situation." class="form-control"></textarea>
+          {% if child.guardian_fname %}
+            <input type="text" name="guardian_fname" value="{{ child.guardian_fname }}" placeholder="{{ child.guardian_fname }}" class="form-control addchildinput"><br />
+          {% else %}
+            <input type="text" name="guardian_fname" placeholder="Guardian first name" class="form-control addchildinput"><br />
+          {% endif %}
+
+          {% if child.guardian_lname %}
+            <input type="text" name="guardian_lname" value="{{ child.guardian_lname }}" placeholder="{{ child.guardian_lname }}" class="form-control addchildinput"><br />
+          {% else %}
+            <input type="text" name="guardian_lname" placeholder="Guardian last name" class="form-control addchildinput"><br />
+          {% endif %}
+
+        </p>
+        <p>
+        <label for="godparent-field">Godparent status:</label>
+        <select id="godparent_status" name="godparent_status" class="form-control addchildinput">
+          <option value=""> - Select godparent status - </option>
+            {% for _, option in form.godparent_status.choices %}
+              <option value="{{ option }}" {% if option == form.data.godparent_status %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+        </select>
+        </p>
+
+        {% if child.godparent_status == 'Has godparent' %}
+          <p>
+          <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button>
+          </p>
+          <label for="godparent-list">Godparents:</label>
+          <p id='godparents_list'>
+          {% for godparent in child.godparents %}
+            <i data-id="{{ godparent.id }}" class="fa fa-minus-circle icon-warning" data-toggle="modal" data-target="#deleteGPModal" aria-hidden="true"></i> {{ godparent.first_name}} {{ godparent.last_name}} <br>
+          {% endfor %}
+          </p>
         {% endif %}
+      </div>
+      <!-- End Guardian and Godparent information -->
 
-      </p>
-      <label for="volunteer_task-field">
-      {% if child.is_active %}
-        <h3 class="animated6"> 
-      {% else %}
-        <h3 class="inactive">
-      {% endif %}
-        Volunteer tasks:</h3></label>
-      <p>
-
-        {% if child.volunteer_task %}
-          <textarea rows="3" cols="40" name="volunteer_task" placeholder="{{ child.volunteer_task }}" class="form-control">{{ child.volunteer_task }}</textarea>
+      <div class="lowerform col-xs-12 col-md-12">
+        <label for="siblings-field">
+        {% if child.is_active %}
+          <h3 class="animated3">
         {% else %}
-          <textarea rows="3" cols="40" name="volunteer_task" placeholder="Please write about the volunteer tasks." class="form-control"></textarea>
+          <h3 class="inactive">
         {% endif %}
+            Siblings
+          </h3>
+        </label>
+        <p>
+          <label for="siblings-field">Number of siblings</label>
+          <select id="number_of_siblings" name="number_of_siblings" class="form-control addchildinput">
+            <option value="0"> - Select number of siblings - </option>
+            {% for num in range(1, form.max_number_of_siblings + 1) %}
+              <option value="{{ num }}" {% if num == form.data.number_of_siblings %}selected{% endif %}>{{ num }}</option>
+            {% endfor %}
+          </select>
+        </p>
+        <p>
+          <label for="siblings-field">Siblings in project: </label><br />
+          <input type="text" name="siblings_in_project" value="{{ child.siblings_in_project }}" placeholder="{{ child.siblings_in_project }}" class="form-control addchildinput"><br />
+        </p>
+        <label for="school_field">
+        {% if child.is_active %}
+          <h3 class="animated4">
+        {% else %}
+          <h3 class="inactive">
+        {% endif %}
+          School
+          </h3>
+        </label>
+        <p>
+          <label for="class-field">School Class</label><br />
+          <select id="school_class" name="school_class" class="form-control addchildinput" data-placeholder="Select a school class">
+            <option value=""> - Select school class - </option>
+            {% for _, option in form.school_class.choices %}
+              <option value="{{ option }}" {% if option == form.data.school_class %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+          </select>
+        </p>
+        <p><strong>School attendance: </strong>
+          <select id="school_attendance" name="school_attendance" class="form-control addchildinput">
+            <option value=""> - Select attendance rate - </option>
+            {% for _, option in form.school_attendance.choices %}
+              <option value="{{ option }}" {% if option == form.data.school_attendance %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+          </select>
+        </p>
+        <label for="situation-field">
+        {% if child.is_active %}
+          <h3 class="animated5">
+        {% else %}
+          <h3 class="inactive">
+        {% endif %}
+          Situation:</h3></label>
+        <p>
 
-      </p>
+          {% if child.situation %}
+            <textarea rows="3" cols="40" name="situation" placeholder="{{ child.situation }}" class="form-control">{{ child.situation }}</textarea>
+          {% else %}
+            <textarea rows="3" cols="40" name="situation" placeholder="Please write about {{ child.first_name }}'s situation." class="form-control"></textarea>
+          {% endif %}
 
-      <input type="text" id="lat" name="latitude" class="hidden" value="{{ child.latitude or '' }}">
-      <input type="text" id="lng" name="longitude" class="hidden" value="{{ child.longitude or '' }}">
-      {% if child.is_active %}
-        <h3 class="animated7"> 
-      {% else %}
-        <h3 class="inactive">
-      {% endif %}
-        Home Location </h3>
-      <a id="delete_address">Delete Address</a><br>
-      <div class="mapcontainer">
-        <div id="map"></div>
-      </div>
-    </div>
-  </div>
-  <div class="bottom_bar_buttons">
-    <button class="btn btn-sm btn-primary" type="submit">Save</button>
-    <a href="/child/{{ child.id }}"><button type="button" class="btn btn-sm btn-warning" type="cancel" value="cancel">Cancel</button></a>
-    {% if not child.is_active %}
-      <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" value="delete">Delete Profile</button>
-    {% endif %}
-  </div>
-</form>
-<!-- Modal -->
-<!-- add godparent modal -->
-<div class="modal fade" id="godparentModal" tabindex="-1" role="dialog" aria-labelledby="godparentModalLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title center" id="godparentModalLabel">Add {{ child.first_name }}'s godparent: </h4>
-      </div>
-      <form id="addGodparentForm" role="form" method='POST' enctype="multipart/form-data">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-        <div id="godparentModalBody" class="modal-body center">
-          <input type="text" name="first_name" placeholder="Godparent's first name" class="form-control addchildinput" /><br />
-          <input type="text" name="last_name" placeholder="Godparent's last name" class="form-control addchildinput" /><br />
-          <input type="text" name="email" placeholder="Godparent's email" class="form-control addchildinput" /><br />
+        </p>
+        <label for="volunteer_task-field">
+        {% if child.is_active %}
+          <h3 class="animated6">
+        {% else %}
+          <h3 class="inactive">
+        {% endif %}
+          Volunteer tasks:</h3></label>
+        <p>
+
+          {% if child.volunteer_task %}
+            <textarea rows="3" cols="40" name="volunteer_task" placeholder="{{ child.volunteer_task }}" class="form-control">{{ child.volunteer_task }}</textarea>
+          {% else %}
+            <textarea rows="3" cols="40" name="volunteer_task" placeholder="Please write about the volunteer tasks." class="form-control"></textarea>
+          {% endif %}
+
+        </p>
+
+        <input type="text" id="lat" name="latitude" class="hidden" value="{{ child.latitude or '' }}">
+        <input type="text" id="lng" name="longitude" class="hidden" value="{{ child.longitude or '' }}">
+        {% if child.is_active %}
+          <h3 class="animated7">
+        {% else %}
+          <h3 class="inactive">
+        {% endif %}
+          Home Location </h3>
+        <a id="delete_address">Delete Address</a><br>
+        <div class="mapcontainer">
+          <div id="map"></div>
         </div>
-        <div class="modal-footer center">
-          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
-          <button id="addGodparentCancelButton" type="button" class="btn btn-warning" data-dismiss="modal" />Cancel</button>
-          <button id="addGodparentButton" class="btn btn-default" type="submit" />Add Godparent</button>
+      </div>
+      <div class="bottom_bar_buttons">
+        <button class="btn btn-sm btn-primary" type="submit">Save</button>
+        <a href="/child/{{ child.id }}">
+          <button type="button" class="btn btn-sm btn-warning" type="cancel" value="cancel">Cancel</button>
+        </a>
+        {% if not child.is_active %}
+          <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" value="delete">Delete Profile</button>
+        {% endif %}
+      </div>
+    </form>
+    <!-- Modal -->
+    <!-- add godparent modal -->
+    <div class="modal fade" id="godparentModal" tabindex="-1" role="dialog" aria-labelledby="godparentModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title center" id="godparentModalLabel">Add {{ child.first_name }}'s godparent: </h4>
+          </div>
+          <form id="addGodparentForm" role="form" method='POST' enctype="multipart/form-data">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <div id="godparentModalBody" class="modal-body center">
+              <input type="text" name="first_name" placeholder="Godparent's first name" class="form-control addchildinput" /><br />
+              <input type="text" name="last_name" placeholder="Godparent's last name" class="form-control addchildinput" /><br />
+              <input type="text" name="email" placeholder="Godparent's email" class="form-control addchildinput" /><br />
+            </div>
+            <div class="modal-footer center">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+              <button id="addGodparentCancelButton" type="button" class="btn btn-warning" data-dismiss="modal" />Cancel</button>
+              <button id="addGodparentButton" class="btn btn-default" type="submit" />Add Godparent</button>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
-  </div>
-</div>
-<!-- delete godparent modal -->
-<div class="modal fade" id="deleteGPModal" tabindex="-1" role="dialog" aria-labelledby="deleteGPModalLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title center" id="deleteModalLabel">WARNING</h4>
-      </div>
-      <div id="deleteGodparentModalBody" class="modal-body center">
-        Are you sure you want to delete this godparent?
-      </div>
-      <div class="modal-footer center">
-        <form id="deleteGodparentForm" role="form" method='POST' enctype="multipart/form-data">
-          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
-          <button id="deleteGodparentCancelButton" type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-          <button id="deleteGodparentButton"  class="btn btn-danger" type="submit">Delete godparent</button>
-        </form>
       </div>
     </div>
-  </div>
-</div>
-</div>
-<!-- delete profile modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title center" id="deleteModalLabel">WARNING</h4>
+    <!-- delete godparent modal -->
+    <div class="modal fade" id="deleteGPModal" tabindex="-1" role="dialog" aria-labelledby="deleteGPModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title center" id="deleteModalLabel">WARNING</h4>
+          </div>
+          <div id="deleteGodparentModalBody" class="modal-body center">
+            Are you sure you want to delete this godparent?
+          </div>
+          <div class="modal-footer center">
+            <form id="deleteGodparentForm" role="form" method='POST' enctype="multipart/form-data">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+              <button id="deleteGodparentCancelButton" type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+              <button id="deleteGodparentButton"  class="btn btn-danger" type="submit">Delete godparent</button>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="modal-body center">
-        Are you sure you want to delete {{ child.first_name }}'s profile?
+    </div>
+    </div>
+    <!-- delete profile modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title center" id="deleteModalLabel">WARNING</h4>
+          </div>
+          <div class="modal-body center">
+            Are you sure you want to delete {{ child.first_name }}'s profile?
+          </div>
+          <div class="modal-footer center">
+            <form role="form" method='POST' action='/delete-profile/{{ child.id }}' enctype="multipart/form-data">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+              <button class="btn btn-danger" type="submit">Delete profile</button>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer center">
-        <form role="form" method='POST' action='/delete-profile/{{ child.id }}' enctype="multipart/form-data">
-          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
-          <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-          <button class="btn btn-danger" type="submit">Delete profile</button>
-        </form>
+    </div>
+    <!-- hide child and delete godparents modal -->
+    <div class="modal fade" id="hideModal" tabindex="-1" role="dialog" aria-labelledby="hideModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title center" id="deleteModalLabel">WARNING</h4>
+          </div>
+          <div class="modal-body center">
+            Are you sure you want to hide {{ child.first_name }}'s profile? <b>This will automatically convert {{ child.first_name }}'s godparents to project sponsors.</b> They can be added to a different child through the new child's profile.
+          </div>
+          <div class="modal-footer center">
+            <form role="form" method='POST' action='/delete-profile/{{ child.id }}' enctype="multipart/form-data">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+              <button type="button" id="cancelHide" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+              <button class="btn btn-danger" data-dismiss="modal">Hide profile</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- hide child and delete godparents modal -->
-<div class="modal fade" id="hideModal" tabindex="-1" role="dialog" aria-labelledby="hideModalLabel">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title center" id="deleteModalLabel">WARNING</h4>
-      </div>
-      <div class="modal-body center">
-        Are you sure you want to hide {{ child.first_name }}'s profile? <b>This will automatically convert {{ child.first_name }}'s godparents to project sponsors.</b> They can be added to a different child through the new child's profile.
-      </div>
-      <div class="modal-footer center">
-        <form role="form" method='POST' action='/delete-profile/{{ child.id }}' enctype="multipart/form-data">
-          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
-          <button type="button" id="cancelHide" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-          <button class="btn btn-danger" data-dismiss="modal">Hide profile</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
 {% endblock %}
 {% block js %}
   <!-- Image preview -->

@@ -469,6 +469,7 @@ label {
     bottom: 0;
     left: 0;
     margin-bottom: 55px;
+    text-align: center;
     z-index: 1030;
     background-color: #edf9ff;
     padding: 7px;

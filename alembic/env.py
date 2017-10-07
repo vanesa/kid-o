@@ -8,7 +8,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 
 
-from app.settings import SQLALCHEMY_DATABASE_URI
+from app.settings.common import SQLALCHEMY_DATABASE_URI
 from app.models import db
 
 # this is the Alembic Config object, which provides

@@ -1,6 +1,7 @@
 """ Utility file to seed children database from the list of our children's aid project in seed_data/"""
 
-from app.models import Child, User, connect_to_db, db
+from flask_sqlalchemy import SQLAlchemy
+from app.models import Child, User
 from app import app
 from datetime import datetime
 
@@ -34,10 +35,10 @@ def load_children():
         print "The line is:", line
         
         print "This is the child info:", child_info
-        child_entry = Child(pic_url=child_info[0], first_name=child_info[1], last_name=child_info[2],
-                            birth_date=child_info[3], guardian_type=child_info[4], guardian_fname=child_info[5],
-                            guardian_lname=child_info[6], medical_condition=child_info[7], doctor_appt=child_info[8], situation=child_info[9],
-                            home_visit=child_info[10], latitude=child_info[11], longitude=child_info[12])
+        child_entry = Child(photo_url=child_info[0], first_name=child_info[1], last_name=child_info[2],
+                            birth_date=child_info[3], nationality=child_info[4], guardian_type=child_info[5], guardian_fname=child_info[6],
+                            guardian_lname=child_info[7], number_of_siblings=child_info[8], siblings_in_project=child_info[9], school_class=child_info[10], 
+                            school_attendance=child_info[11], situation=child_info[12], latitude=child_info[13], longitude=child_info[14])
         db.session.add(child_entry)
        
         print child_entry
@@ -48,7 +49,7 @@ def load_children():
 ##################
 
 if __name__ == "__main__":
-    connect_to_db(app)
+    db = SQLAlchemy(app)
 
     load_children()
     load_users()

@@ -1,3 +1,2 @@
-Vanesa	Miller	vanesa@me.com	pass
 Tabea	Schmidt	tabea@me.com	pass2
 Lisa	Stein	lisa@me.com	pass3

@@ -72,7 +72,7 @@ class Child(db.Model):
     is_active = db.Column(db.Boolean, default=True)
     first_name = db.Column(db.String(32), nullable=False)
     last_name = db.Column(db.String(32), nullable=False)
-    nick_name = db.Column(db.String(32), nullable=False)
+    nick_name = db.Column(db.String(32), nullable=True)
     birth_date = db.Column(db.DateTime, nullable=False)
     nationality = db.Column(db.String(200))
     guardian_type = db.Column(db.String(50), nullable=True)

@@ -82,12 +82,12 @@ class Child(db.Model):
     siblings_in_project = db.Column(db.String)
     school_class = db.Column(db.String(50))
     school_attendance = db.Column(db.String(50))
-    project = db.Column(db.String(50))
     volunteer_task = db.Column(db.String)
     situation = db.Column(db.String)
     godparent_status = db.Column(db.String)
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
+    project = db.relationship('Project', secondary='child_to_project', backref='child', lazy='dynamic', collection_class=set)
     godparents = db.relationship('Godparent', secondary='child_to_godparent', backref='child', lazy='dynamic', collection_class=set)
     messages = db.relationship('Message', backref='child', lazy='dynamic')
 
@@ -122,7 +122,6 @@ class Child(db.Model):
             siblings_in_project = self.siblings_in_project,
             school_class = self.school_class,
             school_attendance = self.school_attendance,
-            project = self.project,
             volunteer_task = self.volunteer_task,
             situation = self.situation,
             godparent_status = self.godparent_status,
@@ -145,6 +144,16 @@ class Godparent(db.Model):
     email = db.Column(db.String(64), nullable=True)
     messages = db.relationship('Message', backref='godparent', lazy='dynamic')
     sponsorship_history = db.Column(db.String(), nullable=True)
+
+
+class Project(db.Model):
+    id = db.Column(UUID(), primary_key=True, default=uuid4)
+    project_name = db.Column(db.String(32), nullable=False)
+
+
+class ChildToProject(db.Model):
+    child_id = db.Column(UUID(), db.ForeignKey('child.id'), primary_key=True)
+    project_id = db.Column(UUID(), db.ForeignKey('project.id'), primary_key=True)
 
 
 class Message(db.Model):

@@ -82,6 +82,7 @@ class Child(db.Model):
     siblings_in_project = db.Column(db.String)
     school_class = db.Column(db.String(50))
     school_attendance = db.Column(db.String(50))
+    project = db.Column(db.String(50))
     volunteer_task = db.Column(db.String)
     situation = db.Column(db.String)
     godparent_status = db.Column(db.String)
@@ -121,6 +122,7 @@ class Child(db.Model):
             siblings_in_project = self.siblings_in_project,
             school_class = self.school_class,
             school_attendance = self.school_attendance,
+            project = self.project,
             volunteer_task = self.volunteer_task,
             situation = self.situation,
             godparent_status = self.godparent_status,
@@ -133,6 +135,7 @@ class ChildToGodparent(db.Model):
     child_id = db.Column(UUID(), db.ForeignKey('child.id'), primary_key=True)
     godparent_id = db.Column(UUID(), db.ForeignKey('godparent.id'), primary_key=True)
     created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+    is_active = db.Column(db.Boolean, default=True)
 
 
 class Godparent(db.Model):
@@ -141,6 +144,7 @@ class Godparent(db.Model):
     last_name = db.Column(db.String(32), nullable=False)
     email = db.Column(db.String(64), nullable=True)
     messages = db.relationship('Message', backref='godparent', lazy='dynamic')
+    sponsorship_history = db.Column(db.String(), nullable=True)
 
 
 class Message(db.Model):

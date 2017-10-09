@@ -87,7 +87,7 @@ class Child(db.Model):
     godparent_status = db.Column(db.String)
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
-    project = db.relationship('Project', secondary='child_to_project', backref='child', lazy='dynamic', collection_class=set)
+    projects = db.relationship('Project', secondary='child_to_project', backref='child', lazy='dynamic', collection_class=set)
     godparents = db.relationship('Godparent', secondary='child_to_godparent', backref='child', lazy='dynamic', collection_class=set)
     messages = db.relationship('Message', backref='child', lazy='dynamic')
 
@@ -104,6 +104,10 @@ class Child(db.Model):
         age = currenttime - self.birth_date
         age = age.days / 365
         return age
+
+    @property
+    def projects_for_html(self):
+        return [{'name': p.name, 'selected': p in self.projects} for p in Project.query.all()]
 
     def to_dict(self):
         return dict(

@@ -29,7 +29,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 
 from PIL import Image
 
-from app.models import User, Child, Godparent, db
+from app.models import User, Child, Godparent, Project, db
 from app import auth 
 from app import settings
 from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm
@@ -161,7 +161,7 @@ def child_profile(id):
 def edit_profile(id):
     """ Edit child profile """
 
-    child = db.session.query(Child).filter_by(id=id).first()
+    child = Child.query.filter_by(id=id).first()
     # godparent = db.session.query(Godparent).filter_by(id=child_id).first()
 
     if child is None:
@@ -195,6 +195,7 @@ def edit_profile(id):
         if photo_url != "":
             child.photo_url = photo_url
         # seed into database
+
         child.is_active= form.data['is_active']
         child.first_name = form.data['first_name']
         child.last_name = form.data['last_name']
@@ -217,9 +218,6 @@ def edit_profile(id):
         db.session.commit()
 
         return redirect('/child/%s' % child.id)
-
-    app.logger.debug(form.errors)
-    app.logger.debug("latitude: ", child.latitude)
 
     return render_template('edit_profile.html', form=form, child=child)
 
@@ -265,7 +263,8 @@ def add_profile():
         return redirect('/child/%s' % child.id)
     
     app.logger.debug(form.errors)
-    return render_template('add_profile.html', form=form)
+    projects = [{'name': p.name, 'selected': p.name in form.data['projects']} for p in Project.query.all()]
+    return render_template('add_profile.html', form=form, projects=projects)
 
 @app.route('/delete-profile/<string:id>', methods=['GET', 'POST'])
 @login_required

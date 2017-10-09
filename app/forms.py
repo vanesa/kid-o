@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm as Form
-from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField, FileField, SelectField
+from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField, FileField, SelectField, FieldList
 from wtforms.validators import DataRequired, Email, Length, NumberRange, ValidationError, Optional, Regexp
 from app import app
 
@@ -39,11 +39,11 @@ class ChildForm(Form):
     number_of_siblings = IntegerField('number_of_siblings', validators=[NumberRange(min=0, max=max_number_of_siblings)])
     siblings_in_project = StringField('siblings_in_school', validators=[Length(max=40)])
     school_class = SelectField('school_class', validators=[Optional()], choices=[(x, x) for x in [
-        'Maternal', 'Preschool', '1st school year', '2nd school year', '3rd school year', '4th school year', 'Special School'
-    ]])
+        'Kindergarten', 'Preschool', 'School (Basic)', 'School (Advanced)', 'Special School']])
     school_attendance = SelectField('school_attendance', validators=[Optional()], choices=[(x, x) for x in [
         'Good', 'Intermediate', 'Bad'
     ]])
+    projects = FieldList(StringField())
     volunteer_task = StringField('volunteer_task')
     situation = StringField('situation')
     godparent_status = SelectField('godparent_status', validators=[Optional()], choices=[(x, x) for x in [

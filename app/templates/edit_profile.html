@@ -155,6 +155,13 @@
             {% endfor %}
           </select>
         </p>
+        <p><strong>Project: </strong>
+          <select id="projects" name="projects" class="form-control addchildinput" multiselect>
+          {% for proj in child.projects_for_html %}
+            <option value="{{ proj.name }}" {% if proj.selected %} selected="selected"{% endif %}>{{ proj.name }}</option>
+          {% endfor %}
+          </select>
+        </p>
         <label for="situation-field">
         {% if child.is_active %}
           <h3 class="animated5">

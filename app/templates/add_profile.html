@@ -84,6 +84,13 @@
             {% endfor %}
           </select>
         </p>
+        <p><strong>Project: </strong>
+          <select id="projects" name="projects" class="form-control addchildinput" multiselect>
+          {% for proj in projects %}
+            <option value="{{ proj.name }}" {% if proj.selected %} selected="selected"{% endif %}>{{ proj.name }}</option>
+          {% endfor %}
+          </select>
+        </p>
         <label for="situation-field"><h3 class="animated5">Situation:</h3></label>
         <p>
           <textarea rows="3" cols="40" name="situation" placeholder="Situation at home and at school." class="form-control addchildinput"></textarea>

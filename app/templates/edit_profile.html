@@ -156,7 +156,7 @@
           </select>
         </p>
         <p><strong>Project: </strong>
-          <select id="projects" name="projects" class="form-control addchildinput" multiselect>
+          <select id="projects" name="projects" class="form-control addchildinput" multiple>
           {% for proj in child.projects_for_html %}
             <option value="{{ proj.name }}" {% if proj.selected %} selected="selected"{% endif %}>{{ proj.name }}</option>
           {% endfor %}

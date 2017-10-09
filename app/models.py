@@ -152,7 +152,7 @@ class Godparent(db.Model):
 
 class Project(db.Model):
     id = db.Column(UUID(), primary_key=True, default=uuid4)
-    project_name = db.Column(db.String(32), nullable=False)
+    name = db.Column(db.String(80), nullable=False)
 
 
 class ChildToProject(db.Model):

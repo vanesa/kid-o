@@ -51,8 +51,7 @@ def load_projects():
     all_lines = fileinput.readlines()
     for line in all_lines:
         project_info = line.split("\t")
-
-        project_entry = Project(name=project_info[0])
+        project_entry = Project(name=project_info[0].strip())
 
         db.session.add(project_entry)
     db.session.commit()
@@ -65,6 +64,6 @@ def load_projects():
 if __name__ == "__main__":
     db = SQLAlchemy(app)
 
-    load_users()
-    load_children()
+    # load_users()
+    # load_children()
     load_projects()

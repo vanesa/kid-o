@@ -134,13 +134,15 @@
         <p><strong>School attendance:</strong> {{ child.school_attendance }}</p>
       {% endif%}
 
-      {% if child.projects %}
-        <p><strong>Projects:</strong>
+      <p><strong>Projects:</strong>
+      {% if child.projects.all() %}
         {% for project in child.projects %}
           {{ project }}{% if not loop.last %},{% endif %}
         {% endfor %}
-        </p>
+      {% else %}
+        - No projects assigned -
       {% endif%}
+        </p>
 
       {% if child.is_active %}
       <h3 class="animated5">

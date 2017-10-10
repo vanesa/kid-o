@@ -120,7 +120,7 @@
           </h3>
         </label>
         <p>
-          <label for="siblings-field">Number of siblings</label>
+          <label for="siblings-field">Number of siblings:</label>
           <select id="number_of_siblings" name="number_of_siblings" class="form-control addchildinput">
             <option value="0"> - Select number of siblings - </option>
             {% for num in range(1, form.max_number_of_siblings + 1) %}
@@ -142,7 +142,7 @@
           </h3>
         </label>
         <p>
-          <label for="class-field">School Class</label><br />
+          <label for="class-field">School Class:</label>
           <select id="school_class" name="school_class" class="form-control addchildinput" data-placeholder="Select a school class">
             <option value=""> - Select school class - </option>
             {% for _, option in form.school_class.choices %}
@@ -150,7 +150,7 @@
             {% endfor %}
           </select>
         </p>
-        <p><strong>School attendance: </strong>
+        <p><strong>School attendance:</strong>
           <select id="school_attendance" name="school_attendance" class="form-control addchildinput">
             <option value=""> - Select attendance rate - </option>
             {% for _, option in form.school_attendance.choices %}
@@ -158,8 +158,7 @@
             {% endfor %}
           </select>
         </p>
-        <p><strong>Project: </strong><br>
-          <small>Hold down the CMD key to select multiple projects.</small>
+        <p><strong>Project: </strong>
           <select id="projects" name="projects" class="form-control addchildinput" multiple>
           {% for proj in child.projects_for_html %}
             <option value="{{ proj.name }}" {% if proj.selected %} selected="selected"{% endif %}>{{ proj.name }}</option>
@@ -172,7 +171,7 @@
         {% else %}
           <h3 class="inactive">
         {% endif %}
-          Situation:</h3></label>
+          Situation</h3></label>
         <p>
 
           {% if child.situation %}
@@ -188,7 +187,7 @@
         {% else %}
           <h3 class="inactive">
         {% endif %}
-          Volunteer tasks:</h3></label>
+          Volunteer tasks</h3></label>
         <p>
 
           {% if child.volunteer_task %}

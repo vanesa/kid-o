@@ -52,10 +52,19 @@
             {% if child.school_class %}
               <p><strong>School class:</strong> {{ child.school_class }}</p>
             {% endif %}
-          {% if child.situation %}
-            <p><strong>Situation:</strong> {{ child.situation }}</p>
-          {% else %}
-          {% endif %}
+            <p><strong>Projects:</strong>
+            {% if child.projects.all() %}
+              {% for project in child.projects %}
+                {{ project }}{% if not loop.last %},{% endif %}
+              {% endfor %}
+            {% else %}
+              - No projects assigned -
+            {% endif%}
+            </p>
+            {% if child.situation %}
+              <p><strong>Situation:</strong> {{ child.situation }}</p>
+            {% else %}
+            {% endif %}
             <a href="../child/{{child.id}}">
               <button type="button" class="btn btn-warning btn-sm">
                 <span class="fa fa-child" aria-hidden="true"></span> View profile

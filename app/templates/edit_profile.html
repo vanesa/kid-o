@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+
+
+
 {% block content %}
   <div class="row toppad_child">
     {% with messages = get_flashed_messages() %}
@@ -320,6 +323,7 @@
   <!-- Ajax add and delete godparent -->
   <script>
   let child_id = '{{ child.id }}';
+  $("select").chosen({search_contains: true});
   </script>
   <script src='/static/js/addgodparent.js'></script>
   <script src='/static/js/editprofile.js'></script>

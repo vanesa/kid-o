@@ -58,8 +58,9 @@ class GodparentForm(Form):
     email = StringField('email', validators=[DataRequired(), Email()], filters=[lower])
 
 class SearchForm(Form):
-    name = StringField('name', validators=[Optional(), Length(max=15)])
-    class_str = SelectField('class_str', validators=[Optional()], choices=[(x, x) for x in [
-        'Maternal', 'Preschool', '1st school year', '2nd school year', '3rd school year', '4th school year', 'Special School'
-    ]])
+    name = StringField(validators=[Optional(), Length(max=15)])
+    class_str = SelectField(validators=[Optional()], choices=[(x, x) for x in [
+        'Kindergarten', 'Preschool', 'School (Basic)', 'School (Advanced)', 'Special School']])
+    project = SelectField(validators=[Optional()], choices=[(x, x) for x in [
+        'Orphanage', 'San Skate', 'Dance Group', 'Volleyball Group', 'English Group', 'Tutoring Group']])
     show_hidden_profiles = BooleanField('show_hidden_profiles')

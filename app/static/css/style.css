@@ -6,6 +6,13 @@
   padding-bottom: 50px;
 }
 
+@media (max-width: 800px) {
+  .toppad {
+    padding-top: 230px;
+    padding-bottom: 50px;
+}
+  }
+
 .toppad_child {
   padding-top: 100px;
   padding-bottom: 100px;

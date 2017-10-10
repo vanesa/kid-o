@@ -20,6 +20,10 @@
         panel-default
       {% elif child.photo_url is none %}
         panel-danger
+      {% elif child.school_class is none or child.school_class == '' %}
+        panel-danger
+      {% elif child.latitude is none or child.latitude == '' %}
+        panel-danger
       {% elif child.situation is none or child.situation == '' %}
         panel-danger
       {% else %}
@@ -67,10 +71,20 @@
           {% else %}
             <i class="fa fa-camera-retro fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please upload photo!"></i>
           {% endif %}
+          {% if child.school_class %}
+            <i class="fa fa-graduation-cap fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="School Class info available."></i>
+          {% else %}
+            <i class="fa fa-graduation-cap fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please add {{child.first_name}}'s school class!"></i>
+          {% endif %}
           {% if child.situation %}
             <i class="fa fa-list fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Situation info available."></i>
           {% else %}
             <i class="fa fa-list fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please add missing info about {{child.first_name}}'s situation!"></i>
+          {% endif %}
+          {% if child.latitude %}
+            <i class="fa fa-map-marker fa-fw icon-success fa-2x" data-toggle="tooltip" data-placement="top" title="Location info available."></i>
+          {% else %}
+            <i class="fa fa-map-marker fa-fw icon-warning fa-2x" data-toggle="tooltip" data-placement="top" title="Please add {{child.first_name}}'s home location!"></i>
           {% endif %}
         </div>
       </div>

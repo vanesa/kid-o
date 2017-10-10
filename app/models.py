@@ -143,11 +143,15 @@ class ChildToGodparent(db.Model):
 
 class Godparent(db.Model):
     id = db.Column(UUID(), primary_key=True, default=uuid4)
-    first_name = db.Column(db.String(32), nullable=False)
-    last_name = db.Column(db.String(32), nullable=False)
+    first_name = db.Column(db.String(64), nullable=False)
+    last_name = db.Column(db.String(64), nullable=False)
+    referal_name = db.Column(db.String(64), nullable=True)
     email = db.Column(db.String(64), nullable=True)
     messages = db.relationship('Message', backref='godparent', lazy='dynamic')
     sponsorship_history = db.Column(db.String(), nullable=True)
+
+    def __repr__(self):
+        return "<Godparent id=%s first_name=%s last_name=%s referal_name=%s>" % (self.id, self.first_name, self.last_name, self.referal_name)
 
 
 class Project(db.Model):
@@ -161,6 +165,13 @@ class Project(db.Model):
 class ChildToProject(db.Model):
     child_id = db.Column(UUID(), db.ForeignKey('child.id'), primary_key=True)
     project_id = db.Column(UUID(), db.ForeignKey('project.id'), primary_key=True)
+
+
+class GodparentToProject(db.Model):
+    godparent_id = db.Column(UUID(), db.ForeignKey('godparent.id'), primary_key=True)
+    project_id = db.Column(UUID(), db.ForeignKey('project.id'), primary_key=True)
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+    is_active = db.Column(db.Boolean, default=True)
 
 
 class Message(db.Model):

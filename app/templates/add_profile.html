@@ -84,10 +84,11 @@
             {% endfor %}
           </select>
         </p>
-        <p><strong>Project: </strong>
+        <p><strong>Project: </strong><br>
+          <small>Hold down the CMD key to select multiple projects.</small>
           <select id="projects" name="projects" class="form-control addchildinput" multiple>
           {% for proj in projects %}
-            <option value="{{ proj.name }}" {% if proj.selected %} selected="selected"{% endif %}>{{ proj.name }}</option>
+            <option value="{{ proj }}">{{ proj }}</option>
           {% endfor %}
           </select>
         </p>

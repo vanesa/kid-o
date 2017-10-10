@@ -154,6 +154,9 @@ class Project(db.Model):
     id = db.Column(UUID(), primary_key=True, default=uuid4)
     name = db.Column(db.String(80), nullable=False)
 
+    def __repr__(self):
+        return unicode(self.name)
+
 
 class ChildToProject(db.Model):
     child_id = db.Column(UUID(), db.ForeignKey('child.id'), primary_key=True)

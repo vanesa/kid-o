@@ -10,7 +10,7 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
-    <form action="/child/edit/{{ child.id }}" class="form-signin" method="POST" enctype="multipart/form-data">
+    <form class="form-signin" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
       <div class="col-xs-12 col-md-3">
 
@@ -155,7 +155,8 @@
             {% endfor %}
           </select>
         </p>
-        <p><strong>Project: </strong>
+        <p><strong>Project: </strong><br>
+          <small>Hold down the CMD key to select multiple projects.</small>
           <select id="projects" name="projects" class="form-control addchildinput" multiple>
           {% for proj in child.projects_for_html %}
             <option value="{{ proj.name }}" {% if proj.selected %} selected="selected"{% endif %}>{{ proj.name }}</option>

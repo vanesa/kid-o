@@ -166,7 +166,11 @@ def edit_profile(id):
 
     if child is None:
         abort(404)
+
+
     form = ChildForm(request.form, obj=child)
+    form.projects.choices = [(p.name, p.name) for p in Project.query.all()]
+
     if request.method == 'POST' and form.validate():  # update child info from edit_profile.html form
         # Set photo_url to empty string to keep original path in case no changes are made.
         app.logger.debug(form.validate())
@@ -214,6 +218,20 @@ def edit_profile(id):
         child.godparent_status = form.data['godparent_status']
         child.latitude = form.data['latitude']
         child.longitude = form.data['longitude']
+
+        # add child projects if necessary
+        projects = child.projects.all()
+        for proj in form.data.get('projects'):
+            proj = Project.query.filter_by(name=proj).first()
+            if proj not in projects:
+                projects.append(proj)
+
+        # remove child projects
+        for proj in projects:
+            if proj.name not in form.data.get('projects'):
+                projects = list(filter(lambda p: p.name != proj.name, projects))
+
+        child.projects = projects
 
         db.session.commit()
 
@@ -263,7 +281,7 @@ def add_profile():
         return redirect('/child/%s' % child.id)
     
     app.logger.debug(form.errors)
-    projects = [{'name': p.name, 'selected': p.name in form.data['projects']} for p in Project.query.all()]
+    projects = [(p.name) for p in Project.query.all()]
     return render_template('add_profile.html', form=form, projects=projects)
 
 @app.route('/delete-profile/<string:id>', methods=['GET', 'POST'])

@@ -236,7 +236,7 @@ def edit_profile(id):
         db.session.commit()
 
         return redirect('/child/%s' % child.id)
-
+    app.logger.debug(form.errors)
     return render_template('edit_profile.html', form=form, child=child)
 
 @app.route('/child/add', methods=['GET', 'POST'])
@@ -245,6 +245,7 @@ def add_profile():
 
     """ Add a child profile """
     form = ChildForm(request.form)
+    form.projects.choices = [(p.name, p.name) for p in Project.query.all()]
 
     if request.method == 'POST' and form.validate(): 
         # Upload image 
@@ -274,6 +275,7 @@ def add_profile():
         # seed into database
         data = form.data
         data['photo_url'] = photo_url
+        data['projects'] = [Project.query.filter_by(name=x).first() for x in data['projects']]
         child = Child(**data)
         
         db.session.add(child)

@@ -84,19 +84,19 @@
             {% endfor %}
           </select>
         </p>
-        <p><strong>Project: </strong><br>
-          <small>Hold down the CMD key to select multiple projects.</small>
+        <p><strong>Project: </strong>
           <select id="projects" name="projects" class="form-control addchildinput" multiple>
+            <option> - No project assigned - </option>
           {% for proj in projects %}
             <option value="{{ proj }}">{{ proj }}</option>
           {% endfor %}
           </select>
         </p>
-        <label for="situation-field"><h3 class="animated5">Situation:</h3></label>
+        <label for="situation-field"><h3 class="animated5">Situation</h3></label>
         <p>
           <textarea rows="3" cols="40" name="situation" placeholder="Situation at home and at school." class="form-control addchildinput"></textarea>
         </p>
-        <label for="volunteer_task-field"><h3 class="animated6">Volunteer tasks:</h3></label>
+        <label for="volunteer_task-field"><h3 class="animated6">Volunteer tasks</h3></label>
         <p>
           <textarea rows="3" cols="40" name="volunteer_task" placeholder="Tasks for the volunteer." class="form-control addchildinput"></textarea>
         </p>
@@ -120,6 +120,9 @@
     {% compress 'js' %}
       <script>
         $(":file").filestyle({buttonText: "Upload", iconName: "glyphicon glyphicon-camera", size: "sm"});
+      </script>
+      <script>
+      $("select").chosen({search_contains: true});
       </script>
       <script src='/static/js/mapadd.js'></script>
       <script src='/static/js/imgpreview.js'></script>

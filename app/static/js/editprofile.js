@@ -3,6 +3,23 @@ $(function() {
     $('#myInput').focus()
   });
 
+// Show Add Godparent button when selecting "Has Godparent"
+$(document).ready (function () {
+    let gpselect = $('#godparent_status_chosen a span').text();
+    if (gpselect == 'Has godparent' && (!$('#addgpbutton').length)) {
+    $('#guardian').append('<p><button type="button" id="addgpbutton" class="btn btn-sm btn-success" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button></p>');
+    } 
+  });
+
+$('#godparent_status_chosen').on('click', function() {
+  let gpselect = $('#godparent_status_chosen a span').text();
+  if (gpselect == 'Has godparent' && (!$('#addgpbutton').length)) {
+    $('#guardian').append('<p><button type="button" id="addgpbutton" class="btn btn-sm btn-success" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button></p>');
+  } 
+  
+});
+
+
 // Retrieve godparent id from clicking list point
   $('#godparents_list i').on('click', function(e) {
     godparent_id = $(e.target).attr('data-id');

@@ -62,7 +62,7 @@
       </div>
         <!-- End Basic Child information -->
         <!-- Guardian and Godparent information -->
-      <div class="info col-xs-12 col-md-3">
+      <div id="guardian" class="info col-xs-12 col-md-3">
         <p>
           <label for="guardian-field">Guardian </label> <br />
 
@@ -96,9 +96,6 @@
         </p>
 
         {% if child.godparent_status == 'Has godparent' %}
-          <p>
-          <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button>
-          </p>
           <label for="godparent-list">Godparents:</label>
           <p id='godparents_list'>
           {% for godparent in child.godparents %}

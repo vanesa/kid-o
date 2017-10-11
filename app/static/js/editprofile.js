@@ -16,6 +16,9 @@ $('#godparent_status_chosen').on('click', function() {
   if (gpselect == 'Has godparent' && (!$('#addgpbutton').length)) {
     $('#guardian').append('<p><button type="button" id="addgpbutton" class="btn btn-sm btn-success" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button></p>');
   } 
+  if (gpselect != 'Has godparent' && ($('#addgpbutton').length)) {
+    $('#addgpbutton').remove();
+  } 
   
 });
 

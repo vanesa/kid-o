@@ -1,16 +1,16 @@
 $(function() {
-  $('#godparentModal').on('shown.bs.modal', function () {
+  $('#newGodparentModal').on('shown.bs.modal', function () {
     $('#myInput').focus()
   });
 
-  $('#addGodparentForm').on('submit', function(e) {
+  $('#addNewGodparentForm').on('submit', function(e) {
     e && e.preventDefault();
 
     var data = {
-      _csrf_token: $('#addGodparentForm input[name="_csrf_token"]').val(),
-      first_name: $('#addGodparentForm input[name="first_name"]').val(),
-      last_name: $('#addGodparentForm input[name="last_name"]').val(),
-      email: $('#addGodparentForm input[name="email"]').val(),
+      _csrf_token: $('#addNewGodparentForm input[name="_csrf_token"]').val(),
+      first_name: $('#addNewGodparentForm input[name="first_name"]').val(),
+      last_name: $('#addNewGodparentForm input[name="last_name"]').val(),
+      email: $('#addNewGodparentForm input[name="email"]').val(),
     };
 
     $.ajax({
@@ -22,15 +22,15 @@ $(function() {
       },
       data: JSON.stringify(data),
       success: function(response) {
-        $("#godparentModalBody").html( "<p>Success!</p>" );
-        $("#addGodparentCancelButton").html("Close");
-        $("#addGodparentButton").remove();
+        $("#newGodparentModalBody").html( "<p>Success!</p>" );
+        $("#addNewGodparentCancelButton").html("Close");
+        $("#addNewGodparentButton").remove();
         $('#godparentModal').on('hide.bs.modal', function () {
           location.reload();
         });
       },
       error: function(error) {
-          $("#godparentModalBody").append('<div class="alert alert-danger" role="alert"> Please check if all fields are valid. </div>');
+          $("#newGodparentModalBody").append('<div class="alert alert-danger" role="alert"> Please check if all fields are valid. </div>');
           console.log(error);
       }
     });

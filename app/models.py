@@ -151,7 +151,10 @@ class Godparent(db.Model):
     sponsorship_history = db.Column(db.String(), nullable=True)
 
     def __repr__(self):
-        return "<Godparent id=%s first_name=%s last_name=%s referal_name=%s>" % (self.id, self.first_name, self.last_name, self.referal_name)
+        return unicode('{first_name} {last_name}').format(
+            first_name=self.first_name,
+            last_name=self.last_name,
+        )
 
 
 class Project(db.Model):

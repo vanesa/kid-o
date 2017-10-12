@@ -29,10 +29,14 @@ from flask_login import login_required, login_user, logout_user, current_user
 
 from PIL import Image
 
+import wtforms_json
+
 from app.models import User, Child, Godparent, Project, db
 from app import auth 
 from app import settings
 from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm
+
+wtforms_json.init()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -171,7 +175,6 @@ def edit_profile(id):
     if child is None:
         abort(404)
 
-
     form = ChildForm(request.form, obj=child)
     form.projects.choices = [(p.name, p.name) for p in Project.query.all()]
 
@@ -240,8 +243,15 @@ def edit_profile(id):
         db.session.commit()
 
         return redirect('/child/%s' % child.id)
+
     app.logger.debug(form.errors)
-    return render_template('edit_profile.html', form=form, child=child)
+
+    context = {
+        'form': form,
+        'child': child,
+        'godparents_available': [{'id': g.id, 'name': unicode(g)} for g in Godparent.query.all()],
+    }
+    return render_template('edit_profile.html', **context)
 
 @app.route('/child/add', methods=['GET', 'POST'])
 @login_required
@@ -290,7 +300,7 @@ def add_profile():
     projects = [(p.name) for p in Project.query.all()]
     return render_template('add_profile.html', form=form, projects=projects)
 
-@app.route('/delete-profile/<string:id>', methods=['GET', 'POST'])
+@app.route('/delete-profile/<string:id>', methods=['POST'])
 @login_required
 def delete_profile(id):
 
@@ -315,7 +325,7 @@ def add_godparent(child_id):
     if not child:
         abort(404)
 
-    form = GodparentForm(obj=request.get_json())
+    form = GodparentForm.from_json(request.get_json())
     if form.validate():
 
         # seed into database
@@ -323,12 +333,12 @@ def add_godparent(child_id):
         db.session.add(godparent)
         child.godparents.append(godparent)
         db.session.commit()
-        return '{"success": true}'
+        return jsonify(success=True), 201
     
     app.logger.debug(form.errors)
-    return '{"error": true}', 400
+    return jsonify(errors=form.errors), 400
 
-@app.route('/delete-godparent/<string:id>', methods=['GET', 'POST'])
+@app.route('/delete-godparent/<string:id>', methods=['POST'])
 @login_required
 def delete_godparent(id):
 
@@ -336,8 +346,9 @@ def delete_godparent(id):
     godparent_name = godparent.first_name + " " + godparent.last_name
     db.session.delete(godparent)
     db.session.commit()
-    flash('You have deleted ' + godparent_name + ".")
-    return '{"success": true}'
+
+    flash('You have deleted ' + godparent_name + " as a godparent.")
+    return jsonify(success=True)
 
 @app.route('/twilio', methods=['GET', 'POST'])
 def registerbysms():

@@ -227,17 +227,33 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title center" id="godparentModalLabel">Add {{ child.first_name }}'s godparent: </h4>
           </div>
-          <form id="addGodparentForm" role="form" method='POST' enctype="multipart/form-data">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+          <form id="addGodparentForm" role="form">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+            <h5>Add existing godparent:</h5>
             <div id="godparentModalBody" class="modal-body center">
-              <input type="text" name="first_name" placeholder="Godparent's first name" class="form-control addchildinput" /><br />
-              <input type="text" name="last_name" placeholder="Godparent's last name" class="form-control addchildinput" /><br />
-              <input type="text" name="email" placeholder="Godparent's email" class="form-control addchildinput" /><br />
+              <select id="existing_godparents" name="existing_godparents" class="form-control addchildinput delay-chosen" multiple>
+              {% for godparent in godparents_available %}
+                <option value="{{ godparent.id }}">{{ godparent.name }}</option>
+              {% endfor %}
+              </select>
             </div>
-            <div class="modal-footer center">
-              <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+            <div class="gp-footer center">
               <button id="addGodparentCancelButton" type="button" class="btn btn-warning" data-dismiss="modal" />Cancel</button>
               <button id="addGodparentButton" class="btn btn-default" type="submit" />Add Godparent</button>
+            </div>
+          </form>
+          <form id="addNewGodparentForm" role="form" method='POST' enctype="multipart/form-data">
+            <h5>Add new godparent:</h5>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <div id="newGodparentModalBody" class="modal-body center">
+              <input type="text" name="first_name" placeholder="Godparent's first name" class="form-control addchildinput" /><br />
+              <input type="text" name="last_name" placeholder="Godparent's last name" class="form-control addchildinput" /><br />
+              <input type="text" name="referal_name" placeholder="Godparent's referal name" class="form-control addchildinput" /><br />
+              <input type="text" name="email" placeholder="Godparent's email" class="form-control addchildinput" /><br />
+            </div>
+            <div class="gp-footer-2 center">
+              <button id="addNewGodparentCancelButton" type="button" class="btn btn-warning" data-dismiss="modal" />Cancel</button>
+              <button id="addNewGodparentButton" class="btn btn-default" type="submit" />Add New Godparent</button>
             </div>
           </form>
         </div>
@@ -319,7 +335,10 @@
   <!-- Ajax add and delete godparent -->
   <script>
   let child_id = '{{ child.id }}';
-  $("select").chosen({search_contains: true});
+  $("select:not(.delay-chosen)").chosen({search_contains: true});
+  $('#godparentModal').on('shown.bs.modal', function () {
+    $("select.delay-chosen").chosen({search_contains: true});
+  });
   </script>
   <script src='/static/js/addgodparent.js'></script>
   <script src='/static/js/editprofile.js'></script>

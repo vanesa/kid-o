@@ -482,3 +482,25 @@ label {
     padding: 7px;
     border-top: 1px solid #d6f1ff;
 }
+
+.gp-footer {
+  padding-bottom: 15px;
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.gp-footer .btn + .btn {
+  margin-bottom: 0;
+  margin-top: 0;
+  margin-left: 5px;
+}
+.gp-footer .btn-group .btn + .btn {
+  margin-left: -1px;
+}
+.gp-footer .btn-block + .btn-block {
+  margin-left: 0;
+}
+
+.gp-footer-2 {
+  padding-bottom: 15px;
+  text-align: center;
+}

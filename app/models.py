@@ -145,7 +145,7 @@ class Godparent(db.Model):
     id = db.Column(UUID(), primary_key=True, default=uuid4)
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
-    referal_name = db.Column(db.String(64), nullable=True)
+    referral_name = db.Column(db.String(64), nullable=True)
     email = db.Column(db.String(64), nullable=True)
     messages = db.relationship('Message', backref='godparent', lazy='dynamic')
     sponsorship_history = db.Column(db.String(), nullable=True)

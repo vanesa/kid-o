@@ -10,6 +10,7 @@ $(function() {
       _csrf_token: $('#addNewGodparentForm input[name="_csrf_token"]').val(),
       first_name: $('#addNewGodparentForm input[name="first_name"]').val(),
       last_name: $('#addNewGodparentForm input[name="last_name"]').val(),
+      referral_name: $('#addNewGodparentForm input[name="referral_name"]').val(),
       email: $('#addNewGodparentForm input[name="email"]').val(),
     };
 

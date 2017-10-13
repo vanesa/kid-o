@@ -55,7 +55,7 @@ class ChildForm(Form):
 class GodparentForm(Form):
     first_name = StringField('first_name', validators=[DataRequired(), Length(max=15)])
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
-    referal_name = StringField('referal_name', validators=[Optional(), Length(max=25)])
+    referral_name = StringField('referal_name', validators=[Optional(), Length(max=25)])
     email = StringField('email', validators=[DataRequired(), Email()], filters=[lower])
 
 class SearchForm(Form):

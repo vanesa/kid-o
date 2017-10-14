@@ -99,7 +99,7 @@
           <label for="godparent-list">Godparents:</label>
           <p id='godparents_list'>
           {% for godparent in child.godparents %}
-            <i data-id="{{ godparent.id }}" class="fa fa-minus-circle icon-warning" data-toggle="modal" data-target="#deleteGPModal" aria-hidden="true"></i> {{ godparent.first_name}} {{ godparent.last_name}} <br>
+            <i data-id="{{ godparent.id }}" class="fa fa-minus-circle icon-warning" data-toggle="modal" data-target="#removeGPModal" aria-hidden="true"></i> {{ godparent.first_name}} {{ godparent.last_name}} <br>
           {% endfor %}
           </p>
         {% endif %}
@@ -259,22 +259,22 @@
         </div>
       </div>
     </div>
-    <!-- delete godparent modal -->
-    <div class="modal fade" id="deleteGPModal" tabindex="-1" role="dialog" aria-labelledby="deleteGPModalLabel">
+    <!-- remove godparent modal -->
+    <div class="modal fade" id="removeGPModal" tabindex="-1" role="dialog" aria-labelledby="removeGPModalLabel">
       <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title center" id="deleteModalLabel">WARNING</h4>
+            <h4 class="modal-title center" id="removeModalLabel">WARNING</h4>
           </div>
-          <div id="deleteGodparentModalBody" class="modal-body center">
-            Are you sure you want to delete this godparent?
+          <div id="removeGodparentModalBody" class="modal-body center">
+            Are you sure you want to remove this godparent?
           </div>
           <div class="modal-footer center">
-            <form id="deleteGodparentForm" role="form" method='POST' enctype="multipart/form-data">
+            <form id="removeGodparentForm" role="form" method='POST' enctype="multipart/form-data">
               <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
-              <button id="deleteGodparentCancelButton" type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-              <button id="deleteGodparentButton"  class="btn btn-danger" type="submit">Delete godparent</button>
+              <button id="removeGodparentCancelButton" type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+              <button id="removeGodparentButton"  class="btn btn-danger" type="submit">Remove godparent</button>
             </form>
           </div>
         </div>
@@ -302,7 +302,7 @@
         </div>
       </div>
     </div>
-    <!-- hide child and delete godparents modal -->
+    <!-- hide child and remove godparents modal -->
     <div class="modal fade" id="hideModal" tabindex="-1" role="dialog" aria-labelledby="hideModalLabel">
       <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">

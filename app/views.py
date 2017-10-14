@@ -31,7 +31,7 @@ from PIL import Image
 
 import wtforms_json
 
-from app.models import User, Child, Godparent, Project, db
+from app.models import User, Child, Godparent, Project, ChildToGodparent, db
 from app import auth 
 from app import settings
 from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm
@@ -338,16 +338,32 @@ def add_godparent(child_id):
     app.logger.debug(form.errors)
     return jsonify(errors=form.errors), 400
 
-@app.route('/delete-godparent/<string:id>', methods=['POST'])
+@app.route('/remove-godparent/<string:id>', methods=['POST'])
 @login_required
-def delete_godparent(id):
+def remove_godparent(id):
 
-    godparent = db.session.query(Godparent).filter_by(id=id).first()
+    godparent = Godparent.query.filter_by(id=id).first()
+    godparent.is_active = False
+    child_to_gp = ChildToGodparent.query.filter_by(godparent_id=id).first()
+    child = Child.query.filter_by(id=child_to_gp.child_id).first()
+    app.logger.debug(child_to_gp)
+    old_history = godparent.sponsorship_history
+
+    if old_history:
+        godparent.sponsorship_history = old_history + godparent.first_name + ' ' + \
+        godparent.last_name + ' sponsored ' + child.first_name + ' ' + child.last_name + ' from ' + \
+        str(child_to_gp.created_at) + ' until ' + str(datetime.now()) + '\n'
+    else:
+        godparent.sponsorship_history = godparent.first_name + ' ' + \
+        godparent.last_name + ' sponsored ' + child.first_name + ' ' + child.last_name + ' from ' + \
+        str(child_to_gp.created_at) + ' until ' + str(datetime.now()) + '\n'
+
+    ChildToGodparent.query.filter_by(godparent_id=id).delete()
     godparent_name = godparent.first_name + " " + godparent.last_name
-    db.session.delete(godparent)
+
     db.session.commit()
 
-    flash('You have deleted ' + godparent_name + " as a godparent.")
+    flash('You have removed ' + godparent_name + " as a godparent to " + child.first_name + ".")
     return jsonify(success=True)
 
 @app.route('/twilio', methods=['GET', 'POST'])

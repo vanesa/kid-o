@@ -1,9 +1,9 @@
 $(function() {
-  $('#deleteGPtModal').on('shown.bs.modal', function () {
+  $('#removeGPtModal').on('shown.bs.modal', function () {
     $('#myInput').focus()
   });
 
-// Show Add Godparent button when selecting "Has Godparent"
+// Show or remove Add Godparent button when selecting "Has Godparent"
 $(document).ready (function () {
     let gpselect = $('#godparent_status_chosen a span').text();
     if (gpselect == 'Has godparent' && (!$('#addgpbutton').length)) {
@@ -28,33 +28,33 @@ $('#godparent_status_chosen').on('click', function() {
     godparent_id = $(e.target).attr('data-id');
   });
   
-// Delete godparent when confirming delete godparent warning modal
-  $('#deleteGodparentForm').on('submit', function(e) {
+// Remove godparent when confirming remove godparent warning modal
+  $('#removeGodparentForm').on('submit', function(e) {
     e && e.preventDefault();
 
     var data = {
-      _csrf_token: $('#deleteGodparentForm input[name="_csrf_token"]').val(),
+      _csrf_token: $('#removeGodparentForm input[name="_csrf_token"]').val(),
       godparent_id: godparent_id,
     };
 
     $.ajax({
       type: 'POST',
-      url: '/delete-godparent/' + godparent_id,
+      url: '/remove-godparent/' + godparent_id,
       contentType: 'application/json',
       headers: {
         'X-CSRFToken': data._csrf_token,
       },
       success: function(response) {
-        $("#deleteGodparentModalBody").html( "<p>Godparent deleted!</p>" );
-        $("#deleteModalLabel").html( "DELETED" );
-        $("#deleteGodparentCancelButton").html("Close");
-        $("#deleteGodparentButton").remove();
-        $('#deleteGPModal').on('hide.bs.modal', function () {
+        $("#removeGodparentModalBody").html( "<p>Godparent removed!</p>" );
+        $("#removeModalLabel").html( "REMOVED" );
+        $("#removeGodparentCancelButton").html("Close");
+        $("#removeGodparentButton").remove();
+        $('#removeGPModal').on('hide.bs.modal', function () {
           location.reload();
         });
       },
       error: function(error) {
-          $("#deleteGodparentModalBody").append('<div class="alert alert-danger" role="alert"> There was an issue. Please try again. </div>');
+          $("#removeGodparentModalBody").append('<div class="alert alert-danger" role="alert"> There was an issue. Please try again. </div>');
           console.log(error);
       }
     });

@@ -227,13 +227,13 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title center" id="godparentModalLabel">Add {{ child.first_name }}'s godparent: </h4>
           </div>
-          <form id="addGodparentForm" role="form">
+          <form id="addGodparentForm" role="form" method='POST' enctype="multipart/form-data">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
             <h5>Add existing godparent:</h5>
             <div id="godparentModalBody" class="modal-body center">
               <select id="existing_godparents" name="existing_godparents" class="form-control addchildinput delay-chosen" multiple>
               {% for godparent in godparents_available %}
-                <option value="{{ godparent.id }}">{{ godparent.name }}</option>
+                <option value="{{ godparent.id }}" {% if godparent.selected %} selected="selected"{% endif %}>{{ godparent.name }}</option>
               {% endfor %}
               </select>
             </div>

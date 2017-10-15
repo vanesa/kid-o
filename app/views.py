@@ -34,6 +34,7 @@ import wtforms_json
 from app.models import User, Child, Godparent, Project, ChildToGodparent, db, GodparentToProject
 from app import auth 
 from app import settings
+from app.constants import CHILD_HAS_GODPARENT, NO_NEED
 from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm
 
 wtforms_json.init()
@@ -180,7 +181,6 @@ def edit_profile(id):
 
     if request.method == 'POST' and form.validate():  # update child info from edit_profile.html form
         # Set photo_url to empty string to keep original path in case no changes are made.
-        app.logger.debug(form.validate())
         photo_url = ""
         photo = request.files['photo']
         if photo and allowed_file(photo.filename):
@@ -256,12 +256,14 @@ def edit_profile(id):
 
         return redirect('/child/%s' % child.id)
 
-    app.logger.debug(form.errors)
+    # TODO: display these errors in the template and delete this line
+    if form.errors:
+        app.logger.debug(form.errors)
 
     context = {
         'form': form,
         'child': child,
-        'godparents_available': [{'id': g.id, 'name': unicode(g)} for g in Godparent.query.all()],
+        'godparents_available': [{'id': g.id, 'name': unicode(g), 'selected': g in child.godparents} for g in Godparent.query.all()],
     }
     return render_template('edit_profile.html', **context)
 
@@ -328,6 +330,20 @@ def delete_profile(id):
     flash('You have deleted ' + child_name + "'s profile.")
     return redirect('/overview')
 
+@app.route('/create-godparent', methods=['POST'])
+@login_required
+def create_godparent():
+    """create a godparent profile"""
+
+    form = GodparentForm.from_json(request.get_json())
+    if form.validate():
+
+        # seed into database
+        godparent = Godparent(**form.data)
+        db.session.add(godparent)
+        db.session.commit()
+        return jsonify(success=True), 201
+
 @app.route('/add-godparent/<string:child_id>', methods=['POST'])
 @login_required
 def add_godparent(child_id):
@@ -350,6 +366,26 @@ def add_godparent(child_id):
     app.logger.debug(form.errors)
     return jsonify(errors=form.errors), 400
 
+@app.route('/add-existing-godparent/<string:child_id>', methods=['POST'])
+@login_required
+def add_existing_godparent(child_id):
+    """add a godparent profile"""
+
+    child = Child.query.filter_by(id=child_id).first()
+    if not child:
+        abort(404)
+
+    data = request.get_json()
+
+    if data.get('ids'):
+        for g in data['ids']:
+            godparent = Godparent.query.filter_by(id=g).first()
+            child.godparents.append(godparent)
+        child.godparent_status = CHILD_HAS_GODPARENT
+        db.session.commit()
+    return jsonify(success=True), 201
+
+
 @app.route('/remove-godparent/<string:id>', methods=['POST'])
 @login_required
 def remove_godparent(id):
@@ -371,6 +407,9 @@ def remove_godparent(id):
         str(child_to_gp.created_at) + ' until ' + str(datetime.now()) + '\n'
 
     ChildToGodparent.query.filter_by(godparent_id=id).delete()
+
+    if not child.godparents.all():
+        child.godparent_status = NO_NEED
     godparent_name = godparent.first_name + " " + godparent.last_name
 
     db.session.commit()

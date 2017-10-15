@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm as Form
 from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField, FileField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired, Email, Length, NumberRange, ValidationError, Optional, Regexp
 from app import app
+from app.constants import CHILD_HAS_GODPARENT, NO_NEED, SEARCHING_GODPARENT
 
 def lower(data):
     return data.lower() if data else data
@@ -47,7 +48,7 @@ class ChildForm(Form):
     volunteer_task = StringField('volunteer_task')
     situation = StringField('situation')
     godparent_status = SelectField('godparent_status', validators=[Optional()], choices=[(x, x) for x in [
-        'Searching godparent', 'Has godparent', 'No need'
+        SEARCHING_GODPARENT, CHILD_HAS_GODPARENT, NO_NEED
     ]])
     latitude = FloatField('latitude', validators=[Optional()])
     longitude = FloatField('longitude', validators=[Optional()])

@@ -31,7 +31,7 @@ from PIL import Image
 
 import wtforms_json
 
-from app.models import User, Child, Godparent, Project, ChildToGodparent, db
+from app.models import User, Child, Godparent, Project, ChildToGodparent, db, GodparentToProject
 from app import auth 
 from app import settings
 from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm
@@ -239,6 +239,18 @@ def edit_profile(id):
                 projects = list(filter(lambda p: p.name != proj.name, projects))
 
         child.projects = projects
+
+        # when hiding a child, turn existing godparent into project godparent
+        if child.is_active == False and child.godparents:
+            for g in child.godparents:
+                remove_godparent(g.id)
+                orphanage = Project.query.filter_by(name='Orphanage').first()
+                data = {}
+                data['project_id'] = orphanage.id
+                data['godparent_id'] = g.id
+                sponsorship = GodparentToProject(**data)
+                db.session.add(sponsorship)
+                child.godparent_status = 'No need'
 
         db.session.commit()
 

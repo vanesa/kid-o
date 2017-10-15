@@ -10,6 +10,7 @@ click==6.7
 cryptography==2.1.1
 enum34==1.1.6
 Flask==0.12.2
+Flask-Admin==1.5.0
 Flask-Bcrypt==0.7.1
 Flask-DebugToolbar==0.10.1
 Flask-Login==0.4.0

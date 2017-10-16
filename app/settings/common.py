@@ -6,7 +6,38 @@ IS_TRAVIS = os.environ.get('IS_TRAVIS') == 'true'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 COMPRESSOR_DEBUG = True
 
-if os.environ.get('PRODUCTION'):
-    from .production import *
-else:
-    from .development import *
+
+# Overwrite above settings with production data
+# If we aren't on a prod machine, the file shouldn't exist
+try:
+    from settings.production import *
+except ImportError:
+    pass
+
+
+# Overwrite above settings with dev data
+# If we aren't on a dev machine, the file shouldn't exist
+try:
+    from settings.development import *
+except ImportError:
+    pass
+
+
+# Overwrite above settings with test data
+# If we aren't on a test machine, the file shouldn't exist
+try:
+    from settings.test import *
+except ImportError:
+    pass
+
+
+auth = ''
+if DB_USERNAME and DB_PASSWORD:
+    auth = '{user}:{password}@'.format(user=username, password=password)
+SQLALCHEMY_DATABASE_URI = 'postgresql://{auth}{host}/{database}'.format(
+    auth=auth,
+    host=DB_HOST,
+    database=DB_NAME,
+)
+
+MAPBOX_MAP_ID = None

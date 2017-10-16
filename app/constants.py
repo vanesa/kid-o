@@ -31,3 +31,6 @@ PROJECT_UNDETERMINED = 'Project Undetermined'
 # Birth day accuracy
 EXACT = 'exact'
 ESTIMATED = 'estimated'
+
+# Roles
+PERMISSION_ADMIN = 'admin'

@@ -12,6 +12,7 @@ login_manager.init_app(app)
 
 login_manager.login_view = "login"
 
+
 @login_manager.user_loader
 def load_user(userid):
     if not is_uuid4(userid):
@@ -32,4 +33,4 @@ def is_safe_url(target):
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and \
-           ref_url.netloc == test_url.netloc
+        ref_url.netloc == test_url.netloc

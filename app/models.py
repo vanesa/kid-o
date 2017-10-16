@@ -1,12 +1,12 @@
 """Models and database functions for Kid-O project."""
 
+import hashlib
+from datetime import datetime
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID as PGUUID
 from sqlalchemy.ext.hybrid import hybrid_property
-import hashlib
 from uuid import uuid4
-from datetime import datetime
-from flask_bcrypt import Bcrypt
 
 from . import app
 
@@ -30,10 +30,14 @@ class UUID(PGUUID):
 
 class User(db.Model):
     id = db.Column(UUID(), primary_key=True, default=uuid4)
-    first_name = db.Column(db.String(32), nullable=False)
-    last_name = db.Column(db.String(64), nullable=False)
-    email = db.Column(db.String(200), nullable=True)
-    password = db.Column(db.String(600), nullable=True)
+    first_name = db.Column(db.String(200), nullable=False)
+    last_name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(254), nullable=True)
+    password = db.Column(db.String(60), nullable=True)  # bcrypt hashes are 60 chars long
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+    modified_at = db.Column(db.DateTime(), onupdate=datetime.utcnow)
+
+    groups = db.relationship('Group', secondary='user_to_group', lazy='dynamic', collection_class=set)
 
     def __init__(self, **kwargs):
         if 'password' in kwargs:
@@ -43,6 +47,13 @@ class User(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
         return "<User id=%s first_name=%s last_name=%s email=%s password=%s>" % (self.id, self.first_name, self.last_name, self.email, self.password)
+
+    @property
+    def permissions(self):
+        perms = []
+        for group in self.groups.all():
+            perms.extend([perm.name for perm in group.permissions.all()])
+        return list(set(perms))
 
     def is_authenticated(self):
         return True
@@ -64,6 +75,40 @@ class User(db.Model):
         if not self.password or not password:
             return False
         return bcrypt.check_password_hash(self.password, password)
+
+
+class UserToGroup(db.Model):
+    user_id = db.Column(UUID(), db.ForeignKey('user.id'), primary_key=True)
+    group_id = db.Column(UUID(), db.ForeignKey('group.id'), primary_key=True)
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+
+
+class Group(db.Model):
+    id = db.Column(UUID(), primary_key=True, default=uuid4)
+    name = db.Column(db.String(100), nullable=False)
+    permissions = db.relationship('Permission', secondary='group_to_permission', backref='group', lazy='dynamic', collection_class=set)
+    users = db.relationship('User', secondary='user_to_group', collection_class=set)
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+    modified_at = db.Column(db.DateTime(), onupdate=datetime.utcnow)
+
+    def __repr__(self):
+        return '{self.name}'.format(self=self)
+
+
+class GroupToPermission(db.Model):
+    group_id = db.Column(UUID(), db.ForeignKey('group.id'), primary_key=True)
+    permission_id = db.Column(UUID(), db.ForeignKey('permission.id'), primary_key=True)
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+
+
+class Permission(db.Model):
+    id = db.Column(UUID(), primary_key=True, default=uuid4)
+    name = db.Column(db.String(100), nullable=False)
+    created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+    modified_at = db.Column(db.DateTime(), onupdate=datetime.utcnow)
+
+    def __repr__(self):
+        return '{self.name}'.format(self=self)
 
 
 class Child(db.Model):

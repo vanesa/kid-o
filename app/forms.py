@@ -64,7 +64,7 @@ class SearchForm(Form):
     class_str = SelectField(validators=[Optional()], choices=[(x, x) for x in [
         'Kindergarten', 'Preschool', 'School (Basic)', 'School (Advanced)', 'Special School']])
     project = SelectField(validators=[Optional()], choices=[(x, x) for x in [
-        'Orphanage', 'San Skate', 'Dance Group', 'Volleyball Group', 'English Group', 'Tutoring Group']])
+        'Orphanage', 'San Skate', 'Dance Group', 'Volleyball Group', 'English Group', 'Tutoring Group', 'ProSalud', 'Project Undetermined']])
     show_hidden_profiles = BooleanField('show_hidden_profiles')
 
 class GPSearchForm(Form):

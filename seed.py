@@ -64,6 +64,6 @@ def load_projects():
 if __name__ == "__main__":
     db = SQLAlchemy(app)
 
-    # load_users()
-    # load_children()
+    load_users()
+    load_children()
     load_projects()

@@ -281,7 +281,7 @@ def edit_profile(id):
         if child.is_active == False and child.godparents:
             for g in child.godparents:
                 remove_godparent(g.id)
-                orphanage = Project.query.filter_by(name='Orphanage').first()
+                project_undetermined = Project.query.filter_by(name='Project Undetermined').first()
                 data = {}
                 data['project_id'] = orphanage.id
                 data['godparent_id'] = g.id

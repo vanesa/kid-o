@@ -42,21 +42,32 @@
         <li role="presentation">
           <a href="/map">
             <button type="button" class="btn btn-primary">
-              <span class="fa fa-map-marker" aria-hidden="true"></span> Map
+              <span class="fa fa-map-marker" aria-hidden="true"></span>
+              <span class="footer-buttons">Map </span>
             </button>
           </a>
         </li>
         <li role="presentation">
           <a href="/overview">
             <button type="button" class="btn btn-warning">
-              <span class="fa fa-child" aria-hidden="true"></span> Children
+              <span class="fa fa-child" aria-hidden="true"></span>
+              <span class="footer-buttons">Children </span>
+            </button>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="/godparents-overview">
+            <button type="button" class="btn btn-success">
+              <span class="fa fa-users" aria-hidden="true"></span>
+              <span class="footer-buttons">Godparents </span>
             </button>
           </a>
         </li>
         <li role="presentation">
           <a href="/logout">
             <button type="button" class="btn btn-danger">
-              <span class="fa fa-paper-plane" aria-hidden="true"></span> Log Out
+              <span class="fa fa-paper-plane" aria-hidden="true"></span>
+              <span class="footer-buttons">Log Out </span>
             </button>
           </a>
         </li>
@@ -70,7 +81,7 @@
     <script type="text/javascript" src="/static/js/chosen/chosen.jquery.js"> </script>
     <script type="text/javascript" src="/static/js/bootstrap-filestyle.min.js"> </script>
 
-    {% block js %} here goes javascript {% endblock %}
+    {% block js %} {% endblock %}
 
     {% compress 'js' %}
       <script type="text/javascript" src="/static/js/base.js"></script>

@@ -1,0 +1,31 @@
+
+      <form action="/godparents-overview" method="POST">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 searchfield">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <input type="text" class="form-control" name="name" placeholder="Type godparents's name..." value="{% if form.data.name is defined %}{{form.data.name or ''}}{% else %}{% endif %}" />
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 searchfield">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <input type="text" class="form-control" name="child_name" placeholder="Type godparent's child's name..." value="{% if form.data.child_name is defined %}{{form.data.child_name or ''}}{% else %}{% endif %}" />
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 searchfield">
+            <div class="col-lg-8 col-md-8 col-sm-4 col-xs-6 projects">
+              <select id="project" name="project" class="form-control addchildinput" data-placeholder="Select a project">
+                <option value=""> - Search by project - </option>
+                {% for _, option in form.project.choices %}
+                <option value="{{ option }}" {% if option == form.data.project %}selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 go-button">
+              <span class="input-btn">
+                <button class="btn btn-default" type="submit">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>

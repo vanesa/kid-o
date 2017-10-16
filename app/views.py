@@ -35,7 +35,7 @@ from app.models import User, Child, Godparent, Project, ChildToGodparent, db, Go
 from app import auth 
 from app import settings
 from app.constants import CHILD_HAS_GODPARENT, NO_NEED
-from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm
+from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm, GPSearchForm
 
 wtforms_json.init()
 
@@ -145,6 +145,43 @@ def show_overview():
             flash('We found 1 profile.')
     
     return render_template('overview.html', children=children, form=form)
+
+@app.route('/godparents-overview', methods=['GET', 'POST'])
+@login_required
+def show_godparents_overview():
+    """ Shows overview of all of the children in the project ordered by lastname."""
+
+    query = Godparent.query
+    form = GPSearchForm(request.form)
+    flash_number_results = False
+
+    if request.method == 'POST' and form.validate():
+
+        name = form.data.get('name')
+        child_name = form.data.get('child_name')
+        project = form.data.get('project')
+
+        if name:
+            query = query.filter(Godparent.gp_fullname.ilike("%"+name+"%"))
+            flash_number_results = True
+        if child_name:
+            query = query.join(Godparent.children).filter(Child.fullname.ilike("%"+child_name+"%"))
+            flash_number_results = True
+        if project:
+            query = query.join(Godparent.projects).filter(Project.name == project)
+            flash_number_results = True
+
+    godparents = query.order_by(Godparent.last_name.asc()).all()
+
+    if flash_number_results and request.method == 'POST':
+        if len(godparents) == 0:
+            flash('We could not find any child that matches your search. ')
+        if len(godparents) > 1:
+            flash('We found ' + str(len(godparents)) + ' profiles.')
+        elif len(godparents) == 1:
+            flash('We found 1 profile.')
+
+    return render_template('godparents_overview.html', godparents=godparents, form=form)
 
 @app.route('/map')
 @login_required

@@ -149,12 +149,18 @@ class Godparent(db.Model):
     email = db.Column(db.String(64), nullable=True)
     messages = db.relationship('Message', backref='godparent', lazy='dynamic')
     sponsorship_history = db.Column(db.String(), nullable=True)
+    children = db.relationship('Child', secondary='child_to_godparent', backref='godparent', lazy='dynamic', collection_class=set)
+    projects = db.relationship('Project', secondary='godparent_to_project', backref='godparent', lazy='dynamic', collection_class=set)
 
     def __repr__(self):
         return unicode('{first_name} {last_name}').format(
             first_name=self.first_name,
             last_name=self.last_name,
         )
+
+    @hybrid_property
+    def gp_fullname(self):
+        return self.first_name + " " + self.last_name
 
 
 class Project(db.Model):

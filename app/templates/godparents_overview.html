@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block extra_nav_content %} 
+  {% include '/partials/godparent_search.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="godparents-toppad">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+        {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% for godparent in godparents %}
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4>{{ godparent.first_name}} {{ godparent.last_name }}</h4>
+      </div>
+      <div class="panel-body">
+        {% if godparent.children.count() %}
+          <p><strong>Godparent to: </strong> </p>
+          {% for child in godparent.children.all() %}
+          {% if child.photo_url %}
+          <p class="gp-child">
+            <a href="../child/{{ child.id }}">
+            {{ child.fullname }}
+              <img src="{{ child.photo_url }}" class="gp-images-style clip-circle">
+            </a>
+          </p>
+          {% else %}
+            <a href="../child/{{ child.id }}">
+              <img src="/static/images/childphotopreview.png" class="gp-images-style clip-circle">
+            </a>
+            {{ child.fullname }}
+          {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% if godparent.projects.count() %}
+        <p><strong>Project Sponsoring:</strong> 
+          {% for project in godparent.projects.all() %}
+        {{ project }}{% if not loop.last %},{% endif %}
+        {% endfor %}</p>
+        {% endif %}
+        {% if godparent.referral_name %}
+       <strong>Referral Name:</strong> {{ godparent.referral_name }}
+       {% endif %}
+       <p><strong>Email:</strong> <a href="mailto:{{ godparent.email }}">{{ godparent.email }} </a></p>
+        <p><strong>Sponsorship history:</strong> {{ godparent.sponsorship_history }}</p>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

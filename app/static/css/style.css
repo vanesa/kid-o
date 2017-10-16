@@ -6,11 +6,26 @@
   padding-bottom: 50px;
 }
 
+.godparents-toppad {
+  padding-top: 190px;
+  padding-bottom: 50px;
+}
+
 @media (max-width: 800px) {
   .toppad {
     padding-top: 230px;
     padding-bottom: 50px;
 }
+  }
+
+@media (max-width: 800px) {
+  .godparents-toppad {
+    padding-top: 250px;
+    padding-bottom: 50px;
+  }
+  .footer-buttons {
+    display: none;
+  }
   }
 
 .toppad_child {
@@ -58,6 +73,25 @@
     border-radius: 4px;
     vertical-align: baseline;
 }
+
+.gp-child {
+  text-align: center;
+  max-width: 140px;
+  line-height: 2;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.gp-images-style {
+  height: 180px;
+  margin-bottom: -40px;
+  display: block;
+}
+
+.clip-circle {
+  clip-path: circle(60px at 70px 60px);
+}
+
 
 .imagesedit-style {
   width: 84px;

@@ -47,7 +47,8 @@
         {% if godparent.referral_name %}
        <strong>Referral Name:</strong> {{ godparent.referral_name }}
        {% endif %}
-          <p><strong>Sponsorship history:</strong> {{ godparent.sponsorship_history }}</p>
+       <p><strong>Email:</strong> <a href="mailto:{{ godparent.email }}">{{ godparent.email }} </a></p>
+        <p><strong>Sponsorship history:</strong> {{ godparent.sponsorship_history }}</p>
       </div>
     </div>
   {% endfor %}

@@ -8,7 +8,7 @@ try:
 except ImportError:
     pass
 from sqlalchemy import or_, and_
-from twilio import twiml
+from twilio.twiml.messaging_response import MessagingResponse
 import urllib
 from werkzeug import secure_filename
 
@@ -482,7 +482,7 @@ def registerbysms():
                     if nummedia and mediaurl is not None:
                         imgurl = mediaurl
 
-                    child_entry = Child(pic_url=imgurl, first_name=child_first_name, last_name=child_last_name, birth_date=child_birth_date, latitude=18.542769, longitude=-69.801216)
+                    child_entry = Child(photo_url=imgurl, first_name=child_first_name, last_name=child_last_name, birth_date=child_birth_date)
 
                     db.session.add(child_entry)
                     db.session.commit()
@@ -492,7 +492,7 @@ def registerbysms():
     else:
         message = "Hello friend! If you want to use Kid-O please register on our website!"
 
-    resp = twiml.Response()
+    resp = MessagingResponse()
     resp.message(message)
     return str(resp)
 

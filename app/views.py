@@ -287,7 +287,7 @@ def edit_profile(id):
                 data['godparent_id'] = g.id
                 sponsorship = GodparentToProject(**data)
                 db.session.add(sponsorship)
-                child.godparent_status = 'No need'
+                child.godparent_status = NO_NEED
 
         db.session.commit()
 

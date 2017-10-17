@@ -2,7 +2,11 @@ from flask_wtf import FlaskForm as Form
 from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField, FileField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired, Email, Length, NumberRange, ValidationError, Optional, Regexp
 from app import app
-from app.constants import CHILD_HAS_GODPARENT, NO_NEED, SEARCHING_GODPARENT
+from app.constants import (HAITIAN, DOMINICAN, 
+                            CHILD_HAS_GODPARENT, NO_NEED, SEARCHING_GODPARENT,
+                            KINDERGARTEN, PRESCHOOL, SCHOOL_BASIC, SCHOOL_ADVANCED,SPECIAL_SCHOOL,
+                            ORPHANAGE, SAN_SKATE, DANCE_GROUP, VOLLEYBALL_GROUP, ENGLISH_GROUP, 
+                            TUTORING_GROUP, PROSALUD, PROJECT_UNDETERMINED)
 
 def lower(data):
     return data.lower() if data else data
@@ -32,7 +36,7 @@ class ChildForm(Form):
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
     nick_name = StringField('nick_name', validators=[Length(max=15)])
     birth_date = DateField('birth_date', validators=[DataRequired()])
-    nationality = SelectField('nationality', validators=[Optional()], choices=[(x, x) for x in ['Haitian', 'Dominican']])
+    nationality = SelectField('nationality', validators=[Optional()], choices=[(x, x) for x in [HAITIAN, DOMINICAN]])
     guardian_type = StringField('guardian_type', validators=[Length(max=15)])
     guardian_fname = StringField('guardian_fname', validators=[Length(max=25)])
     guardian_lname = StringField('guardian_lname', validators=[Length(max=25)])
@@ -40,7 +44,7 @@ class ChildForm(Form):
     number_of_siblings = IntegerField('number_of_siblings', validators=[NumberRange(min=0, max=max_number_of_siblings)])
     siblings_in_project = StringField('siblings_in_school', validators=[Length(max=40)])
     school_class = SelectField('school_class', validators=[Optional()], choices=[(x, x) for x in [
-        'Kindergarten', 'Preschool', 'School (Basic)', 'School (Advanced)', 'Special School']])
+        KINDERGARTEN, PRESCHOOL, SCHOOL_BASIC, SCHOOL_ADVANCED, SPECIAL_SCHOOL]])
     school_attendance = SelectField('school_attendance', validators=[Optional()], choices=[(x, x) for x in [
         'Good', 'Intermediate', 'Bad'
     ]])
@@ -62,13 +66,13 @@ class GodparentForm(Form):
 class SearchForm(Form):
     name = StringField(validators=[Optional(), Length(max=25)])
     class_str = SelectField(validators=[Optional()], choices=[(x, x) for x in [
-        'Kindergarten', 'Preschool', 'School (Basic)', 'School (Advanced)', 'Special School']])
+        KINDERGARTEN, PRESCHOOL, SCHOOL_BASIC, SCHOOL_ADVANCED, SPECIAL_SCHOOL]])
     project = SelectField(validators=[Optional()], choices=[(x, x) for x in [
-        'Orphanage', 'San Skate', 'Dance Group', 'Volleyball Group', 'English Group', 'Tutoring Group', 'ProSalud', 'Project Undetermined']])
+        ORPHANAGE, SAN_SKATE, DANCE_GROUP, VOLLEYBALL_GROUP, ENGLISH_GROUP, TUTORING_GROUP, PROSALUD, PROJECT_UNDETERMINED]])
     show_hidden_profiles = BooleanField('show_hidden_profiles')
 
 class GPSearchForm(Form):
     name = StringField(validators=[Optional(), Length(max=25)])
     child_name = StringField(validators=[Optional(), Length(max=25)])
     project = SelectField(validators=[Optional()], choices=[(x, x) for x in [
-        'Orphanage', 'San Skate', 'Dance Group', 'Volleyball Group', 'English Group', 'Tutoring Group']])
+        ORPHANAGE, SAN_SKATE, DANCE_GROUP, VOLLEYBALL_GROUP, ENGLISH_GROUP, TUTORING_GROUP, PROSALUD, PROJECT_UNDETERMINED]])

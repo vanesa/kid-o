@@ -289,6 +289,10 @@ def edit_profile(id):
                 db.session.add(sponsorship)
                 child.godparent_status = NO_NEED
 
+        # if no godparent is added, remove godparent status
+        if child.godparent_status == CHILD_HAS_GODPARENT and not child.godparents.all():
+            child.godparent_status = None
+
         db.session.commit()
 
         return redirect('/child/%s' % child.id)

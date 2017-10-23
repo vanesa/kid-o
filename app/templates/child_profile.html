@@ -221,15 +221,16 @@
 {% endblock %}
 
 {% block js %}
+      <script>
+        window.id = '{{ child.id }}'
+      </script>
     {% compress 'js' %}
       <script>
         $('#myModal').on('shown.bs.modal', function () {
           $('#myInput').focus()
         })
       </script>
-      <script>
-        window.id = '{{ child.id }}'
-      </script>
+
       <script src='/static/js/profilemap.js'></script>
     {% endcompress %}
 {% endblock %}

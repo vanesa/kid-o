@@ -3,10 +3,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID as PGUUID
 from sqlalchemy.ext.hybrid import hybrid_property
-from flask_bcrypt import Bcrypt
 import os
 from uuid import uuid4
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import app
 
@@ -15,8 +15,6 @@ from . import app
 # object, where we do most of our interactions (like committing, etc.)
 
 db = SQLAlchemy(app)
-
-bcrypt = Bcrypt(app)
 
 
 class UUID(PGUUID):
@@ -38,7 +36,7 @@ class User(db.Model):
 
     def __init__(self, **kwargs):
         if 'password' in kwargs:
-            kwargs['password'] = bcrypt.generate_password_hash(kwargs['password'])
+            kwargs['password'] = generate_password_hash(kwargs['password'])
         super(User, self).__init__(**kwargs)
 
     def __repr__(self):
@@ -58,12 +56,12 @@ class User(db.Model):
         return unicode(self.id)
 
     def set_password(self, password):
-        self.password = bcrypt.generate_password_hash(password)
+        self.password = generate_password_hash(password)
 
     def check_password(self, password):
         """ Returns True if the password is correct for the user.
         """
-        return bcrypt.check_password_hash(unicode(self.password), unicode(password.decode("utf8")))
+        return check_password_hash(unicode(self.password), unicode(password.decode("utf8")))
     
 
 class Child(db.Model):

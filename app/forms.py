@@ -30,8 +30,9 @@ class SignUpForm(Form):
 
 
 class ChildForm(Form):
-    photo_url = FileField(u'photo', validators=[Regexp(r'\.jpg$'), Optional()])
+    photo = FileField(u'photo', validators=[Regexp(r'\.jpg$'), Optional()])
     is_active = BooleanField('is_active')
+    gender = SelectField('gender', validators=[Optional()], choices=[(x, x) for x in ['Male', 'Female']])
     first_name = StringField('first_name', validators=[DataRequired(), Length(max=15)])
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
     nick_name = StringField('nick_name', validators=[Length(max=15)])

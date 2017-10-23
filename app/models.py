@@ -68,8 +68,9 @@ class User(db.Model):
 
 class Child(db.Model):
     id = db.Column(UUID(), primary_key=True, default=uuid4)
-    photo_url = db.Column(db.String(3000))
+    photo = db.Column(db.LargeBinary())
     is_active = db.Column(db.Boolean, default=True)
+    gender = db.Column(db.String(32))
     first_name = db.Column(db.String(32), nullable=False)
     last_name = db.Column(db.String(32), nullable=False)
     nick_name = db.Column(db.String(32), nullable=True)
@@ -104,6 +105,12 @@ class Child(db.Model):
         age = currenttime - self.birth_date
         age = age.days / 365
         return age
+
+    @property
+    def photo_url(self):
+        if self.photo is None:
+            return '/static/images/childphotopreview.png'
+        return '/child_photo/{0}'.format(self.id)
 
     @property
     def projects_for_html(self):

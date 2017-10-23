@@ -7,7 +7,7 @@ $(function() {
 $(document).ready (function () {
     let gpselect = $('#godparent_status_chosen a span').text();
     if (gpselect == 'Has godparent' && (!$('#addgpbutton').length)) {
-    $('#guardian').append('<p><button type="button" id="addgpbutton" class="btn btn-sm btn-success" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button></p>');
+    $('#right_info').append('<p><button type="button" id="addgpbutton" class="btn btn-sm btn-success" data-toggle="modal" data-target="#godparentModal"> Add Godparent </button></p>');
     } 
   });
 

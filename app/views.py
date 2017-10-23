@@ -2,6 +2,7 @@ from app import app
 
 from datetime import datetime, timedelta
 import re
+import io
 import os
 try:
     import secrets
@@ -19,9 +20,8 @@ from flask import (
     flash, 
     session, 
     url_for, 
-    send_from_directory, 
+    send_file,
     jsonify, 
-    make_response, 
     abort,
     send_from_directory,
 )
@@ -129,9 +129,6 @@ def show_overview():
         if form.data.get('show_hidden_profiles'):
             show_hidden_profiles = True
 
-        # if request.headers.get('Accept') == 'json':
-        #     return jsonify(profiles=[x.to_dict() for x in children])
-
     if not show_hidden_profiles:
         query = query.filter(Child.is_active==True)
     children = query.order_by(Child.last_name.asc()).all()
@@ -208,7 +205,6 @@ def edit_profile(id):
     """ Edit child profile """
 
     child = Child.query.filter_by(id=id).first()
-    # godparent = db.session.query(Godparent).filter_by(id=child_id).first()
 
     if child is None:
         abort(404)
@@ -218,33 +214,31 @@ def edit_profile(id):
 
     if request.method == 'POST' and form.validate():  # update child info from edit_profile.html form
         # Set photo_url to empty string to keep original path in case no changes are made.
-        photo_url = ""
-        photo = request.files['photo']
-        if photo and allowed_file(photo.filename):
+        photo = ''
+        uploaded_photo = request.files['photo']
+        if uploaded_photo and allowed_file(uploaded_photo.filename):
             # If no image is uploaded, this never passes.
             child_name = form.data['first_name'].lower() + form.data['last_name'].lower()
-            photo_format = photo.filename.split('.')[1].lower()
-            filename = secure_filename(child_name + '.' + photo_format)
             
             # resize proportional to baseheight            
             baseheight = 250
-            im = Image.open(photo.stream)
+            im = Image.open(uploaded_photo.stream)
             hpercent = (baseheight/float(im.size[1]))
             wsize = int((float(im.size[0])*float(hpercent)))
             im = im.resize((wsize, baseheight), resample=Image.LANCZOS)
-            path = os.path.abspath(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
-            im.save(path)
 
-            # Save the image path to send to the database
-            photo_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
-        # get all new data
+            image = io.BytesIO()
+            im.save(image, format='JPEG')
+
+            photo = image.getvalue()
 
         # seed into database
-        if photo_url != "":
-            child.photo_url = photo_url
+        if photo != "":
+            child.photo = photo
         # seed into database
 
         child.is_active= form.data['is_active']
+        child.gender= form.data['gender']
         child.first_name = form.data['first_name']
         child.last_name = form.data['last_name']
         child.nick_name = form.data['nick_name']
@@ -318,32 +312,25 @@ def add_profile():
 
     if request.method == 'POST' and form.validate(): 
         # Upload image 
-        photo = request.files['photo']
-        photo_url = ''
+        uploaded_photo = request.files['photo']
+        photo = ''
 
-        if photo and allowed_file(photo.filename):
+        if uploaded_photo and allowed_file(uploaded_photo.filename):
 
-            print "This should be the file: ", photo
+            print "This should be the file: ", uploaded_photo
             child_name = (form.data['first_name'] + form.data['last_name']).lower()
-            photo_format = photo.filename.split('.')[1].lower()
-            filename = secure_filename(child_name + '.' + photo_format)
 
             # resize proportional to baseheight 
             baseheight = 250
-            im = Image.open(photo.stream)
+            im = Image.open(uploaded_photo.stream)
             hpercent = (baseheight/float(im.size[1]))
             wsize = int((float(im.size[0])*float(hpercent)))
             im = im.resize((wsize, baseheight), resample=Image.LANCZOS)
-
-            path = os.path.abspath(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
-            im.save(path)
-
-            # Save the image path to send to the database
-            photo_url = os.path.join("/", app.config['UPLOAD_FOLDER'], filename)
+            photo = im.read()
 
         # seed into database
         data = form.data
-        data['photo_url'] = photo_url
+        data['photo'] = photo
         data['projects'] = [Project.query.filter_by(name=x).first() for x in data['projects']]
         child = Child(**data)
         
@@ -495,6 +482,16 @@ def registerbysms():
     resp = MessagingResponse()
     resp.message(message)
     return str(resp)
+
+@app.route('/child_photo/<string:child_id>', methods=['GET'])
+def child_photo(child_id):
+    child = Child.query.filter_by(id=child_id).first()
+    if not child:
+        abort(404)
+
+    return send_file(io.BytesIO(child.photo),
+                     attachment_filename='{0}.jpg'.format(child.id),
+                     mimetype='image/jpg')
 
 @app.route('/favicon.ico')
 def favicon():

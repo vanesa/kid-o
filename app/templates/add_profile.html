@@ -21,22 +21,32 @@
           <input type="checkbox" name="is_active" checked data-toggle="toggle" value="true" class="addchildinput">
         </p>
         <p>
+          <label for="gender-field">Gender: </label>
+          <select id="gender" name="gender" class="form-control addchildinput">
+            <option value="">Unknown</option>
+            {% for _, option in form.gender.choices %}
+              <option value="{{ option }}" {% if option == form.data.gender %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+          </select>
+        </p>
+        <p>
+          <label for="name-field">Name and Birthday: </label>
           <input type="text" name="first_name" placeholder="First name" class="form-control addchildinput" value="Celia"><br />
           <input type="text" name="last_name" placeholder="Last name" class="form-control addchildinput" value="Aurora"><br />
           <input type="text" name="nick_name" placeholder="Nick name" class="form-control addchildinput"><br />
           <input type="text" name="birth_date" placeholder="Birth date YYYY-MM-DD" class="form-control addchildinput" value="2009-10-04"><br />
         </p>
-        <p>
-          <label for="nationality-field">Nationality: </label>
-          <select name="nationality" class="form-control addchildinput">
-          <option value="">Unknown</option>
-            {% for _, option in form.nationality.choices %}
-              <option value="{{ option }}">{{ option }}</option>
-            {% endfor %}
-        </select>
-        </p>
       </div>
       <div class="info col-xs-12 col-md-3">
+       <p>
+        <label for="nationality-field">Nationality: </label>
+        <select name="nationality" class="form-control addchildinput">
+        <option value="">Unknown</option>
+          {% for _, option in form.nationality.choices %}
+            <option value="{{ option }}">{{ option }}</option>
+          {% endfor %}
+      </select>
+      </p>
       <p>
         <label for="guardian-field">Guardian: </label>
         <input type="text" name="guardian_fname" placeholder="Guardian First name" class="form-control addchildinput"><br />
@@ -86,7 +96,6 @@
         </p>
         <p><strong>Project: </strong>
           <select id="projects" name="projects" class="form-control addchildinput" multiple>
-            <option> - No project assigned - </option>
           {% for proj in projects %}
             <option value="{{ proj }}">{{ proj }}</option>
           {% endfor %}

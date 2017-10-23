@@ -35,10 +35,10 @@ def load_children():
         print "The line is:", line
         
         print "This is the child info:", child_info
-        child_entry = Child(photo_url=child_info[0], first_name=child_info[1], last_name=child_info[2],
-                            birth_date=child_info[3], nationality=child_info[4], guardian_type=child_info[5], guardian_fname=child_info[6],
-                            guardian_lname=child_info[7], number_of_siblings=child_info[8], siblings_in_project=child_info[9], school_class=child_info[10], 
-                            school_attendance=child_info[11], situation=child_info[12], latitude=child_info[13], longitude=child_info[14])
+        child_entry = Child(photo=child_info[0], first_name=child_info[1], gender=child_info[2], last_name=child_info[3],
+                            birth_date=child_info[4], nationality=child_info[5], guardian_type=child_info[6], guardian_fname=child_info[7],
+                            guardian_lname=child_info[8], number_of_siblings=child_info[9], siblings_in_project=child_info[10], school_class=child_info[11], 
+                            school_attendance=child_info[12], situation=child_info[13], latitude=child_info[14], longitude=child_info[15])
         db.session.add(child_entry)
        
         print child_entry

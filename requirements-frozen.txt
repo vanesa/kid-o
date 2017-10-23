@@ -18,6 +18,7 @@ Flask-SeaSurf==0.2.2
 Flask-SQLAlchemy==2.3.2
 Flask-Static-Compress==1.0.2
 Flask-WTF==0.14.2
+gunicorn==19.7.1
 idna==2.6
 ipaddress==1.0.18
 itsdangerous==0.24

@@ -32,7 +32,7 @@ class User(db.Model):
     first_name = db.Column(db.String(32), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(200), nullable=True)
-    password = db.Column(db.String(), nullable=True)
+    password = db.Column(db.String(600), nullable=True)
 
     def __init__(self, **kwargs):
         if 'password' in kwargs:

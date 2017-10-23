@@ -6,9 +6,11 @@ from flask_login import LoginManager
 from flask_seasurf import SeaSurf
 from flask_static_compress import FlaskStaticCompress
 
+from whitenoise import WhiteNoise
 
 app = Flask(__name__)
 app.config.from_object('app.settings.common')
+app = WhiteNoise(app)
 
 csrf = SeaSurf(app)
 

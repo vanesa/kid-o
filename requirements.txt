@@ -9,6 +9,7 @@ Flask-SeaSurf
 Flask-SQLAlchemy
 Flask-Static-Compress
 Flask-WTF
+gunicorn
 Jinja2
 Pillow
 psycopg2
@@ -17,6 +18,6 @@ pytz
 SQLAlchemy
 twilio
 Werkzeug
+WhiteNoise
 WTForms
 WTForms-JSON
-gunicorn

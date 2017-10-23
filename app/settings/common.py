@@ -13,13 +13,13 @@ COMPRESSOR_DEBUG = True
 
 # Overwrite above settings with production data
 if os.environ.get('PRODUCTION'):
-    from settings.production import *
+    from .production import *
 
 
 # Overwrite above settings with dev data
 # If we aren't on a dev machine, the file shouldn't exist
 try:
-    from settings.development import *
+    from .development import *
 except ImportError:
     pass
 
@@ -27,7 +27,7 @@ except ImportError:
 # Overwrite above settings with test data
 # If we aren't on a test machine, the file shouldn't exist
 try:
-    from settings.test import *
+    from .test import *
 except ImportError:
     pass
 

@@ -348,11 +348,6 @@ def delete_profile(id):
 
     child = db.session.query(Child).filter_by(id=id).first()
     child_name = child.first_name + " " + child.last_name
-    filename = child.first_name + child.last_name + ".jpg"
-    try:
-        os.remove(os.path.join("app/", app.config['UPLOAD_FOLDER'], filename))
-    except:
-        pass
     db.session.delete(child)
     db.session.commit()
     flash('You have deleted ' + child_name + "'s profile.")

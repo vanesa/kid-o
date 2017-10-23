@@ -18,6 +18,5 @@ pytz
 SQLAlchemy
 twilio
 Werkzeug
-WhiteNoise
 WTForms
 WTForms-JSON

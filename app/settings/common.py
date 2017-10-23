@@ -1,6 +1,5 @@
 import os
 
-UPLOAD_FOLDER = 'static/images/photos/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 WTF_CSRF_ENABLED = False
 IS_TRAVIS = os.environ.get('IS_TRAVIS') == 'true'
@@ -9,7 +8,8 @@ DB_NAME = 'kido'
 DB_USERNAME = None
 DB_PASSWORD = None
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-COMPRESSOR_DEBUG = True
+COMPRESSOR_DEBUG = False
+COMPRESSOR_OFFLINE_COMPRESS = True
 
 
 # Overwrite above settings with production data

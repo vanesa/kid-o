@@ -8,16 +8,12 @@ DB_NAME = 'kido'
 DB_USERNAME = None
 DB_PASSWORD = None
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-COMPRESSOR_DEBUG = False
-COMPRESSOR_OFFLINE_COMPRESS = True
+COMPRESSOR_DEBUG = True
 
 
 # Overwrite above settings with production data
-# If we aren't on a prod machine, the file shouldn't exist
-try:
+if os.environ.get('PRODUCTION'):
     from settings.production import *
-except ImportError:
-    pass
 
 
 # Overwrite above settings with dev data

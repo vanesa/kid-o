@@ -4,6 +4,7 @@
 # Nationality
 HAITIAN = 'Haitian'
 DOMINICAN = 'Dominican'
+HAITIAN_DOMINICAN = 'Haitian-Dominican'
 
 # Godparent status
 CHILD_HAS_GODPARENT = 'Has godparent'

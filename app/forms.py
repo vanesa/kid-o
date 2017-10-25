@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm as Form
 from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField, FileField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired, Email, Length, NumberRange, ValidationError, Optional, Regexp
 from app import app
-from app.constants import (HAITIAN, DOMINICAN, 
+from app.constants import (HAITIAN, DOMINICAN, HAITIAN_DOMINICAN,
                             CHILD_HAS_GODPARENT, NO_NEED, SEARCHING_GODPARENT,
                             KINDERGARTEN, PRESCHOOL, SCHOOL_BASIC, SCHOOL_ADVANCED,SPECIAL_SCHOOL,
                             ORPHANAGE, SAN_SKATE, DANCE_GROUP, VOLLEYBALL_GROUP, ENGLISH_GROUP, 
@@ -37,7 +37,7 @@ class ChildForm(Form):
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
     nick_name = StringField('nick_name', validators=[Length(max=15)])
     birth_date = DateField('birth_date', validators=[DataRequired()])
-    nationality = SelectField('nationality', validators=[Optional()], choices=[(x, x) for x in [HAITIAN, DOMINICAN]])
+    nationality = SelectField('nationality', validators=[Optional()], choices=[(x, x) for x in [HAITIAN, DOMINICAN, HAITIAN_DOMINICAN]])
     guardian_type = StringField('guardian_type', validators=[Length(max=15)])
     guardian_fname = StringField('guardian_fname', validators=[Length(max=25)])
     guardian_lname = StringField('guardian_lname', validators=[Length(max=25)])

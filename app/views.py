@@ -14,14 +14,14 @@ import urllib
 from werkzeug import secure_filename
 
 from flask import (
-    render_template, 
-    redirect, 
+    render_template,
+    redirect,
     request,
-    flash, 
-    session, 
-    url_for, 
+    flash,
+    session,
+    url_for,
     send_file,
-    jsonify, 
+    jsonify,
     abort,
     send_from_directory,
 )
@@ -32,7 +32,7 @@ from PIL import Image
 import wtforms_json
 
 from app.models import User, Child, Godparent, Project, ChildToGodparent, db, GodparentToProject
-from app import auth 
+from app import auth
 from app import settings
 from app.constants import CHILD_HAS_GODPARENT, NO_NEED
 from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm, GPSearchForm
@@ -46,7 +46,7 @@ def login():
 
     For Log in: take email, password from user and check if credentials exist in the database
     by checking if email is in the users table. If email in table, redirect to the children overview.
-    If not: redirect to sign up page. WTForms validates the form. 
+    If not: redirect to sign up page. WTForms validates the form.
     """
 
     form = LoginForm(request.form)
@@ -58,7 +58,6 @@ def login():
             login_user(user)
             if not auth.is_safe_url(next_url):
                 return abort(400)
-            app.logger.debug(next_url)
             return redirect(next_url or '/overview')
 
         if not user:
@@ -89,7 +88,6 @@ def signup_form():
     if request.method == 'POST' and form.validate():  # Process form if route gets POST request from /index
         next_url = request.form.get('next', '/overview')
         user_data = form.data
-        app.logger.debug(user_data)
         del user_data['confirm']
         user = User(**user_data)
         db.session.add(user)
@@ -110,7 +108,7 @@ def show_overview():
     form = SearchForm(request.form)
     show_hidden_profiles = False
     flash_number_results = False
-    
+
     if request.method == 'POST' and form.validate():
 
         name = form.data.get('name')
@@ -140,7 +138,7 @@ def show_overview():
             flash('We found ' + str(len(children)) + ' profiles.')
         elif len(children) == 1:
             flash('We found 1 profile.')
-    
+
     return render_template('overview.html', children=children, form=form)
 
 @app.route('/godparents-overview', methods=['GET', 'POST'])
@@ -196,7 +194,7 @@ def child_profile(id):
     child = db.session.query(Child).filter_by(id=id).first()
     if child is None:
         abort(404)
-    
+
     return render_template('child_profile.html', child=child)
 
 @app.route('/child/edit/<string:id>', methods=['GET', 'POST'])
@@ -213,29 +211,17 @@ def edit_profile(id):
     form.projects.choices = [(p.name, p.name) for p in Project.query.all()]
 
     if request.method == 'POST' and form.validate():  # update child info from edit_profile.html form
-        # Set photo_url to empty string to keep original path in case no changes are made.
-        photo = ''
         uploaded_photo = request.files['photo']
         if uploaded_photo and allowed_file(uploaded_photo.filename):
-            # If no image is uploaded, this never passes.
-            child_name = form.data['first_name'].lower() + form.data['last_name'].lower()
-            
-            # resize proportional to baseheight            
+            # resize proportional to baseheight
             baseheight = 250
             im = Image.open(uploaded_photo.stream)
             hpercent = (baseheight/float(im.size[1]))
             wsize = int((float(im.size[0])*float(hpercent)))
             im = im.resize((wsize, baseheight), resample=Image.LANCZOS)
-
             image = io.BytesIO()
             im.save(image, format='JPEG')
-
-            photo = image.getvalue()
-
-        # seed into database
-        if photo != "":
-            child.photo = photo
-        # seed into database
+            child.photo = image.getvalue()
 
         child.is_active= form.data['is_active']
         child.gender= form.data['gender']
@@ -243,6 +229,7 @@ def edit_profile(id):
         child.last_name = form.data['last_name']
         child.nick_name = form.data['nick_name']
         child.birth_date = form.data['birth_date']
+        child.birth_date_accuracy = form.data['birth_date_accuracy']
         child.nationality = form.data['nationality']
         child.guardian_type = form.data['guardian_type']
         child.guardian_fname = form.data['guardian_fname']
@@ -310,34 +297,29 @@ def add_profile():
     form = ChildForm(request.form)
     form.projects.choices = [(p.name, p.name) for p in Project.query.all()]
 
-    if request.method == 'POST' and form.validate(): 
-        # Upload image 
+    if request.method == 'POST' and form.validate():
+        data = form.data
+
         uploaded_photo = request.files['photo']
-        photo = ''
-
         if uploaded_photo and allowed_file(uploaded_photo.filename):
-
-            print "This should be the file: ", uploaded_photo
-            child_name = (form.data['first_name'] + form.data['last_name']).lower()
-
-            # resize proportional to baseheight 
+            # resize proportional to baseheight
             baseheight = 250
             im = Image.open(uploaded_photo.stream)
             hpercent = (baseheight/float(im.size[1]))
             wsize = int((float(im.size[0])*float(hpercent)))
             im = im.resize((wsize, baseheight), resample=Image.LANCZOS)
-            photo = im.read()
+            image = io.BytesIO()
+            im.save(image, format='JPEG')
+            data['photo'] = image.getvalue()
 
         # seed into database
-        data = form.data
-        data['photo'] = photo
         data['projects'] = [Project.query.filter_by(name=x).first() for x in data['projects']]
         child = Child(**data)
-        
+
         db.session.add(child)
         db.session.commit()
         return redirect('/child/%s' % child.id)
-    
+
     app.logger.debug(form.errors)
     projects = [(p.name) for p in Project.query.all()]
     return render_template('add_profile.html', form=form, projects=projects)
@@ -371,7 +353,7 @@ def create_godparent():
 @login_required
 def add_godparent(child_id):
     """add a godparent profile"""
-    
+
     child = Child.query.filter_by(id=child_id).first()
     if not child:
         abort(404)
@@ -385,7 +367,7 @@ def add_godparent(child_id):
         child.godparents.append(godparent)
         db.session.commit()
         return jsonify(success=True), 201
-    
+
     app.logger.debug(form.errors)
     return jsonify(errors=form.errors), 400
 

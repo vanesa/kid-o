@@ -35,6 +35,12 @@
           <input type="text" name="last_name" placeholder="Last name" class="form-control addchildinput" value="Aurora"><br />
           <input type="text" name="nick_name" placeholder="Nick name" class="form-control addchildinput"><br />
           <input type="text" name="birth_date" placeholder="Birth date YYYY-MM-DD" class="form-control addchildinput" value="2009-10-04"><br />
+          <label for="birth_date_accuracy-field">Birth Date Accuracy: </label>
+          <select id="birth_date_accuracy" name="birth_date_accuracy" class="form-control addchildinput">
+            {% for _, option in form.birth_date_accuracy.choices %}
+              <option value="{{ option }}" {% if option == form.data.birth_date_accuracy %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+          </select>
         </p>
       </div>
       <div class="info col-xs-12 col-md-3">

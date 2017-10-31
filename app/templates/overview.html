@@ -47,8 +47,20 @@
             </div>
           {% endif %}
           <div class="rightbox ov-rightbox">
-            <p><strong>Age: </strong>{{ child.age }} years old</p>
-            <p><strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}</p>
+            {% if child.birth_date_accuracy == "estimated" %}
+            <p class="estimated-birth-date">
+              (Estimated)
+            {% else %}
+            </p>
+            {% endif %}
+              <strong>Age: </strong>{{ child.age }} years old</p>
+            {% if child.birth_date_accuracy == "estimated" %}
+            <p class="estimated-birth-date">
+            {% else %}
+            </p>
+            {% endif %}
+              <strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}
+            </p>
             {% if child.school_class %}
               <p><strong>School class:</strong> {{ child.school_class }}</p>
             {% endif %}

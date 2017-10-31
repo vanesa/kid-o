@@ -57,6 +57,12 @@
           {% endif %}
 
           <input type="text" name="birth_date" value="{{ child.birth_date.strftime('%Y-%m-%d') }}" placeholder="{{ child.birth_date.strftime('%Y-%m-%d') }}" class="form-control addchildinput"><br />
+          <label for="gender-field">Birth Date Accuracy: </label>
+          <select id="birth_date_accuracy" name="birth_date_accuracy" class="form-control addchildinput">
+            {% for _, option in form.birth_date_accuracy.choices %}
+              <option value="{{ option }}" {% if option == form.data.birth_date_accuracy %}selected{% endif %}>{{ option }}</option>
+            {% endfor %}
+          </select>
         </p>
       </div>
         <!-- End Basic Child information -->

@@ -63,6 +63,11 @@
     margin-right: 10px;
 }
 
+.estimated-birth-date {
+  color: #F24E54;
+  font-style: italic;
+}
+
 .images-style {
   max-height: 250px;
     z-index: 10;

@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID as PGUUID
 from sqlalchemy.ext.hybrid import hybrid_property
 import os
+import hashlib
 from uuid import uuid4
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -109,7 +110,11 @@ class Child(db.Model):
     def photo_url(self):
         if self.photo is None:
             return '/static/images/childphotopreview.png'
-        return '/child_photo/{0}'.format(self.id)
+        return '/child_photo/{0}?v={1}'.format(self.id, self.photo_hash)
+
+    @property
+    def photo_hash(self):
+        return hashlib.md5(self.photo).hexdigest()
 
     @property
     def projects_for_html(self):

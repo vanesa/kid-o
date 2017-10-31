@@ -1,4 +1,4 @@
-/static/images/photos/ingrisaurora.jpg	Ingris	Female	Aurora	2011-04-20	Dominican				2	Selena, Tina	School (Basic)	Good	Lives in the orphanage with her sisters.	18.542769	-69.801213
-/static/images/photos/celiorodriguez.jpg	Celio	Male	Rodriguez	2010-11-22	Hatian	Mother	Maria	Aleala	2	Maria, Theresa	School (Basic)	Good	Mother doesn't have a job. They live with relatives.	18.542769	-69.801216
-/static/images/photos/marissaperez.jpg	Marissa	Female	Perez	2008-03-22	Dominican	Aunt	Celia	Morro	0		School (Advanced)	Good	Was abandoned by her mother.	18.542413	-69.805216
-/static/images/photos/juliofernandez.jpg	Julio	Male	Fernandez	2009-11-22	Dominican	Mother	Theresa	Fernandez	1	Marco	School (Basic)	Intermediate		18.542769	-69.805219
+	Ingris	Female	Aurora	2011-04-20	exact	Dominican				2	Selena, Tina	School (Basic)	Good	Lives in the orphanage with her sisters.	18.542769	-69.801213
+	Celio	Male	Rodriguez	2010-11-22	estimated	Hatian	Mother	Maria	Aleala	2	Maria, Theresa	School (Basic)	Good	Mother doesn't have a job. They live with relatives.	18.542769	-69.801216
+	Marissa	Female	Perez	2008-03-22	estimated	Dominican	Aunt	Celia	Morro	0		School (Advanced)	Good	Was abandoned by her mother.	18.542413	-69.805216
+	Julio	Male	Fernandez	2009-11-22	exact	Dominican	Mother	Theresa	Fernandez	1	Marco	School (Basic)	Intermediate		18.542769	-69.805219

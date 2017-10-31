@@ -39,10 +39,16 @@
       <p>
         <strong>Gender: </strong> {{ child.gender }}
       </p>
+      {% if child.birth_date_accuracy == "estimated" %}
+      <p class="estimated-birth-date">
+        (Estimated) <br>
+        {% else %}
       <p>
+        {% endif %}
         <strong>Age: </strong>{{ child.age }} years old
       </p>
-      <p>
+
+      <p {% if child.birth_date_accuracy == "estimated" %} class="estimated-birth-date" {% endif %}>
         <strong>Birth date:</strong> {{ child.birth_date.strftime('%d-%m-%Y') }}
       </p>
 

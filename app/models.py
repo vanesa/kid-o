@@ -73,10 +73,11 @@ class Child(db.Model):
     last_name = db.Column(db.String(32), nullable=False)
     nick_name = db.Column(db.String(32), nullable=True)
     birth_date = db.Column(db.DateTime, nullable=False)
+    birth_date_accuracy = db.Column(db.String(200))
     nationality = db.Column(db.String(200))
-    guardian_type = db.Column(db.String(50), nullable=True)
-    guardian_fname = db.Column(db.String(32), nullable=True)
-    guardian_lname = db.Column(db.String(32), nullable=True)
+    guardian_type = db.Column(db.String(50))
+    guardian_fname = db.Column(db.String(32))
+    guardian_lname = db.Column(db.String(32))
     number_of_siblings = db.Column(db.Integer)
     siblings_in_project = db.Column(db.String)
     school_class = db.Column(db.String(50))
@@ -123,6 +124,7 @@ class Child(db.Model):
             last_name = self.last_name,
             nick_name = self.nick_name,
             birth_date = self.birth_date,
+            birth_date_accuracy = self.birth_date_accuracy,
             nationality = self.nationality,
             guardian_type = self.guardian_type,
             guardian_fname = self.guardian_fname,

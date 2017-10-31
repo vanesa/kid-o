@@ -27,3 +27,7 @@ ENGLISH_GROUP = 'English Group'
 TUTORING_GROUP = 'Tutoring Group'
 PROSALUD = 'ProSalud'
 PROJECT_UNDETERMINED = 'Project Undetermined'
+
+# Birth day accuracy
+EXACT = 'exact'
+ESTIMATED = 'estimated'

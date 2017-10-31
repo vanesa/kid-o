@@ -6,7 +6,7 @@ from app.constants import (HAITIAN, DOMINICAN, HAITIAN_DOMINICAN,
                             CHILD_HAS_GODPARENT, NO_NEED, SEARCHING_GODPARENT,
                             KINDERGARTEN, PRESCHOOL, SCHOOL_BASIC, SCHOOL_ADVANCED,SPECIAL_SCHOOL,
                             ORPHANAGE, SAN_SKATE, DANCE_GROUP, VOLLEYBALL_GROUP, ENGLISH_GROUP, 
-                            TUTORING_GROUP, PROSALUD, PROJECT_UNDETERMINED)
+                            TUTORING_GROUP, PROSALUD, PROJECT_UNDETERMINED, EXACT, ESTIMATED)
 
 def lower(data):
     return data.lower() if data else data
@@ -37,6 +37,7 @@ class ChildForm(Form):
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
     nick_name = StringField('nick_name', validators=[Length(max=15)])
     birth_date = DateField('birth_date', validators=[DataRequired()])
+    birth_date_accuracy = SelectField('birth_date_accuracy', validators=[Optional()], choices=[(x, x) for x in [EXACT, ESTIMATED]])
     nationality = SelectField('nationality', validators=[Optional()], choices=[(x, x) for x in [HAITIAN, DOMINICAN, HAITIAN_DOMINICAN]])
     guardian_type = StringField('guardian_type', validators=[Length(max=15)])
     guardian_fname = StringField('guardian_fname', validators=[Length(max=25)])

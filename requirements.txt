@@ -22,7 +22,7 @@ gunicorn==19.7.1
 idna==2.6
 ipaddress==1.0.18
 itsdangerous==0.24
-jac==0.16.3
+jac==0.17.0
 Jinja2==2.9.6
 Mako==1.0.7
 MarkupSafe==1.0

@@ -9,9 +9,10 @@ env:
   - IS_TRAVIS=true
 before_script:
   - npm install -g less
-  - psql -c 'create database kido;' -U postgres
+  - psql -c 'CREATE DATABASE kido;' -U postgres
+  - psql -c "CREATE USER kido WITH PASSWORD 'kido';" -U postgres
   - python -c 'from app.models import db; db.create_all()'
   - cp app/settings/test.py.example app/settings/test.py
 script: python test.py
-# use new travis-ci container-based infrastructure 
+# use new travis-ci container-based infrastructure
 sudo: false

@@ -3,7 +3,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID as PGUUID
 from sqlalchemy.ext.hybrid import hybrid_property
-import os
 import hashlib
 from uuid import uuid4
 from datetime import datetime
@@ -49,10 +48,10 @@ class User(db.Model):
 
     def is_active(self):
         return True
-    
+
     def is_anonymous(self):
         return False
-    
+
     def get_id(self):
         return unicode(self.id)
 
@@ -63,7 +62,7 @@ class User(db.Model):
         """ Returns True if the password is correct for the user.
         """
         return check_password_hash(unicode(self.password), unicode(password.decode("utf8")))
-    
+
 
 class Child(db.Model):
     id = db.Column(UUID(), primary_key=True, default=uuid4)
@@ -81,6 +80,7 @@ class Child(db.Model):
     guardian_lname = db.Column(db.String(32))
     number_of_siblings = db.Column(db.Integer)
     siblings_in_project = db.Column(db.String)
+    school_name = db.Column(db.String(150))
     school_class = db.Column(db.String(50))
     school_attendance = db.Column(db.String(50))
     volunteer_task = db.Column(db.String)
@@ -136,6 +136,7 @@ class Child(db.Model):
             guardian_lname = self.guardian_lname,
             number_of_siblings = self.number_of_siblings,
             siblings_in_project = self.siblings_in_project,
+            school_name = self.school_name,
             school_class = self.school_class,
             school_attendance = self.school_attendance,
             volunteer_task = self.volunteer_task,

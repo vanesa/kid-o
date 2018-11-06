@@ -311,6 +311,8 @@ def add_profile():
             image = io.BytesIO()
             im.save(image, format='JPEG')
             data['photo'] = image.getvalue()
+        else:
+            data['photo'] = None
 
         # seed into database
         data['projects'] = [Project.query.filter_by(name=x).first() for x in data['projects']]

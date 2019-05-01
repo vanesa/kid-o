@@ -6,6 +6,10 @@
 
 Kid-O helps Non-Profit children’s aid orgs keep an overview of their children.  
 
+##### Google Impact Challenge 2018 award winner
+
+![Google Impact Challenge Award](https://github.com/vanesa/kid-o/raw/master/app/static/images/gic.jpg)
+
 ##### Winner of C-Base Hack 'N Tell HACK OF THE MONTH PRIZE
 
 

@@ -22,11 +22,10 @@ Kid-O helps Non-Profit children’s aid orgs keep an overview of their children.
 - [Future plans](#future-plans)
 - [Technical choices](#technical-choices)
 - [Screenshots](#screenshots)
-- [Forking](#forking)
+- [Contributing](#forking)
 
 
-Overview
-----------------
+## Overview<a name="overview"></a>
 
 Kid-O solves these common problems for aid workers:
 * keeping accurate and up-to-date information about each child in a central sharable CMS
@@ -40,8 +39,7 @@ Kid-O will be tested by the children's aid project [Dominiño](http://www.domini
 
 
 
-Technologies and stack
-------------------------
+## Technologies & Stack<a name="technologies-and-stack"></a>
 
 #### Backend
 Python, Flask, SQLAlchemy, PostgreSQL
@@ -57,8 +55,7 @@ HTML5, CSS3, Twitter Bootstrap (html/css/js framework), RWD (responsive web desi
 #### APIs:
 Mapbox.js(OpenStreetMaps), Twilio.
 
-Features
--------------------
+## Features<a name="features"></a>
 
 - [x] Shows children's profiles
 
@@ -96,7 +93,7 @@ Features
 - [x] Custom responsive web design (RWD) using CSS3.
 
 
-### In-depth use cases
+### In-depth use cases<a name="in-depth-use-cases"></a>
 
 #### Overview page
 - List's a short preview of the children's profiles
@@ -124,8 +121,7 @@ Features
 - Add a child's profile through SMS/MMS including the child's photo
 
 
-Future plans
------------------------
+## Future plans <a name="future-plans"></a>
 
 ##### Verify existence of child when creating a new profile
 Currently, the existence of the child been added to Kid-O is not verified. I plan to warn the user with a popup suggesting a possible child if the new child's name is similar to an existing child in the system.
@@ -153,8 +149,7 @@ Many children's aid projects have godparents who sponsor children. I want to add
 
 
 
-Technical choices
------------------------
+## Technical choices <a name="technical-choices"></a>
 
 ##### Security
 In any login system, security is important. I wanted to ensure that user passwords couldn't be stolen, especially considering that most people re-use their passwords all over the place (despite warnings against such a practice). Bcrypt offers a simple but effective encryption and verification system using hashes, requiring only a few lines of code.  
@@ -187,8 +182,8 @@ On the overview page, I used Jinja to show alerting icons depending on what info
 The users are also asked to fill out missing information in the child's profile page.
 On the frontend, rather than recode my nav bar for every web page, I used Jinja templates to simplify the process by extending from a base.html file that contains the nav bar.
 
-Screenshots
------------------------
+
+## Screenshots <a name="screenshots"></a>
 
 ###### Overview of the children
 ![Overview of the children](screenshots/overview1.jpg "Children's overview")
@@ -245,17 +240,25 @@ Search by school class:
 ![Sign up](screenshots/signup.jpg "Sign up with form validation")
 
 
-Forking?
------------------------
-You'll need your own API keys for Twilio!
+## Want to contribute?<a name="forking"></a>
 
-	* Install Postgres
-	* After cloning the kid-o repo, run these terminal commands:
-	* cd kid-o
-	* virtualenv venv -p `which python2` --no-site-packages
-	* source ./venv/bin/activate
-	* pip install -r requirements-frozen.txt
-	* ./run.sh
-	* Create a Postgres user kido with password kido.
-	* Create a Postgres database kido with owner kido.
-	* Go to http://localhost:5000 in your browser to use the app.
+1. You'll need your own API keys for Twilio!
+2. Install Postgres
+	> For Mac users, you can install Postgres.app and PSequel for creating connecting to postgres superuser, create
+	database user & password and actual database through a GUI interface. Here is a medium post
+	in how you can create a [user and database through command line](https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e)  
+	
+    1. Create a Postgres user kido with password kido.
+	2. Create a Postgres database kido with owner kido.
+
+3. Fork [github project](https://github.com/vanesa/kid-o)
+    > Run the following commands
+    1. `git clone git@github.com:<GITHUB USERNAME>/kid-o.git`
+    1. `cd kid-o`
+    2. `virtualenv venv -p which python2 --no-site-packages`
+    3. `source ./venv/bin/activate`
+    4. `pip install -r requirements-frozen.txt`
+    5. `python setup_database.py`
+    5. `npm install -g less`
+    5. `bash ./run.sh`
+    6. Go to http://localhost:5000 in your browser to use the app

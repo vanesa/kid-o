@@ -12,3 +12,4 @@ app/static/images/photos/*
 .wakatime-project
 settings/production.py
 settings/development.py
+.idea/

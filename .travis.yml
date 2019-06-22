@@ -9,6 +9,6 @@ before_script:
   - cp kido/settings/travis.example.py kido/settings/test.py
   - psql -c 'CREATE DATABASE kido;' -U postgres
   - npm install -g less
-  - python -c 'from app.models import db; db.create_all()'
+  - python -c 'from kido.models import db; db.create_all()'
 script: python test.py
 sudo: false

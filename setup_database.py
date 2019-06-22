@@ -3,10 +3,11 @@
 import os
 import sys
 
-from app.models import db
-
 from alembic import command
 from alembic.config import Config
+
+from kido.models import db
+
 
 def main():
 

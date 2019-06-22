@@ -8,7 +8,7 @@ from sqlalchemy.dialects.postgresql import UUID as PGUUID
 from sqlalchemy.ext.hybrid import hybrid_property
 from uuid import uuid4
 
-from . import app
+from kido import app
 
 # This is the connection to the postgres database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`

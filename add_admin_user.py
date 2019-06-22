@@ -2,8 +2,8 @@
 
 import sys
 
-from app.constants import PERMISSION_ADMIN
-from app.models import db, User, Group, Permission
+from kido.constants import PERMISSION_ADMIN
+from kido.models import db, User, Group, Permission
 
 
 def main():

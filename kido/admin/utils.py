@@ -9,8 +9,8 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
 from functools import wraps
 
-from app import app
-from app.constants import PERMISSION_ADMIN
+from kido import app
+from kido.constants import PERMISSION_ADMIN
 
 
 def admin_required(f):

@@ -3,33 +3,13 @@
 import os
 import shutil
 import sys
-import tempfile
-try:
-    # Python >= 3
-    from tempfile import TemporaryDirectory
-except ImportError:
-    # Python < 3
-    class TemporaryDirectory(object):
-        """Context manager for tempfile.mkdtemp().
+from tempfile import TemporaryDirectory
 
-        Adds the ability to use with a `with` statement.
-        """
-
-        def __enter__(self):
-            self.name = tempfile.mkdtemp()
-            return self.name
-
-        def __exit__(self, exc_type, exc_value, traceback):
-            try:
-                shutil.rmtree(unicode(self.name))
-            except:
-                pass
-
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 
 from jac.contrib.flask import get_template_dirs
 
-from app import app
+from kido import app
 
 
 def main():
@@ -67,7 +47,7 @@ def main():
             print('Cleaning up {old}...'.format(old=static_dir + '_old'))
             shutil.rmtree(static_dir + '_old')
 
-    print('Finished compressing static files.')
+    print('Finished.')
     return 0
 
 

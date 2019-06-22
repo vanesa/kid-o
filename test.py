@@ -1,14 +1,12 @@
-import os
 import unittest
-import tempfile
-import json
-
-from app import app, csrf
-from app.models import db, Child, User
 from datetime import datetime
 
+from kido import app, csrf
+from kido.models import db, Child, User
+
+
 class ChildViewTestCase(unittest.TestCase):
-    
+
     def test_child_view(self):
         first_name = "Martha"
         last_name = "Sosa"
@@ -19,6 +17,7 @@ class ChildViewTestCase(unittest.TestCase):
         currenttime = datetime.now()
         expected_age = (currenttime - birth_date).days / 365
         self.assertEqual(test_child_view.age, expected_age)
+
 
 class AuthTestCase(unittest.TestCase):
 
@@ -62,12 +61,13 @@ class AuthTestCase(unittest.TestCase):
             password=password,
         ), follow_redirects=True)
         response = self.client.get('/logout', follow_redirects=True)
-        
+
         self.assertEqual(response.status_code, 200)
         self.assertIn("Login", response.get_data())
 
         db.session.delete(user)
         db.session.commit()
+
 
 if __name__ == "__main__":
     app.testing = True

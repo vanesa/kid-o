@@ -1,16 +1,19 @@
 import os
+from kido import app
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 WTF_CSRF_ENABLED = False
-IS_TRAVIS = os.environ.get('IS_TRAVIS') == 'true'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 COMPRESSOR_DEBUG = True
+COMPRESSOR_OUTPUT_DIR = app.static_folder + '/sdist'
+COMPRESSOR_STATIC_PREFIX = app.static_url_path + '/sdist'
+MAPBOX_MAP_ID = None
 
 
-# Overwrite above settings with production data
-# If we aren't on a prod machine, the file shouldn't exist
+# Overwrite above settings with test data
+# If we aren't on a test machine, the file shouldn't exist
 try:
-    from settings.production import *
+    from settings.test import *
 except ImportError:
     pass
 
@@ -23,10 +26,10 @@ except ImportError:
     pass
 
 
-# Overwrite above settings with test data
-# If we aren't on a test machine, the file shouldn't exist
+# Overwrite above settings with production data
+# If we aren't on a prod machine, the file shouldn't exist
 try:
-    from settings.test import *
+    from settings.production import *
 except ImportError:
     pass
 
@@ -39,5 +42,3 @@ SQLALCHEMY_DATABASE_URI = 'postgresql://{auth}{host}/{database}'.format(
     host=DB_HOST,
     database=DB_NAME,
 )
-
-MAPBOX_MAP_ID = None

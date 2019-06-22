@@ -6,7 +6,7 @@ from flask_seasurf import SeaSurf
 from flask_static_compress import FlaskStaticCompress
 
 app = Flask(__name__)
-app.config.from_object('app.settings.common')
+app.config.from_object('kido.settings.common')
 
 csrf = SeaSurf(app)
 
@@ -23,7 +23,7 @@ app.secret_key = "ABC"
 # Raise error if there is an undefined variable in Jinja2
 app.jinja_env.undefined = StrictUndefined
 
-from app.admin import views as admin_views
+from .admin import views as admin_views
 
 from . import views
 from . import api

@@ -1,41 +1,33 @@
-from app import app
-
-from datetime import datetime, timedelta
 import re
 import io
 import os
+from datetime import datetime
 try:
     import secrets
 except ImportError:
     pass
-from sqlalchemy import or_, and_
 from twilio.twiml.messaging_response import MessagingResponse
-import urllib
-from werkzeug import secure_filename
 
 from flask import (
     render_template,
     redirect,
     request,
     flash,
-    session,
-    url_for,
     send_file,
     jsonify,
     abort,
     send_from_directory,
 )
-from flask_login import login_required, login_user, logout_user, current_user
+from flask_login import login_required, login_user, logout_user
 
 from PIL import Image
 
 import wtforms_json
 
-from app.models import User, Child, Godparent, Project, ChildToGodparent, db, GodparentToProject
-from app import auth
-from app import settings
-from app.constants import CHILD_HAS_GODPARENT, NO_NEED
-from app.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm, GPSearchForm
+from kido import app, auth
+from kido.models import User, Child, Godparent, Project, ChildToGodparent, db, GodparentToProject
+from kido.constants import CHILD_HAS_GODPARENT, NO_NEED
+from kido.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm, GPSearchForm
 
 wtforms_json.init()
 
@@ -51,7 +43,7 @@ def login():
 
     form = LoginForm(request.form)
     next_url = request.args.get('next', '/overview')
-    if request.method == 'POST' and form.validate(): # Process form if route gets POST request from /index
+    if request.method == 'POST' and form.validate():  # Process form if route gets POST request from /index
         next_url = request.form.get('next', '/overview')
         user = User.query.filter_by(email=form.data['email']).first()
         if user and user.check_password(form.data['password']):
@@ -69,15 +61,18 @@ def login():
     status_code = 400 if form.errors else 200
     return render_template("login.html", form=form, next=next_url), status_code
 
+
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect('/')
 
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup_form():
@@ -99,6 +94,7 @@ def signup_form():
 
     return render_template("signup.html", form=form, next=next_url)
 
+
 @app.route('/overview', methods=['GET', 'POST'])
 @login_required
 def show_overview():
@@ -116,7 +112,7 @@ def show_overview():
         project = form.data.get('project')
 
         if name:
-            query = query.filter(Child.fullname.ilike("%"+name+"%"))
+            query = query.filter(Child.fullname.ilike("%" + name + "%"))
             flash_number_results = True
         if class_str:
             query = query.filter(Child.school_class == class_str)
@@ -140,6 +136,7 @@ def show_overview():
             flash('We found 1 profile.')
 
     return render_template('overview.html', children=children, form=form)
+
 
 @app.route('/godparents-overview', methods=['GET', 'POST'])
 @login_required
@@ -178,6 +175,7 @@ def show_godparents_overview():
 
     return render_template('godparents_overview.html', godparents=godparents, form=form)
 
+
 @app.route('/map')
 @login_required
 def load_map():
@@ -196,6 +194,7 @@ def child_profile(id):
         abort(404)
 
     return render_template('child_profile.html', child=child)
+
 
 @app.route('/child/edit/<string:id>', methods=['GET', 'POST'])
 @login_required
@@ -262,9 +261,8 @@ def edit_profile(id):
         if child.is_active == False and child.godparents:
             for g in child.godparents:
                 remove_godparent(g.id)
-                project_undetermined = Project.query.filter_by(name='Project Undetermined').first()
                 data = {}
-                data['project_id'] = orphanage.id
+                # data['project_id'] = orphanage.id
                 data['godparent_id'] = g.id
                 sponsorship = GodparentToProject(**data)
                 db.session.add(sponsorship)
@@ -288,6 +286,7 @@ def edit_profile(id):
         'godparents_available': [{'id': g.id, 'name': unicode(g), 'selected': g in child.godparents} for g in Godparent.query.all()],
     }
     return render_template('edit_profile.html', **context)
+
 
 @app.route('/child/add', methods=['GET', 'POST'])
 @login_required
@@ -326,6 +325,7 @@ def add_profile():
     projects = [(p.name) for p in Project.query.all()]
     return render_template('add_profile.html', form=form, projects=projects)
 
+
 @app.route('/delete-profile/<string:id>', methods=['POST'])
 @login_required
 def delete_profile(id):
@@ -336,6 +336,7 @@ def delete_profile(id):
     db.session.commit()
     flash('You have deleted ' + child_name + "'s profile.")
     return redirect('/overview')
+
 
 @app.route('/create-godparent', methods=['POST'])
 @login_required
@@ -350,6 +351,7 @@ def create_godparent():
         db.session.add(godparent)
         db.session.commit()
         return jsonify(success=True), 201
+
 
 @app.route('/add-godparent/<string:child_id>', methods=['POST'])
 @login_required
@@ -396,7 +398,6 @@ def add_existing_godparent(child_id):
 @app.route('/remove-godparent/<string:id>', methods=['POST'])
 @login_required
 def remove_godparent(id):
-
     godparent = Godparent.query.filter_by(id=id).first()
     godparent.is_active = False
     child_to_gp = ChildToGodparent.query.filter_by(godparent_id=id).first()
@@ -423,6 +424,7 @@ def remove_godparent(id):
 
     flash('You have removed ' + godparent_name + " as a godparent to " + child.first_name + ".")
     return jsonify(success=True)
+
 
 @app.route('/twilio', methods=['GET', 'POST'])
 def registerbysms():
@@ -462,6 +464,7 @@ def registerbysms():
     resp.message(message)
     return str(resp)
 
+
 @app.route('/child_photo/<string:child_id>', methods=['GET'])
 def child_photo(child_id):
     child = Child.query.filter_by(id=child_id).first()
@@ -471,6 +474,7 @@ def child_photo(child_id):
     return send_file(io.BytesIO(child.photo),
                      attachment_filename='{0}.jpg'.format(child.id),
                      mimetype='image/jpg')
+
 
 @app.route('/favicon.ico')
 def favicon():

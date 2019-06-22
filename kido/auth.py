@@ -3,8 +3,8 @@
 import re
 from flask import request
 from flask_login import LoginManager
-from app import app
-from app.models import User
+from kido import app
+from kido.models import User
 from urlparse import urlparse, urljoin
 
 login_manager = LoginManager()

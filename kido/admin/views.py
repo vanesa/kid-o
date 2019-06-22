@@ -4,8 +4,8 @@
 
 from flask_admin import Admin, BaseView, expose
 
-from app import app
-from app.models import db, User
+from kido import app
+from kido.models import db, User
 from .utils import (AuthenticatedMenuLink, CustomAdminIndexView,
                    CustomModelView, admin_required, permission_required)
 

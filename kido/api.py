@@ -1,19 +1,7 @@
-from app import app
+from flask import abort, jsonify
 
-from datetime import datetime, timedelta
-import re
-import os
-from sqlalchemy import or_, and_
-
-from flask import (
-    request,
-    jsonify, 
-)
-from flask_login import login_required, login_user, logout_user, current_user
-
-from app.models import User, Child, Godparent, db
-from app import auth 
-from app import settings
+from kido import app
+from kido.models import db, Child
 
 
 @app.route('/api/children_profiles', methods=['GET'])
@@ -21,7 +9,7 @@ def getChildrenProfiles():
 
     """ Gets all of the children profiles in the project. """
     query = Child.query
-    
+
     children = query.order_by(Child.last_name.asc()).all()
 
     return jsonify(profiles=[x.to_dict() for x in children])
@@ -46,7 +34,7 @@ def getChildrenHomeLocation():
     query = Child.query
     query = query.filter(Child.latitude != None)
     query = query.filter(Child.is_active)
-    
+
     children_with_location = query.order_by(Child.last_name.asc()).all()
 
     return jsonify(profiles=[x.to_dict() for x in children_with_location])

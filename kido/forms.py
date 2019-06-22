@@ -1,19 +1,39 @@
 from flask_wtf import FlaskForm as Form
 from wtforms import StringField, PasswordField, DateField, FloatField, BooleanField, IntegerField, FileField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired, Email, Length, NumberRange, ValidationError, Optional, Regexp
-from app import app
-from app.constants import (HAITIAN, DOMINICAN, HAITIAN_DOMINICAN,
-                            CHILD_HAS_GODPARENT, NO_NEED, SEARCHING_GODPARENT,
-                            KINDERGARTEN, PRESCHOOL, SCHOOL_BASIC, SCHOOL_ADVANCED,SPECIAL_SCHOOL,
-                            ORPHANAGE, SAN_SKATE, DANCE_GROUP, VOLLEYBALL_GROUP, ENGLISH_GROUP, 
-                            TUTORING_GROUP, PROSALUD, PROJECT_UNDETERMINED, EXACT, ESTIMATED)
+from kido.constants import (
+    HAITIAN,
+    DOMINICAN,
+    HAITIAN_DOMINICAN,
+    CHILD_HAS_GODPARENT,
+    NO_NEED,
+    SEARCHING_GODPARENT,
+    KINDERGARTEN,
+    PRESCHOOL,
+    SCHOOL_BASIC,
+    SCHOOL_ADVANCED,
+    SPECIAL_SCHOOL,
+    ORPHANAGE,
+    SAN_SKATE,
+    DANCE_GROUP,
+    VOLLEYBALL_GROUP,
+    ENGLISH_GROUP,
+    TUTORING_GROUP,
+    PROSALUD,
+    PROJECT_UNDETERMINED,
+    EXACT,
+    ESTIMATED,
+)
+
 
 def lower(data):
     return data.lower() if data else data
 
+
 class LoginForm(Form):
     email = StringField('email', validators=[DataRequired(), Email()], filters=[lower])
     password = PasswordField('password', validators=[DataRequired(), Length(min=4, max=200)])
+
 
 class SignUpForm(Form):
     first_name = StringField('first_name', validators=[DataRequired(), Length(max=15)])
@@ -59,11 +79,13 @@ class ChildForm(Form):
     latitude = FloatField('latitude', validators=[Optional()])
     longitude = FloatField('longitude', validators=[Optional()])
 
+
 class GodparentForm(Form):
     first_name = StringField('first_name', validators=[DataRequired(), Length(max=15)])
     last_name = StringField('last_name', validators=[DataRequired(), Length(max=15)])
     referral_name = StringField('referal_name', validators=[Optional(), Length(max=25)])
     email = StringField('email', validators=[DataRequired(), Email()], filters=[lower])
+
 
 class SearchForm(Form):
     name = StringField(validators=[Optional(), Length(max=25)])
@@ -72,6 +94,7 @@ class SearchForm(Form):
     project = SelectField(validators=[Optional()], choices=[(x, x) for x in [
         ORPHANAGE, SAN_SKATE, DANCE_GROUP, VOLLEYBALL_GROUP, ENGLISH_GROUP, TUTORING_GROUP, PROSALUD, PROJECT_UNDETERMINED]])
     show_hidden_profiles = BooleanField('show_hidden_profiles')
+
 
 class GPSearchForm(Form):
     name = StringField(validators=[Optional(), Length(max=25)])

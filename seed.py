@@ -1,9 +1,10 @@
 """ Utility file to seed children database from the list of our children's aid project in seed_data/"""
 
 from flask_sqlalchemy import SQLAlchemy
-from app.models import Child, User, Project
-from app import app
-from datetime import datetime
+
+from kido import app
+from kido.models import Child, User, Project
+
 
 def load_users():
     """ Load users from users.txt into database. """
@@ -45,6 +46,7 @@ def load_children():
     db.session.commit()
 
     print "All children added to the database."
+
 
 def load_projects():
     fileinput = open("seed_data/projectslist.txt")

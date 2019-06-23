@@ -1,9 +1,11 @@
 venv
 env
 *.pyc
+__pycache__
 sdist
-settings/production.py
-settings/development.py
+kido/settings/production.py
+kido/settings/development.py
+kido/settings/test.py
 .wakatime-project
 .idea/
 .tox

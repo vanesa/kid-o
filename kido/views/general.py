@@ -19,9 +19,9 @@ from flask import (
     render_template,
     redirect,
     request,
-    session,
     send_file,
     send_from_directory,
+    url_for,
 )
 from flask_login import login_required
 
@@ -54,7 +54,9 @@ blueprint = Blueprint("views", __name__)
 
 @blueprint.route("/")
 def index():
-    return "Coming soon..."
+    if app.current_user.is_authenticated:
+        return redirect(url_for('.overview'))
+    return redirect(url_for('.login'))
 
 
 @blueprint.route("/login", methods=["GET", "POST"])
@@ -79,7 +81,7 @@ def login():
 @login_required
 def logout():
     auth.logout()
-    return redirect("/")
+    return redirect(url_for('.login'))
 
 
 @blueprint.route("/signup", methods=["GET", "POST"])
@@ -100,7 +102,7 @@ def signup():
 
         auth.login(user.email, force=True)
 
-        return redirect("/overview")
+        return redirect(url_for('.overview'))
 
     return render_template("signup.html", form=form, next=next_url)
 
@@ -196,26 +198,21 @@ def load_map():
     return render_template("map.html", child_profiles=all_children, form=form)
 
 
-@blueprint.route("/child/<string:id>")
+@blueprint.route("/child/<string:child_id>")
 @login_required
-def child_profile(id):
-    """ Show's each child's profile """
-
-    child = db.session.query(Child).filter_by(id=id).first()
-    if child is None:
+def child(child_id):
+    child = db.session.query(Child).filter_by(id=child_id).first()
+    if not child:
         abort(404)
 
     return render_template("child_profile.html", child=child)
 
 
-@blueprint.route("/child/edit/<string:id>", methods=["GET", "POST"])
+@blueprint.route("/child/<string:child_id>/edit", methods=["GET", "POST"])
 @login_required
-def edit_profile(id):
-    """ Edit child profile """
-
-    child = Child.query.filter_by(id=id).first()
-
-    if child is None:
+def child_edit(child_id):
+    child = Child.query.filter_by(id=child_id).first()
+    if not child:
         abort(404)
 
     form = ChildForm(request.form, obj=child)
@@ -288,7 +285,7 @@ def edit_profile(id):
 
         db.session.commit()
 
-        return redirect("/child/%s" % child.id)
+        return redirect(url_for(".child", child_id=child.id))
 
     # TODO: display these errors in the template and delete this line
     if form.errors:
@@ -298,7 +295,7 @@ def edit_profile(id):
         "form": form,
         "child": child,
         "godparents_available": [
-            {"id": g.id, "name": unicode(g), "selected": g in child.godparents}
+            {"id": g.id, "name": str(g), "selected": g in child.godparents}
             for g in Godparent.query.all()
         ],
     }
@@ -338,7 +335,7 @@ def add_profile():
 
         db.session.add(child)
         db.session.commit()
-        return redirect("/child/%s" % child.id)
+        return redirect(url_for(".child", child_id=child.id))
 
     app.logger.debug(form.errors)
     projects = [(p.name) for p in Project.query.all()]
@@ -354,7 +351,7 @@ def delete_profile(id):
     db.session.delete(child)
     db.session.commit()
     flash("You have deleted " + child_name + "'s profile.")
-    return redirect("/overview")
+    return redirect(url_for(".overview"))
 
 
 @blueprint.route("/create-godparent", methods=["POST"])

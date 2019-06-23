@@ -3,10 +3,13 @@
 __all__ = ["login", "logout", "login_required", "is_uuid4", "is_safe_url"]
 
 
-from flask_login import login_required, LoginManager
+from flask_login import login_required, LoginManager, current_user
 
 from kido import app
 from kido.models import User
+
+
+app.current_user = current_user
 
 
 login_manager = LoginManager()

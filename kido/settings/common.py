@@ -1,4 +1,3 @@
-import os
 from kido import app
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -36,7 +35,7 @@ except ImportError:
 
 auth = ''
 if DB_USERNAME and DB_PASSWORD:
-    auth = '{user}:{password}@'.format(user=username, password=password)
+    auth = '{user}:{password}@'.format(user=DB_USERNAME, password=DB_PASSWORD)
 SQLALCHEMY_DATABASE_URI = 'postgresql://{auth}{host}/{database}'.format(
     auth=auth,
     host=DB_HOST,

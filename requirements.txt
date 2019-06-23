@@ -1,6 +1,6 @@
 alembic
-bcrypt
 Flask
+Flask-Admin
 Flask-Bcrypt
 Flask-DebugToolbar
 Flask-Login

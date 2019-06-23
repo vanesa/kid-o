@@ -3,9 +3,10 @@
 import re
 from flask import request
 from flask_login import LoginManager
+from urllib import parse as urlparse
+
 from kido import app
 from kido.models import User
-from urlparse import urlparse, urljoin
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -30,7 +31,7 @@ def is_uuid4(text):
 
 
 def is_safe_url(target):
-    ref_url = urlparse(request.host_url)
-    test_url = urlparse(urljoin(request.host_url, target))
+    ref_url = urlparse.urlparse(request.host_url)
+    test_url = urlparse.urlparse(urlparse.urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and \
         ref_url.netloc == test_url.netloc

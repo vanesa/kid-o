@@ -2,13 +2,13 @@
 
 [![Build Status](https://travis-ci.org/vanesa/kid-o.svg?branch=master)](https://travis-ci.org/vanesa/kid-o)
 
-![Kid-O](https://github.com/vanesa/kid-o/raw/master/app/static/images/kid-ologo.png)
+![Kid-O](https://github.com/vanesa/kid-o/raw/master/kido/static/images/kid-ologo.png)
 
-Kid-O helps Non-Profit children’s aid orgs keep an overview of their children.  
+Kid-O helps Non-Profit children’s aid orgs keep an overview of their children.
 
 ##### Google Impact Challenge 2018 award winner
 
-![Google Impact Challenge Award](https://github.com/vanesa/kid-o/raw/master/app/static/images/gic.jpg)
+![Google Impact Challenge Award](https://github.com/vanesa/kid-o/raw/master/kido/static/images/gic.jpg)
 
 ##### Winner of C-Base Hack 'N Tell HACK OF THE MONTH PRIZE
 
@@ -18,7 +18,7 @@ Kid-O helps Non-Profit children’s aid orgs keep an overview of their children.
 - [Overview](#overview)
 - [Technologies & Stack](#technologies-and-stack)
 - [Features](#features)
-	- [In-depth use cases](#in-depth-use-cases)
+- [In-depth use cases](#in-depth-use-cases)
 - [Future plans](#future-plans)
 - [Technical choices](#technical-choices)
 - [Screenshots](#screenshots)
@@ -33,7 +33,7 @@ Kid-O solves these common problems for aid workers:
 * structures a child's information in an easily editable format
 * organizes information such as name, age, home situation, school year etc.
 * makes it easy to visualize a child's home location on a map even when no address is available
-* makes it easy to add the orresponding godparent to the child profile, if available 
+* makes it easy to add the orresponding godparent to the child profile, if available
 
 Kid-O will be tested by the children's aid project [Dominiño](http://www.dominino.de) in the Dominican Republic.
 
@@ -136,10 +136,10 @@ In order to limit the use of data, I want to include a Lazy Load to only preview
 I plan to use the Twilio API to send a text message/email to the aid workers when a child's profile has not been updated for a specific amount of months.
 
 ##### Additional security
-To prevent brute-force hacking attempts, I will add an increasing time delay after multiple failed login attempts. 
+To prevent brute-force hacking attempts, I will add an increasing time delay after multiple failed login attempts.
 
 ##### Monitor which user edited which child's profile
-Allow users to see their stats on their user profile pages, e.g. how many updates they have made, which child profile they last worked on, etc.  
+Allow users to see their stats on their user profile pages, e.g. how many updates they have made, which child profile they last worked on, etc.
 
 ##### Real time updates
 Currently, the page must be refreshed to show updated children's profiles. This should be updated to happen in real-time with server-sent events.
@@ -152,9 +152,9 @@ Many children's aid projects have godparents who sponsor children. I want to add
 ## Technical choices <a name="technical-choices"></a>
 
 ##### Security
-In any login system, security is important. I wanted to ensure that user passwords couldn't be stolen, especially considering that most people re-use their passwords all over the place (despite warnings against such a practice). Bcrypt offers a simple but effective encryption and verification system using hashes, requiring only a few lines of code.  
+In any login system, security is important. I wanted to ensure that user passwords couldn't be stolen, especially considering that most people re-use their passwords all over the place (despite warnings against such a practice). Bcrypt offers a simple but effective encryption and verification system using hashes, requiring only a few lines of code.
 
-I chose Flask-Login to manage secure user sessions when they login. This Flask extension is well-known, well-documented, reliable, and offers exactly what I needed to implement that feature.  
+I chose Flask-Login to manage secure user sessions when they login. This Flask extension is well-known, well-documented, reliable, and offers exactly what I needed to implement that feature.
 
 ##### PostgreSQL
 I chose to use PostgreSQL to make use of the powerful SQLAlchemy ORM and ensure scalability.
@@ -163,10 +163,10 @@ I chose to use PostgreSQL to make use of the powerful SQLAlchemy ORM and ensure 
 Partway through the project, I discovered Flask-WTForms, a Flask extension that offers form creation and validation. I switched to this method for all future forms on the site because of its simple and effective form management and validation options.
 
 ##### OpenStreetMaps
-My app will be deployed for the Non-Profit  Dominiño in the Dominican Republic. For this reason, I decided to use OpenStreetMaps instead of Google Maps, since OpenStreetMaps offers much better coverage of the infrastructure in the Dominican Republic than Google Maps. 
+My app will be deployed for the Non-Profit  Dominiño in the Dominican Republic. For this reason, I decided to use OpenStreetMaps instead of Google Maps, since OpenStreetMaps offers much better coverage of the infrastructure in the Dominican Republic than Google Maps.
 
 ##### Custom CSS
-Using CSS3, I customized the checkboxes and select dropdowns.  I didn't like their default appearances, and wanted to change their colors and styles to better match that of the website. 
+Using CSS3, I customized the checkboxes and select dropdowns.  I didn't like their default appearances, and wanted to change their colors and styles to better match that of the website.
 
 I used Bootstrap for certain things, like button shapes and the navbar.
 
@@ -178,7 +178,7 @@ I used JQuery to dynamically shrink the navbar header on scroll by adding a CSS 
 All my routes are in one file, views.py, and my database models are in a separate models.py file. I dabbled with child base views in child.py.
 The Twilio API-related route is at the bottom of views.py.
 
-On the overview page, I used Jinja to show alerting icons depending on what information is missing in the children's profile. 
+On the overview page, I used Jinja to show alerting icons depending on what information is missing in the children's profile.
 The users are also asked to fill out missing information in the child's profile page.
 On the frontend, rather than recode my nav bar for every web page, I used Jinja templates to simplify the process by extending from a base.html file that contains the nav bar.
 
@@ -244,21 +244,22 @@ Search by school class:
 
 1. You'll need your own API keys for Twilio!
 2. Install Postgres
-	> For Mac users, you can install Postgres.app and PSequel for creating connecting to postgres superuser, create
-	database user & password and actual database through a GUI interface. Here is a medium post
-	in how you can create a [user and database through command line](https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e)  
-	
-    1. Create a Postgres user kido with password kido.
-	2. Create a Postgres database kido with owner kido.
+  > For Mac users, you can install Postgres.app and PSequel for creating connecting to postgres superuser, create
+  database user & password and actual database through a GUI interface. Here is a medium post
+  in how you can create a [user and database through command line](https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e)
 
 3. Fork [github project](https://github.com/vanesa/kid-o)
     > Run the following commands
-    1. `git clone git@github.com:<GITHUB USERNAME>/kid-o.git`
-    1. `cd kid-o`
-    2. `virtualenv venv -p which python2 --no-site-packages`
+    1. `git clone git@github.com:vanesa/kid-o.git && cd kid-o`
+    2. ``virtualenv --no-site-packages -p `which python3` venv``
     3. `source ./venv/bin/activate`
     4. `pip install -r requirements-frozen.txt`
     5. `python setup_database.py`
-    5. `npm install -g less`
-    5. `bash ./run.sh`
-    6. Go to http://localhost:5000 in your browser to use the app
+    6. `npm install -g less`
+    7. `bash ./run.sh`
+    8. Go to http://localhost:5000 in your browser to use the app
+
+4. Make sure tests pass
+    > Run the following commands
+    1. `pip install -r requirements-test.txt`
+    2. `pytest`

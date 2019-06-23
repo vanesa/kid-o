@@ -1,0 +1,7 @@
+SECRET_KEY = None
+DB_HOST = 'localhost'
+DB_NAME = 'kido'
+DB_USERNAME = 'kido'
+DB_PASSWORD = 'kido'
+COMPRESSOR_DEBUG = False
+COMPRESSOR_OFFLINE_COMPRESS = True

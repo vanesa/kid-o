@@ -1,0 +1,22 @@
+{% extends 'admin/master.html' %}
+{% import 'admin/lib.html' as lib with context %}
+
+{% macro extra() %}
+  <input name="_continue_editing" type="submit" class="btn btn-large" value="{{ _gettext('Save and Continue') }}" />
+{% endmacro %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block body %}
+    {% call lib.form_tag(form) %}
+        <input type="hidden" name="_csrftoken" value="{{ csrf_token() }}"/>
+        {{ lib.render_form_fields(form, form_opts=form_opts) }}
+        {{ lib.render_form_buttons(return_url, extra()) }}
+    {% endcall %}
+{% endblock %}
+
+{% block tail %}
+  {{ super() }}
+{% endblock %}

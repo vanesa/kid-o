@@ -1,6 +1,0 @@
-import os
-
-SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or ''
-
-COMPRESSOR_DEBUG = False
-COMPRESSOR_OFFLINE_COMPRESS = True

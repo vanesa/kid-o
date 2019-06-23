@@ -8,8 +8,8 @@ import sys
 sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 
 
-from app.settings.common import SQLALCHEMY_DATABASE_URI
-from app.models import db
+from kido.settings.common import SQLALCHEMY_DATABASE_URI
+from kido.models import db
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

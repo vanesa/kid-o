@@ -1,17 +1,14 @@
 language: python
 python:
-    - "2.7"
-# command to install dependencies
+  - "3.6"
+services:
+  - postgresql
 install:
-    - travis_retry pip install -r requirements-frozen.txt
-# command to run tests
-env:
-  - IS_TRAVIS=true
+  - travis_retry pip install -r requirements-frozen.txt
 before_script:
-  - npm install -g less
+  - cp kido/settings/travis.example.py kido/settings/test.py
   - psql -c 'CREATE DATABASE kido;' -U postgres
-  - psql -c "CREATE USER kido WITH PASSWORD 'kido';" -U postgres
-  - python -c 'from app.models import db; db.create_all()'
+  - npm install -g less
+  - python -c 'from kido.models import db; db.create_all()'
 script: python test.py
-# use new travis-ci container-based infrastructure
 sudo: false

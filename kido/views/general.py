@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import re
 import io
 import os
@@ -9,73 +11,66 @@ except ImportError:
 from twilio.twiml.messaging_response import MessagingResponse
 
 from flask import (
+    abort,
+    Blueprint,
+    flash,
+    jsonify,
     render_template,
     redirect,
     request,
-    flash,
+    session,
     send_file,
-    jsonify,
-    abort,
     send_from_directory,
 )
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required
 
 from PIL import Image
-
-import wtforms_json
 
 from kido import app, auth
 from kido.models import User, Child, Godparent, Project, ChildToGodparent, db, GodparentToProject
 from kido.constants import CHILD_HAS_GODPARENT, NO_NEED
 from kido.forms import LoginForm, SignUpForm, ChildForm, GodparentForm, SearchForm, GPSearchForm
+from kido.utils import allowed_file
 
-wtforms_json.init()
+
+blueprint = Blueprint('views', __name__)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@blueprint.route('/')
+def index():
+    return 'Coming soon...'
+
+
+@blueprint.route('/login', methods=['GET', 'POST'])
 def login():
-    """ Starting page with login.
-
-    For Log in: take email, password from user and check if credentials exist in the database
-    by checking if email is in the users table. If email in table, redirect to the children overview.
-    If not: redirect to sign up page. WTForms validates the form.
-    """
+    next_url = request.args.get('next', request.form.get('next', '/overview'))
+    if not auth.is_safe_url(next_url):
+        next_url = '/overview'
 
     form = LoginForm(request.form)
-    next_url = request.args.get('next', '/overview')
-    if request.method == 'POST' and form.validate():  # Process form if route gets POST request from /index
-        next_url = request.form.get('next', '/overview')
-        user = User.query.filter_by(email=form.data['email']).first()
-        if user and user.check_password(form.data['password']):
-            login_user(user)
-            if not auth.is_safe_url(next_url):
-                return abort(400)
-            return redirect(next_url or '/overview')
-
-        if not user:
-            return redirect('/signup')
-
-        # Show error message ('Incorrect password.')
-        form.errors["password"] = ["Incorrect password"]
+    if request.method == 'POST' and form.validate():
+        if auth.login(form.data['email'], password=form.data['password']):
+            return redirect(next_url)
+        else:
+            flash('Invalid email or password.', category='error')
 
     status_code = 400 if form.errors else 200
-    return render_template("login.html", form=form, next=next_url), status_code
+    context = {
+        'form': form,
+        'next_url': next_url,
+    }
+    return render_template("login.html", **context), status_code
 
 
-@app.route("/logout")
+@blueprint.route("/logout")
 @login_required
 def logout():
-    logout_user()
+    auth.logout()
     return redirect('/')
 
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
-
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup_form():
+@blueprint.route('/signup', methods=['GET', 'POST'])
+def signup():
     """ Sign up user """
 
     form = SignUpForm(request.form)
@@ -88,16 +83,16 @@ def signup_form():
         db.session.add(user)
         db.session.commit()
 
-        login_user(user)
+        auth.login(user.email, force=True)
 
         return redirect('/overview')
 
     return render_template("signup.html", form=form, next=next_url)
 
 
-@app.route('/overview', methods=['GET', 'POST'])
+@blueprint.route('/overview', methods=['GET', 'POST'])
 @login_required
-def show_overview():
+def overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
 
     query = Child.query
@@ -138,7 +133,7 @@ def show_overview():
     return render_template('overview.html', children=children, form=form)
 
 
-@app.route('/godparents-overview', methods=['GET', 'POST'])
+@blueprint.route('/godparents-overview', methods=['GET', 'POST'])
 @login_required
 def show_godparents_overview():
     """ Shows overview of all of the children in the project ordered by lastname."""
@@ -176,7 +171,7 @@ def show_godparents_overview():
     return render_template('godparents_overview.html', godparents=godparents, form=form)
 
 
-@app.route('/map')
+@blueprint.route('/map')
 @login_required
 def load_map():
     form = SearchForm()
@@ -184,7 +179,7 @@ def load_map():
     return render_template('map.html', child_profiles=all_children, form=form)
 
 
-@app.route('/child/<string:id>')
+@blueprint.route('/child/<string:id>')
 @login_required
 def child_profile(id):
     """ Show's each child's profile """
@@ -196,7 +191,7 @@ def child_profile(id):
     return render_template('child_profile.html', child=child)
 
 
-@app.route('/child/edit/<string:id>', methods=['GET', 'POST'])
+@blueprint.route('/child/edit/<string:id>', methods=['GET', 'POST'])
 @login_required
 def edit_profile(id):
     """ Edit child profile """
@@ -288,7 +283,7 @@ def edit_profile(id):
     return render_template('edit_profile.html', **context)
 
 
-@app.route('/child/add', methods=['GET', 'POST'])
+@blueprint.route('/child/add', methods=['GET', 'POST'])
 @login_required
 def add_profile():
 
@@ -326,7 +321,7 @@ def add_profile():
     return render_template('add_profile.html', form=form, projects=projects)
 
 
-@app.route('/delete-profile/<string:id>', methods=['POST'])
+@blueprint.route('/delete-profile/<string:id>', methods=['POST'])
 @login_required
 def delete_profile(id):
 
@@ -338,7 +333,7 @@ def delete_profile(id):
     return redirect('/overview')
 
 
-@app.route('/create-godparent', methods=['POST'])
+@blueprint.route('/create-godparent', methods=['POST'])
 @login_required
 def create_godparent():
     """create a godparent profile"""
@@ -353,7 +348,7 @@ def create_godparent():
         return jsonify(success=True), 201
 
 
-@app.route('/add-godparent/<string:child_id>', methods=['POST'])
+@blueprint.route('/add-godparent/<string:child_id>', methods=['POST'])
 @login_required
 def add_godparent(child_id):
     """add a godparent profile"""
@@ -375,7 +370,8 @@ def add_godparent(child_id):
     app.logger.debug(form.errors)
     return jsonify(errors=form.errors), 400
 
-@app.route('/add-existing-godparent/<string:child_id>', methods=['POST'])
+
+@blueprint.route('/add-existing-godparent/<string:child_id>', methods=['POST'])
 @login_required
 def add_existing_godparent(child_id):
     """add a godparent profile"""
@@ -395,7 +391,7 @@ def add_existing_godparent(child_id):
     return jsonify(success=True), 201
 
 
-@app.route('/remove-godparent/<string:id>', methods=['POST'])
+@blueprint.route('/remove-godparent/<string:id>', methods=['POST'])
 @login_required
 def remove_godparent(id):
     godparent = Godparent.query.filter_by(id=id).first()
@@ -426,7 +422,7 @@ def remove_godparent(id):
     return jsonify(success=True)
 
 
-@app.route('/twilio', methods=['GET', 'POST'])
+@blueprint.route('/twilio', methods=['GET', 'POST'])
 def registerbysms():
     callers = secrets.callers
     from_number = request.values.get('From', None)
@@ -465,7 +461,7 @@ def registerbysms():
     return str(resp)
 
 
-@app.route('/child_photo/<string:child_id>', methods=['GET'])
+@blueprint.route('/child_photo/<string:child_id>', methods=['GET'])
 def child_photo(child_id):
     child = Child.query.filter_by(id=child_id).first()
     if not child:
@@ -476,7 +472,10 @@ def child_photo(child_id):
                      mimetype='image/jpg')
 
 
-@app.route('/favicon.ico')
+@blueprint.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static', 'images'),
                                'favicon.ico', mimetype='image/x-icon')
+
+
+app.register_blueprint(blueprint)

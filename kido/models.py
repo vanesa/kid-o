@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Models and database functions for Kid-O project."""
 
 import hashlib
@@ -34,6 +35,8 @@ class User(db.Model):
     last_name = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(254), nullable=True)
     password = db.Column(db.String(60), nullable=True)  # bcrypt hashes are 60 chars long
+    failed_login_count = db.Column(db.Integer(), nullable=False, default=0)
+    last_login_at = db.Column(db.DateTime())
     created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     modified_at = db.Column(db.DateTime(), onupdate=datetime.utcnow)
 
@@ -46,7 +49,7 @@ class User(db.Model):
 
     def __repr__(self):
         """Provide helpful representation when printed."""
-        return "<User id=%s first_name=%s last_name=%s email=%s password=%s>" % (self.id, self.first_name, self.last_name, self.email, self.password)
+        return "{self.first_name} {self.last_name}".format(self=self)
 
     @property
     def permissions(self):
@@ -65,10 +68,10 @@ class User(db.Model):
         return False
 
     def get_id(self):
-        return unicode(self.id)
+        return str(self.id)
 
     def set_password(self, password):
-        self.password = str(bcrypt.generate_password_hash(password))
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def check_password(self, password):
         """ Returns True if the password is correct for the user."""
@@ -213,7 +216,7 @@ class Godparent(db.Model):
     projects = db.relationship('Project', secondary='godparent_to_project', backref='godparent', lazy='dynamic', collection_class=set)
 
     def __repr__(self):
-        return unicode('{first_name} {last_name}').format(
+        return '{first_name} {last_name}'.format(
             first_name=self.first_name,
             last_name=self.last_name,
         )
@@ -228,7 +231,7 @@ class Project(db.Model):
     name = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
-        return unicode(self.name)
+        return self.name
 
 
 class ChildToProject(db.Model):

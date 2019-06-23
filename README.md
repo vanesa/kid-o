@@ -18,7 +18,7 @@ Kid-O helps Non-Profit children’s aid orgs keep an overview of their children.
 - [Overview](#overview)
 - [Technologies & Stack](#technologies-and-stack)
 - [Features](#features)
-	- [In-depth use cases](#in-depth-use-cases)
+- [In-depth use cases](#in-depth-use-cases)
 - [Future plans](#future-plans)
 - [Technical choices](#technical-choices)
 - [Screenshots](#screenshots)
@@ -244,21 +244,22 @@ Search by school class:
 
 1. You'll need your own API keys for Twilio!
 2. Install Postgres
-	> For Mac users, you can install Postgres.app and PSequel for creating connecting to postgres superuser, create
-	database user & password and actual database through a GUI interface. Here is a medium post
-	in how you can create a [user and database through command line](https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e)
-
-    1. Create a Postgres user kido with password kido.
-	2. Create a Postgres database kido with owner kido.
+  > For Mac users, you can install Postgres.app and PSequel for creating connecting to postgres superuser, create
+  database user & password and actual database through a GUI interface. Here is a medium post
+  in how you can create a [user and database through command line](https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e)
 
 3. Fork [github project](https://github.com/vanesa/kid-o)
     > Run the following commands
-    1. `git clone git@github.com:<GITHUB USERNAME>/kid-o.git`
-    1. `cd kid-o`
+    1. `git clone git@github.com:vanesa/kid-o.git && cd kid-o`
     2. ``virtualenv --no-site-packages -p `which python3` venv``
     3. `source ./venv/bin/activate`
     4. `pip install -r requirements-frozen.txt`
     5. `python setup_database.py`
-    5. `npm install -g less`
-    5. `bash ./run.sh`
-    6. Go to http://localhost:5000 in your browser to use the app
+    6. `npm install -g less`
+    7. `bash ./run.sh`
+    8. Go to http://localhost:5000 in your browser to use the app
+
+4. Make sure tests pass
+    > Run the following commands
+    1. `pip install -r requirements-test.txt`
+    2. `pytest`

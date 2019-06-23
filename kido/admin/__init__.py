@@ -1,3 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from .views import admin
+
+__all__ = [
+    'views',
+]
+
+
+from . import views

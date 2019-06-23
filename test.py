@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import unittest
 from datetime import datetime
 
@@ -6,7 +8,6 @@ from kido.models import db, Child, User
 
 
 class ChildViewTestCase(unittest.TestCase):
-
     def test_child_view(self):
         first_name = "Martha"
         last_name = "Sosa"
@@ -20,7 +21,6 @@ class ChildViewTestCase(unittest.TestCase):
 
 
 class AuthTestCase(unittest.TestCase):
-
     def setUp(self):
         self.client = app.test_client()
 
@@ -35,12 +35,12 @@ class AuthTestCase(unittest.TestCase):
         db.session.add(user)
         db.session.commit()
 
-        response = self.client.post('/', data=dict(
+        response = self.client.post('/login', data=dict(
             email=user.email,
             password=password,
         ), follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Log Out", response.get_data())
+        self.assertIn("Log Out", response.data.decode())
 
         db.session.delete(user)
         db.session.commit()
@@ -63,7 +63,7 @@ class AuthTestCase(unittest.TestCase):
         response = self.client.get('/logout', follow_redirects=True)
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Login", response.get_data())
+        self.assertIn("Login", response.data.decode())
 
         db.session.delete(user)
         db.session.commit()

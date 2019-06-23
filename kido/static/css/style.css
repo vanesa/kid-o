@@ -15,8 +15,8 @@
   .toppad {
     padding-top: 230px;
     padding-bottom: 50px;
-}
   }
+}
 
 @media (max-width: 800px) {
   .godparents-toppad {
@@ -26,7 +26,7 @@
   .footer-buttons {
     display: none;
   }
-  }
+}
 
 .toppad_child {
   padding-top: 100px;
@@ -34,18 +34,38 @@
 }
 
 .hiddenchildrenicon {
-  -moz-transform:scale(0.4);
-    -webkit-transform:scale(0.4);
-    transform:scale(0.4);
-    margin-top: -18px;
-    margin-bottom: -18px;
+  -moz-transform: scale(0.4);
+  -webkit-transform: scale(0.4);
+  transform: scale(0.4);
+  margin-top: -18px;
+  margin-bottom: -18px;
 }
 
 @media (max-width: 800px) {
-  .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6,
-  .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12,
-  .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6,
-  .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+  .col-sm-1,
+  .col-sm-2,
+  .col-sm-3,
+  .col-sm-4,
+  .col-sm-5,
+  .col-sm-6,
+  .col-sm-7,
+  .col-sm-8,
+  .col-sm-9,
+  .col-sm-10,
+  .col-sm-11,
+  .col-sm-12,
+  .col-xs-1,
+  .col-xs-2,
+  .col-xs-3,
+  .col-xs-4,
+  .col-xs-5,
+  .col-xs-6,
+  .col-xs-7,
+  .col-xs-8,
+  .col-xs-9,
+  .col-xs-10,
+  .col-xs-11,
+  .col-xs-12 {
     padding-right: 2px;
     padding-left: 2px;
   }
@@ -60,23 +80,23 @@
 .info h2 {
   margin-top: 0px;
   display: inline-block;
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .estimated-birth-date {
-  color: #F24E54;
+  color: #f24e54;
   font-style: italic;
 }
 
 .images-style {
   max-height: 250px;
-    z-index: 10;
-    padding: 5px;
-    line-height: 1.42857143;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    vertical-align: baseline;
+  z-index: 10;
+  padding: 5px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  vertical-align: baseline;
 }
 
 .gp-child {
@@ -97,16 +117,15 @@
   clip-path: circle(60px at 70px 60px);
 }
 
-
 .imagesedit-style {
   width: 84px;
-    position: absolute;
-    z-index: 10;
-    padding: 5px;
-    line-height: 1.42857143;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+  position: absolute;
+  z-index: 10;
+  padding: 5px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 .photobox {
@@ -121,13 +140,13 @@
 }
 
 .uploadlink {
-    z-index: 200;
-    background-color: rgba(255,255,255,0.5);
-    position: absolute;
-    top: 90px;
-    font-size: 0.9em;
-    text-align: center;
-    width: 80px;
+  z-index: 200;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 90px;
+  font-size: 0.9em;
+  text-align: center;
+  width: 80px;
 }
 
 /* Map */
@@ -159,7 +178,6 @@
 .popupimage {
   max-width: 50px;
   max-height: auto;
-
 }
 
 .popupleft {
@@ -184,23 +202,20 @@
   max-width: 50%;
 }
 
-
-
 .rightbox {
   display: inline-block;
   vertical-align: top;
-
 }
 
 .ov-rightbox {
   border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-left: 10px;
-    padding: 10px;
+  border-radius: 4px;
+  margin-left: 10px;
+  padding: 10px;
 }
 
 .addchildicon {
-  float: right!important;
+  float: right !important;
   margin-top: 8px;
   max-height: 60px;
   margin-right: 10px;
@@ -208,7 +223,7 @@
 }
 
 .addchildicon-sm {
-  float: right!important;
+  float: right !important;
   margin-top: 3px;
   max-height: 40px;
   margin-right: 10px;
@@ -226,7 +241,6 @@
   border: 2px solid #888888;
   border-radius: 3px;
 }
-
 
 .alerttext {
   color: #ff1800;
@@ -250,8 +264,8 @@
   margin: 0 auto 0 auto;
   /*margin-bottom: 20px;*/
   background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   max-height: 250px;
 }
 
@@ -270,7 +284,6 @@ div.bootstrap-filestyle.input-group {
 .logo {
   height: 70px;
   margin-top: 10px;
-
 }
 
 .logo-sm {
@@ -279,19 +292,18 @@ div.bootstrap-filestyle.input-group {
 }
 
 .panel-heading {
-    padding: 1px 15px;
-    }
+  padding: 1px 15px;
+}
 
 .panel-footer {
-    padding: 3px 15px;
-    }
+  padding: 3px 15px;
+}
 
 .panel-body {
   max-height: 100%;
 }
 .watercolor {
-  background: url("/static/images/watercolorback.jpg")
-
+  background: url('/static/images/watercolorback.jpg');
 }
 
 .row {
@@ -299,14 +311,14 @@ div.bootstrap-filestyle.input-group {
 }
 
 .icon-warning {
-  color: #F24E54;
+  color: #f24e54;
 }
 
 .icon-success {
-  color: #8CC640;
+  color: #8cc640;
 }
 
-.row{
+.row {
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -329,40 +341,37 @@ nav.shrink a.logolink {
   z-index: 10;
 }
 
-
-
 /* Color scheme buttons */
 
 .btn-danger {
-  background-color: #F24E54;
+  background-color: #f24e54;
 }
 .btn-danger:hover {
-  background-color: #D8444F;
+  background-color: #d8444f;
 }
 
 .btn-warning {
-  background-color: #F9C41C;
-  border-color: #E5AF05;
+  background-color: #f9c41c;
+  border-color: #e5af05;
 }
 
 .btn-warning:hover {
-  background-color: #F9B406;
-  border-color: #FCC61A;
+  background-color: #f9b406;
+  border-color: #fcc61a;
 }
 
-.panel-danger > .panel-heading{
-  background-color: #F99BA2;
-  color: #99252E;
+.panel-danger > .panel-heading {
+  background-color: #f99ba2;
+  color: #99252e;
 }
 
 .panel-success > .panel-heading {
-  background-color: #BBE874;
+  background-color: #bbe874;
 }
 
 /* Child profile */
 
 .edit-icon {
-
   margin-left: -3px;
 }
 
@@ -376,79 +385,77 @@ nav.shrink a.logolink {
 .inactive {
   font-style: bold;
   color: #888888;
-  background-image: -webkit-linear-gradient(92deg,#c1c1c1,#828080);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear;
+  background-image: -webkit-linear-gradient(92deg, #c1c1c1, #828080);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 60s infinite linear;
 }
 
 /* Name title */
 .animated1 {
   color: #888888;
-  background-image: -webkit-linear-gradient(92deg,#F24E54,#feab3a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear;
+  background-image: -webkit-linear-gradient(92deg, #f24e54, #feab3a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 60s infinite linear;
 }
-
-
 
 /* Godparents */
 .animated2 {
   color: #888888;
-  background-image: -webkit-linear-gradient(92deg,#f9d73b,#f9783b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear;
+  background-image: -webkit-linear-gradient(92deg, #f9d73b, #f9783b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 60s infinite linear;
 }
 
 /* Siblings */
 .animated3 {
   color: #888888;
-  background-image: -webkit-linear-gradient(92deg,#79A82F,#f9d73b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear;
-    padding-bottom: 1px;
+  background-image: -webkit-linear-gradient(92deg, #79a82f, #f9d73b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 60s infinite linear;
+  padding-bottom: 1px;
 }
 
 /* School */
 .animated4 {
   color: #888888;
-  background-image: -webkit-linear-gradient(92deg,#119BD1,#79A82F);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear;
+  background-image: -webkit-linear-gradient(92deg, #119bd1, #79a82f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 60s infinite linear;
 }
 
 /* Situation title */
 .animated5 {
   color: #888888;
-  background-image: -webkit-linear-gradient(92deg,#34475f,#119BD1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear;
+  background-image: -webkit-linear-gradient(92deg, #34475f, #119bd1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 60s infinite linear;
 }
 
 /* Volunteer task title */
 .animated6 {
   color: #888888;
-  background-image: -webkit-linear-gradient(92deg,#853ad1, #3365a5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear;
+  background-image: -webkit-linear-gradient(92deg, #853ad1, #3365a5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 60s infinite linear;
 }
 
 /* Home Address title */
 .animated7 {
   color: #888888;
-  background-image: -webkit-linear-gradient(92deg,#c9205b, #853ad1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: hue 60s infinite linear;
+  background-image: -webkit-linear-gradient(92deg, #c9205b, #853ad1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: hue 60s infinite linear;
 }
 
-a#delete_address  {
+a#delete_address {
   cursor: pointer;
 }
 
@@ -461,25 +468,26 @@ a#delete_address  {
 }
 
 .nav-tabs > li {
-    float: none;
-    margin-bottom: -1px;
-    display: inline-block;
- }
+  float: none;
+  margin-bottom: -1px;
+  display: inline-block;
+}
 
- /* Add a Child */
+/* Add a Child */
 
- .addchildinput {
-   display: inline-block;
-   margin-bottom: 5px;
- }
+.addchildinput {
+  display: inline-block;
+  margin-bottom: 5px;
+}
 
 label {
   margin-right: 5px;
 }
 
 @media only screen and (max-width: 620px) {
-
-   h2 { font-size: 1.8em; }
+  h2 {
+    font-size: 1.8em;
+  }
   .leftbox {
     width: 100%;
     max-width: 100%;
@@ -487,12 +495,10 @@ label {
   .rightbox {
     display: block;
   }
-   .info {
-     margin-left: 0px;
-   }
-
+  .info {
+    margin-left: 0px;
+  }
 }
-
 
 @media (max-width: 620px) {
   body {
@@ -510,16 +516,16 @@ label {
 }
 
 .bottom_bar_buttons {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin-bottom: 55px;
-    text-align: center;
-    z-index: 1030;
-    background-color: #edf9ff;
-    padding: 7px;
-    border-top: 1px solid #d6f1ff;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 55px;
+  text-align: center;
+  z-index: 1030;
+  background-color: #edf9ff;
+  padding: 7px;
+  border-top: 1px solid #d6f1ff;
 }
 
 .gp-footer {

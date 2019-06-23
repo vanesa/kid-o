@@ -1,12 +1,15 @@
+# -*- coding: utf-8 -*-
+
 from kido import app
+
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 WTF_CSRF_ENABLED = False
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-COMPRESSOR_DEBUG = True
 COMPRESSOR_OUTPUT_DIR = app.static_folder + '/sdist'
 COMPRESSOR_STATIC_PREFIX = app.static_url_path + '/sdist'
 MAPBOX_MAP_ID = None
+MAX_FAILED_LOGIN_ATTEMPTS = 20
 
 
 # Overwrite above settings with test data

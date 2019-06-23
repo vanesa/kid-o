@@ -3,11 +3,11 @@
 from kido import app
 
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg", "gif"])
 WTF_CSRF_ENABLED = False
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-COMPRESSOR_OUTPUT_DIR = app.static_folder + '/sdist'
-COMPRESSOR_STATIC_PREFIX = app.static_url_path + '/sdist'
+COMPRESSOR_OUTPUT_DIR = app.static_folder + "/sdist"
+COMPRESSOR_STATIC_PREFIX = app.static_url_path + "/sdist"
 MAPBOX_MAP_ID = None
 MAX_FAILED_LOGIN_ATTEMPTS = 20
 
@@ -36,11 +36,9 @@ except ImportError:
     pass
 
 
-auth = ''
+auth = ""
 if DB_USERNAME and DB_PASSWORD:
-    auth = '{user}:{password}@'.format(user=DB_USERNAME, password=DB_PASSWORD)
-SQLALCHEMY_DATABASE_URI = 'postgresql://{auth}{host}/{database}'.format(
-    auth=auth,
-    host=DB_HOST,
-    database=DB_NAME,
+    auth = "{user}:{password}@".format(user=DB_USERNAME, password=DB_PASSWORD)
+SQLALCHEMY_DATABASE_URI = "postgresql://{auth}{host}/{database}".format(
+    auth=auth, host=DB_HOST, database=DB_NAME
 )

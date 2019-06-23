@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__all__ = [
-    'login',
-    'logout',
-    'login_required',
-    'is_uuid4',
-    'is_safe_url',
-]
+__all__ = ["login", "logout", "login_required", "is_uuid4", "is_safe_url"]
 
 
 from flask_login import login_required, LoginManager

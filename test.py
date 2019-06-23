@@ -11,9 +11,11 @@ class ChildViewTestCase(unittest.TestCase):
     def test_child_view(self):
         first_name = "Martha"
         last_name = "Sosa"
-        birth_date= datetime.strptime("2009-02-02", "%Y-%m-%d")
+        birth_date = datetime.strptime("2009-02-02", "%Y-%m-%d")
 
-        test_child_view = Child(first_name=first_name, last_name=last_name, birth_date=birth_date)
+        test_child_view = Child(
+            first_name=first_name, last_name=last_name, birth_date=birth_date
+        )
 
         currenttime = datetime.now()
         expected_age = (currenttime - birth_date).days / 365
@@ -35,10 +37,11 @@ class AuthTestCase(unittest.TestCase):
         db.session.add(user)
         db.session.commit()
 
-        response = self.client.post('/login', data=dict(
-            email=user.email,
-            password=password,
-        ), follow_redirects=True)
+        response = self.client.post(
+            "/login",
+            data=dict(email=user.email, password=password),
+            follow_redirects=True,
+        )
         self.assertEqual(response.status_code, 200)
         self.assertIn("Log Out", response.data.decode())
 
@@ -56,11 +59,10 @@ class AuthTestCase(unittest.TestCase):
         db.session.add(user)
         db.session.commit()
 
-        response = self.client.post('/', data=dict(
-            email=user.email,
-            password=password,
-        ), follow_redirects=True)
-        response = self.client.get('/logout', follow_redirects=True)
+        response = self.client.post(
+            "/", data=dict(email=user.email, password=password), follow_redirects=True
+        )
+        response = self.client.get("/logout", follow_redirects=True)
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("Login", response.data.decode())

@@ -32,11 +32,10 @@ class UUID(PGUUID):
 class User(db.Model):
     id = db.Column(UUID(), primary_key=True, default=uuid4)
     first_name = db.Column(db.String(200), nullable=False)
-    last_name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(254), nullable=True)
-    password = db.Column(
-        db.String(60), nullable=True
-    )  # bcrypt hashes are 60 chars long
+    last_name = db.Column(db.String(200))
+    email = db.Column(db.String(254), nullable=True, unique=True)
+    # bcrypt hashes are 60 chars long
+    password = db.Column(db.String(60), nullable=True)
     failed_login_count = db.Column(db.Integer(), nullable=False, default=0)
     last_login_at = db.Column(db.DateTime())
     created_at = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)

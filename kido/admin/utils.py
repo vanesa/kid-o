@@ -17,7 +17,7 @@ def admin_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         if not current_user.is_authenticated:
-            return redirect(url_for("login", next=request.url))
+            return redirect(url_for("views.general.login", next=request.url))
         users_permissions = current_user.permissions
         if PERMISSION_ADMIN not in users_permissions:
             app.logger.debug("Not an admin")
@@ -36,7 +36,7 @@ def permission_required(permissions):
         @wraps(method)
         def f(*args, **kwargs):
             if not current_user.is_authenticated:
-                return redirect(url_for("login", next=request.url))
+                return redirect(url_for("views.general.login", next=request.url))
             users_permissions = current_user.permissions
             if PERMISSION_ADMIN not in users_permissions:
                 for permission in permissions:
@@ -63,12 +63,12 @@ class CustomAdminIndexView(AdminIndexView):
     @admin_required
     def index(self):
         if not current_user.is_authenticated:
-            return redirect(url_for("login", next=request.url))
+            return redirect(url_for("views.general.login", next=request.url))
         return super(CustomAdminIndexView, self).index()
 
     @expose("/login/")
     def login_view(self):
-        return redirect(url_for("login", next=request.url))
+        return redirect(url_for("views.general.login", next=request.url))
 
     @expose("/logout/")
     def logout_view(self):

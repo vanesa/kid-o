@@ -49,7 +49,7 @@ from kido.forms import (
 from kido.utils import allowed_file
 
 
-blueprint = Blueprint("views", __name__)
+blueprint = Blueprint("views.general", __name__)
 
 
 @blueprint.route("/")

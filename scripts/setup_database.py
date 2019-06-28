@@ -4,6 +4,8 @@
 import os
 import sys
 
+sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
+
 from alembic import command
 from alembic.config import Config
 from subprocess import call

@@ -21,6 +21,8 @@ from wtforms.validators import (
     Optional,
     Regexp,
 )
+
+from .filters import email, lower
 from kido.constants import (
     HAITIAN,
     DOMINICAN,
@@ -46,12 +48,12 @@ from kido.constants import (
 )
 
 
-def lower(data):
-    return data.lower() if data else data
+class EmailForm(Form):
+    email = StringField("email", validators=[DataRequired(), Email()], filters=[email, lower])
 
 
 class LoginForm(Form):
-    email = StringField("email", validators=[DataRequired(), Email()], filters=[lower])
+    email = StringField("email", validators=[DataRequired(), Email()], filters=[email, lower])
     password = PasswordField(
         "password", validators=[DataRequired(), Length(min=4, max=200)]
     )
@@ -60,7 +62,7 @@ class LoginForm(Form):
 class SignUpForm(Form):
     first_name = StringField("first_name", validators=[DataRequired(), Length(max=15)])
     last_name = StringField("last_name", validators=[DataRequired(), Length(max=15)])
-    email = StringField("email", validators=[DataRequired(), Email()], filters=[lower])
+    email = StringField("email", validators=[DataRequired(), Email()], filters=[email, lower])
     password = PasswordField(
         "password", validators=[DataRequired(), Length(min=6, max=200)]
     )
@@ -139,7 +141,7 @@ class GodparentForm(Form):
     first_name = StringField("first_name", validators=[DataRequired(), Length(max=15)])
     last_name = StringField("last_name", validators=[DataRequired(), Length(max=15)])
     referral_name = StringField("referal_name", validators=[Optional(), Length(max=25)])
-    email = StringField("email", validators=[DataRequired(), Email()], filters=[lower])
+    email = StringField("email", validators=[DataRequired(), Email()], filters=[email, lower])
 
 
 class SearchForm(Form):

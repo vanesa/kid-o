@@ -6,6 +6,8 @@ certifi==2019.6.16
 cffi==1.12.3
 chardet==3.0.4
 Click==7.0
+dnspython==1.16.0
+email-validator==1.0.4
 Flask==1.0.3
 Flask-Admin==1.5.3
 Flask-Bcrypt==0.7.1

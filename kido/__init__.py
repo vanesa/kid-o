@@ -2,21 +2,15 @@
 """ Kid-O server"""
 
 
-__all__ = [
-    'app',
-    'admin',
-    'models',
-    'helpers',
-    'views',
-]
+__all__ = ["app", "admin", "models", "helpers", "views"]
 
 
 from flask import Flask
 
 
 app = Flask(__name__)
-app.config.from_object('kido.settings.common')
-app.secret_key = app.config['SECRET_KEY']
+app.config.from_object("kido.settings.common")
+app.secret_key = app.config["SECRET_KEY"]
 
 
 import wtforms_json

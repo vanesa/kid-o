@@ -23,4 +23,4 @@ config_test:
 static:
 	python -m jac.contrib.flask kido:app
 
-netlify: install_test static
+netlify: install_test config_test static

@@ -4,11 +4,10 @@ python:
 services:
   - postgresql
 install:
-  - travis_retry pip install -r requirements-frozen.txt
+  - make installdev
 before_script:
   - cp kido/settings/travis.example.py kido/settings/test.py
   - psql -c 'CREATE DATABASE kido;' -U postgres
-  - npm install -g less
   - python -c 'from kido.models import db; db.create_all()'
-script: python test.py
+script: make test
 sudo: false

@@ -1,0 +1,4 @@
+-r requirements-common.txt
+
+gunicorn==19.7.1
+psycopg2==2.8.3

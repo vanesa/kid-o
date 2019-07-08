@@ -1,5 +1,5 @@
 # Targets that are always out-of-date, and always re-run
-.PHONY: install install_test clean black test static netlify
+.PHONY: install install_test config_test clean black test static netlify
 
 install:
 	pip install -r requirements-frozen.txt
@@ -14,14 +14,13 @@ clean:
 black:
 	black --check .
 
-test:
-	install_test
+test: install_test
 	python test.py
 
-netlify:
-	install_test
+config_test:
 	cp kido/settings/development.example.py kido/settings/test.py
-	static
 
 static:
 	python -m jac.contrib.flask kido:app
+
+netlify: install_test static

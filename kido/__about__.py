@@ -1,0 +1,9 @@
+__title__ = 'kido'
+__description__ = 'Children aid organization app'
+__url__ = 'https://github.com/vanesa/kid-o'
+__version_info__ = ('0', '0', '0')
+__version__ = '.'.join(__version_info__)
+__author__ = 'Vanesa Ortiz'
+__author_email__ = 'vanesa@users.noreply.github.com'
+__license__ = 'BSD'
+__copyright__ = 'Copyright 2019 Vanesa Ortiz'

@@ -10,7 +10,7 @@ Flask-SQLAlchemy==2.4.0
 Flask-Static-Compress==1.0.2
 Flask-WTF==0.14.2
 Jinja2==2.10.1
-Pillow==6.0.0
+Pillow==8.1.1
 pytz==2019.1
 SQLAlchemy==1.3.5
 twilio==6.28.0

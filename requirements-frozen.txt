@@ -22,7 +22,7 @@ gunicorn==19.7.1
 idna==2.8
 itsdangerous==1.1.0
 jac==0.17.2
-Jinja2==2.10.1
+Jinja2==2.11.3
 Mako==1.0.12
 MarkupSafe==1.1.1
 ordereddict==1.1

@@ -23,7 +23,7 @@ idna==2.8
 itsdangerous==1.1.0
 jac==0.17.2
 Jinja2==2.10.1
-Mako==1.0.12
+Mako==1.2.2
 MarkupSafe==1.1.1
 ordereddict==1.1
 Pillow==6.0.0
